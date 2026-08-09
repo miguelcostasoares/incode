@@ -567,3 +567,186 @@
   resize3();
   if(!rm3.matches)start3();
 })();
+
+/* ── 11. Fio de execução v3 — sticky scroll ──────────────── */
+(function () {
+  'use strict';
+
+  var scroller = document.querySelector('.thread__scroller');
+  var canvas   = document.getElementById('thread-canvas');
+  var svg      = document.getElementById('thread-svg');
+  var about    = document.getElementById('sobre');
+  if (!scroller || !canvas || !svg) return;
+
+  var svgBase = document.getElementById('tsb');
+  var svgFill = document.getElementById('tsf');
+  var svgHead = document.getElementById('tsh');
+  var wraps   = canvas.querySelectorAll('.thread__node-wrap');
+  var rm      = window.matchMedia('(prefers-reduced-motion:reduce)');
+
+  /* ── Flags ───────────────────────────────────────────── */
+  var aboutRevealed = false;  /* garante que o reveal só dispara uma vez */
+  var lastP         = -1;
+  var pending       = false;
+
+  /* ── Geometria ───────────────────────────────────────── */
+  var CX = 0, TOP_Y = 0, BOT_Y = 0, canvasW = 0, canvasH = 0;
+
+  function layout() {
+    var cr  = canvas.getBoundingClientRect();
+    canvasW = cr.width;
+    canvasH = cr.height;
+
+    CX    = canvasW / 2;
+    TOP_Y = canvasH * 0.04;
+    BOT_Y = canvasH * 0.96;
+
+    svg.setAttribute('viewBox', '0 0 ' + canvasW + ' ' + canvasH);
+    setLine(svgBase, CX, TOP_Y, CX, BOT_Y);
+    setLine(svgFill, CX, TOP_Y, CX, BOT_Y);
+
+    var len = BOT_Y - TOP_Y;
+    svgFill.style.strokeDasharray  = len;
+    svgFill.style.strokeDashoffset = len;
+
+    /* Posiciona cada nó-wrapper em px */
+    [].forEach.call(wraps, function (w) {
+      var at   = parseFloat(w.getAttribute('data-at') || 0);
+      var side = w.getAttribute('data-side');
+      var nSz  = w.classList.contains('thread__node-wrap--key') ? 20 : 14;
+      var y    = TOP_Y + at * (BOT_Y - TOP_Y);
+
+      w.style.top   = y + 'px';
+      w.style.left  = '';
+      w.style.right = '';
+
+      if (window.innerWidth > 680) {
+        if (side === 'left') {
+          w.style.right = (canvasW - CX - nSz / 2) + 'px';
+          w.style.left  = 'auto';
+        } else {
+          w.style.left  = (CX - nSz / 2) + 'px';
+          w.style.right = 'auto';
+        }
+      } else {
+        w.style.left  = (CX - nSz / 2) + 'px';
+        w.style.right = 'auto';
+      }
+    });
+  }
+
+  function setLine(el, x1, y1, x2, y2) {
+    el.setAttribute('x1', x1); el.setAttribute('y1', y1);
+    el.setAttribute('x2', x2); el.setAttribute('y2', y2);
+  }
+
+  /* ── Scroll update ───────────────────────────────────── */
+  function update() {
+    pending = false;
+
+    var sr      = scroller.getBoundingClientRect();
+    var scrollH = scroller.offsetHeight - (window.innerHeight || 1);
+    var p       = -sr.top / scrollH;
+    p = p < 0 ? 0 : (p > 1 ? 1 : p);
+
+    if (Math.abs(p - lastP) < 0.001) return;
+    lastP = p;
+
+    /* Linha preenchida */
+    var len = BOT_Y - TOP_Y;
+    svgFill.style.strokeDashoffset = (len * (1 - p));
+
+    /* Cabeça luminosa */
+    var hy = TOP_Y + p * len;
+    svgHead.setAttribute('cx', CX);
+    svgHead.setAttribute('cy', hy);
+    svgHead.style.opacity = p < 0.03 ? '0' : '1';
+
+    /* Gradiente acompanha a calha */
+    var grad = document.getElementById('thread-grad');
+    if (grad) { grad.setAttribute('y1', TOP_Y); grad.setAttribute('y2', BOT_Y); }
+
+    /* Acende nós */
+    [].forEach.call(wraps, function (w) {
+      var at = parseFloat(w.getAttribute('data-at') || 0);
+      w.classList.toggle('is-lit', p >= at);
+    });
+
+    /* Auto-reveal do Sobre quando o fio completa */
+    if (!aboutRevealed && p >= 0.995 && about) {
+      aboutRevealed = true;
+      about.classList.add('about--reveal');
+      setTimeout(function () {
+        about.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 180);
+    }
+  }
+
+  function onScroll() {
+    if (!pending) { pending = true; requestAnimationFrame(update); }
+  }
+
+  /* ── Reduced motion: tudo visível de imediato ─────── */
+  if (rm.matches) {
+    layout();
+    svgFill.style.strokeDashoffset = '0';
+    svgHead.style.display = 'none';
+    [].forEach.call(wraps, function (w) { w.classList.add('is-lit'); });
+    if (about) about.classList.add('about--reveal');
+    return;
+  }
+
+  /* ── Init ────────────────────────────────────────────── */
+  layout();
+  update();
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { layout(); update(); });
+  if (rm.addEventListener) rm.addEventListener('change', function (e) {
+    if (e.matches) {
+      window.removeEventListener('scroll', onScroll);
+      layout();
+      svgFill.style.strokeDashoffset = '0';
+      svgHead.style.display = 'none';
+      [].forEach.call(wraps, function (w) { w.classList.add('is-lit'); });
+      if (about) about.classList.add('about--reveal');
+    }
+  });
+
+})();
+
+/* ── 12. Contadores das métricas do Sobre ────────────────── */
+(function () {
+  var els = document.querySelectorAll('[data-count]');
+  if (!els.length || !('IntersectionObserver' in window)) return;
+
+  var rm = window.matchMedia('(prefers-reduced-motion:reduce)');
+
+  function run(el) {
+    var target = parseFloat(el.getAttribute('data-count')) || 0;
+    if (rm.matches) { el.textContent = target; return; }
+    var dur = 1300, t0 = 0;
+    function step(now) {
+      if (!t0) t0 = now;
+      var p = Math.min((now - t0) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * e);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      run(e.target);
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0.45 });
+
+  [].forEach.call(els, function (el) {
+    el.textContent = '0';
+    obs.observe(el);
+  });
+})();

@@ -167,8 +167,78 @@
 
 </section>
 
+<!-- ═══════════════ FIO DE EXECUÇÃO — STICKY ═══════════════ -->
+<!--
+  .thread__scroller  → altura total da "viagem" de scroll (300vh)
+  .thread__sticky    → painel que fica preso durante o scroll
+  .thread__canvas    → área de desenho (calha + nós + labels)
+-->
+<section class="thread" id="thread" aria-hidden="true">
+  <div class="thread__scroller">
+    <div class="thread__sticky">
+
+      <p class="thread__kicker">// do problema ao produto</p>
+
+      <div class="thread__canvas" id="thread-canvas">
+
+        <!-- Calha SVG — renderizada pelo JS, mas criamos o SVG aqui -->
+        <svg class="thread__svg" id="thread-svg"
+             aria-hidden="true"
+             xmlns="http://www.w3.org/2000/svg">
+          <!-- linha base (cinza) -->
+          <line class="thread__svg-base" id="tsb"  />
+          <!-- linha preenchida (gradiente animado) -->
+          <line class="thread__svg-fill" id="tsf"  />
+          <!-- cabeça luminosa -->
+          <circle class="thread__svg-head" id="tsh" r="5" />
+          <!-- definição do gradiente -->
+          <defs>
+            <linearGradient id="thread-grad" x1="0" y1="0" x2="0" y2="1"
+                            gradientUnits="userSpaceOnUse">
+              <stop offset="0%"   stop-color="#00f0ff"/>
+              <stop offset="55%"  stop-color="#0047ff"/>
+              <stop offset="100%" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- Nó 1 — Ideia -->
+        <div class="thread__node-wrap" data-at="0.12" data-side="left" id="tn0">
+          <div class="thread__node" id="tnode0"></div>
+          <div class="thread__label">
+            <span class="thread__key">entrada</span>
+            <b>Ideia</b>
+            <p>Entendemos o problema, o contexto e o que precisa existir — antes de abrir o editor.</p>
+          </div>
+        </div>
+
+        <!-- Nó 2 — Código (central, maior) -->
+        <div class="thread__node-wrap thread__node-wrap--key" data-at="0.50" data-side="right" id="tn1">
+          <div class="thread__node" id="tnode1"></div>
+          <div class="thread__label">
+            <span class="thread__key">núcleo</span>
+            <b>Código</b>
+            <p>Arquitetura, revisão e testes. É aqui que a InCode existe: tudo passa pelo código.</p>
+          </div>
+        </div>
+
+        <!-- Nó 3 — Produto -->
+        <div class="thread__node-wrap" data-at="0.90" data-side="left" id="tn2">
+          <div class="thread__node" id="tnode2"></div>
+          <div class="thread__label">
+            <span class="thread__key">saída</span>
+            <b>Produto</b>
+            <p>No ar, medido e mantido. A entrega é o começo do acompanhamento, não o fim.</p>
+          </div>
+        </div>
+
+      </div><!-- /.thread__canvas -->
+    </div><!-- /.thread__sticky -->
+  </div><!-- /.thread__scroller -->
+</section>
+
 <!-- ═══════════════ SOBRE ═══════════════ -->
-<section class="about" id="sobre">
+<section class="about" id="sobre" aria-labelledby="sobre-title">
   <canvas class="aurora__canvas aurora__canvas--about" id="aurora-about" aria-hidden="true"></canvas>
   <div class="hero__grid about__grid-overlay" aria-hidden="true"></div>
   <div class="about__veil" aria-hidden="true"></div>
@@ -176,113 +246,122 @@
   <div class="container about__inner">
 
     <!-- Cabeçalho -->
-    <div class="section-head about__head" data-reveal-section>
+    <header class="section-head about__head" data-reveal-section>
       <p class="section-label">Sobre a InCode</p>
-      <h2 class="section-title">
+      <h2 class="section-title" id="sobre-title">
         Desenvolvemos software<br>
         como se fosse <em class="grad">nosso.</em>
       </h2>
-    </div>
+      <p class="section-lead">
+        Equipe pequena, sênior e envolvida do primeiro diagnóstico até a manutenção —
+        sem camadas entre quem decide e quem escreve o código.
+      </p>
+    </header>
 
-    <!-- Corpo: texto + valores + foto/visual -->
     <div class="about__body">
 
       <!-- Coluna de texto -->
       <div class="about__text" data-reveal-section style="--sd:80ms">
         <p class="about__lead">
-          A InCode nasceu da frustração com software que "funciona por enquanto". 
-          Somos uma equipe de desenvolvedores e designers que acredita que tecnologia 
-          bem construída é um ativo — não um custo.
+          A InCode nasceu da frustração com software que "funciona por enquanto".
+          Tecnologia bem construída é um ativo — não um custo que volta a cada refação.
         </p>
         <p class="about__para">
-          Trabalhamos com empresas em crescimento que precisam de soluções que 
-          escalem com elas: plataformas web, integrações, produtos digitais e 
-          automações que transformam a forma como as equipes trabalham no dia a dia.
+          Trabalhamos com empresas em crescimento que precisam de soluções que escalem
+          junto: plataformas web, integrações, produtos digitais e automações que mudam
+          a forma como as equipes trabalham no dia a dia.
         </p>
         <p class="about__para">
-          Cada projeto começa com uma pergunta simples: <em>o que o cliente 
-          realmente precisa para crescer?</em> A resposta define o que desenvolvemos 
-          — e como mantemos depois da entrega.
+          Cada projeto começa por uma pergunta simples: <em>o que o cliente realmente
+          precisa para crescer?</em> A resposta define o que construímos — e como
+          mantemos depois da entrega.
         </p>
-        <a class="btn btn--ghost" href="#contato" style="margin-top:8px">
-        Falar conosco
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
-        </a>
+
+        <p class="about__status">
+          <span class="about__status-dot" aria-hidden="true"></span>
+          Aceitando novos projetos · resposta em 24h
+        </p>
+
+        <div class="about__actions">
+          <a class="btn btn--ghost" href="#contato">
+            Falar conosco
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+          </a>
+        </div>
       </div>
 
-      <!-- Coluna de valores + métricas -->
-      <div class="about__right" data-reveal-section style="--sd:160ms">
+      <!-- Coluna de métricas + princípios -->
+      <div class="about__right">
 
-        <!-- Métricas -->
         <div class="about__stats">
-          <div class="about__stat">
-            <span class="about__stat-value">8<em>+</em></span>
-            <span class="about__stat-label">anos de experiência</span>
+          <div class="about__stat" data-reveal-section style="--sd:120ms">
+            <span class="about__stat-value"><span data-count="8">8</span><em>+</em></span>
+            <span class="about__stat-label">anos construindo produtos</span>
           </div>
-          <div class="about__stat">
-            <span class="about__stat-value">120<em>+</em></span>
+          <div class="about__stat" data-reveal-section style="--sd:180ms">
+            <span class="about__stat-value"><span data-count="120">120</span><em>+</em></span>
             <span class="about__stat-label">projetos entregues</span>
           </div>
-          <div class="about__stat">
-            <span class="about__stat-value">40<em>+</em></span>
+          <div class="about__stat" data-reveal-section style="--sd:240ms">
+            <span class="about__stat-value"><span data-count="40">40</span><em>+</em></span>
             <span class="about__stat-label">clientes em produção</span>
           </div>
-          <div class="about__stat">
-            <span class="about__stat-value">24<em>h</em></span>
+          <div class="about__stat" data-reveal-section style="--sd:300ms">
+            <span class="about__stat-value"><span data-count="24">24</span><em>h</em></span>
             <span class="about__stat-label">resposta garantida</span>
           </div>
         </div>
 
-        <!-- Valores / princípios -->
-        <div class="about__values">
-          <div class="about__value">
+        <ul class="about__values">
+          <li class="about__value" data-reveal-section style="--sd:200ms">
             <span class="about__value-icon about__value-icon--blue" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </svg>
             </span>
-            <div>
+            <div class="about__value-body">
               <b>Código que dura</b>
               <p>Escrevemos para manter, não para entregar e esquecer.</p>
             </div>
-          </div>
-          <div class="about__value">
+          </li>
+
+          <li class="about__value" data-reveal-section style="--sd:260ms">
             <span class="about__value-icon about__value-icon--cyan" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 8v4l3 3"/>
+                <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
               </svg>
             </span>
-            <div>
+            <div class="about__value-body">
               <b>Prazos reais</b>
               <p>Estimativas honestas desde o início, sem surpresas no final.</p>
             </div>
-          </div>
-          <div class="about__value">
+          </li>
+
+          <li class="about__value" data-reveal-section style="--sd:320ms">
             <span class="about__value-icon about__value-icon--violet" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
             </span>
-            <div>
+            <div class="about__value-body">
               <b>Parceria de longo prazo</b>
-              <p>Acompanhamos após o lançamento — somos o departamento de tecnologia da sua empresa.</p>
+              <p>Acompanhamos depois do lançamento — somos o time de tecnologia da sua empresa.</p>
             </div>
-          </div>
-          <div class="about__value">
+          </li>
+
+          <li class="about__value" data-reveal-section style="--sd:380ms">
             <span class="about__value-icon about__value-icon--pink" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
               </svg>
             </span>
-            <div>
+            <div class="about__value-body">
               <b>Foco no impacto</b>
-              <p>Cada funcionalidade precisa justificar sua existência com resultados mensuráveis.</p>
+              <p>Cada funcionalidade precisa justificar sua existência com resultado medível.</p>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
 
       </div>
     </div><!-- /.about__body -->
