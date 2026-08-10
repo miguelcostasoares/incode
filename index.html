@@ -243,130 +243,123 @@
   <div class="hero__grid about__grid-overlay" aria-hidden="true"></div>
   <div class="about__veil" aria-hidden="true"></div>
 
-  <div class="container about__inner">
+  <div class="container about__inner--v2">
 
-    <!-- Cabeçalho -->
-    <header class="section-head about__head" data-reveal-section>
-      <p class="section-label">Sobre a InCode</p>
-      <h2 class="section-title" id="sobre-title">
-        Desenvolvemos software<br>
-        como se fosse <em class="grad">nosso.</em>
-      </h2>
-      <p class="section-lead">
-        Equipe pequena, sênior e envolvida do primeiro diagnóstico até a manutenção —
-        sem camadas entre quem decide e quem escreve o código.
-      </p>
-    </header>
+    <!-- COLUNA ESQUERDA -->
+    <div class="about__left-v2">
 
-    <div class="about__body">
-
-      <!-- Coluna de texto -->
-      <div class="about__text" data-reveal-section style="--sd:80ms">
-        <p class="about__lead">
-          A InCode nasceu da frustração com software que "funciona por enquanto".
-          Tecnologia bem construída é um ativo — não um custo que volta a cada refação.
+      <header class="about__head-v2">
+        <p class="section-label">Sobre a InCode</p>
+        <h2 class="about__title-v2" id="sobre-title">
+          Software feito<br>como se fosse<br><em class="grad">nosso.</em>
+        </h2>
+        <p class="about__tagline-v2">
+          Equipe sénior, sem intermediários —<br>
+          do diagnóstico à manutenção.
         </p>
-        <p class="about__para">
-          Trabalhamos com empresas em crescimento que precisam de soluções que escalem
-          junto: plataformas web, integrações, produtos digitais e automações que mudam
-          a forma como as equipes trabalham no dia a dia.
-        </p>
-        <p class="about__para">
-          Cada projeto começa por uma pergunta simples: <em>o que o cliente realmente
-          precisa para crescer?</em> A resposta define o que construímos — e como
-          mantemos depois da entrega.
-        </p>
+      </header>
 
+      <!-- Stats interativos -->
+      <div class="about__stats-v2" role="list">
+        <div class="astat" role="listitem" data-astat>
+          <span class="astat__value"><span data-count="8">0</span><em>+</em></span>
+          <span class="astat__label">Anos de experiência</span>
+        </div>
+        <div class="astat" role="listitem" data-astat>
+          <span class="astat__value"><span data-count="120">0</span><em>+</em></span>
+          <span class="astat__label">Projetos entregues</span>
+        </div>
+        <div class="astat" role="listitem" data-astat>
+          <span class="astat__value"><span data-count="40">0</span><em>+</em></span>
+          <span class="astat__label">Clientes em produção</span>
+        </div>
+        <div class="astat" role="listitem" data-astat>
+          <span class="astat__value"><span data-count="24">0</span><em>h</em></span>
+          <span class="astat__label">Resposta garantida</span>
+        </div>
+      </div>
+
+      <!-- Status + CTA -->
+      <div class="about__bottom-v2">
         <p class="about__status">
           <span class="about__status-dot" aria-hidden="true"></span>
           Aceitando novos projetos · resposta em 24h
         </p>
+        <a class="btn btn--ghost btn--sm" href="#contato">
+          Falar conosco
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+        </a>
+      </div>
 
-        <div class="about__actions">
-          <a class="btn btn--ghost" href="#contato">
-            Falar conosco
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
-          </a>
+    </div><!-- /.about__left-v2 -->
+
+    <!-- COLUNA DIREITA — cards de valores interativos -->
+    <div class="about__values-v2" role="list">
+
+      <div class="aval" role="listitem" tabindex="0">
+        <div class="aval__icon aval__icon--blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="aval__body">
+          <b>Código que dura</b>
+          <p>Escrevemos para manter, não para entregar e esquecer.</p>
+        </div>
+        <div class="aval__arrow" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
         </div>
       </div>
 
-      <!-- Coluna de métricas + princípios -->
-      <div class="about__right">
-
-        <div class="about__stats">
-          <div class="about__stat" data-reveal-section style="--sd:120ms">
-            <span class="about__stat-value"><span data-count="8">8</span><em>+</em></span>
-            <span class="about__stat-label">anos construindo produtos</span>
-          </div>
-          <div class="about__stat" data-reveal-section style="--sd:180ms">
-            <span class="about__stat-value"><span data-count="120">120</span><em>+</em></span>
-            <span class="about__stat-label">projetos entregues</span>
-          </div>
-          <div class="about__stat" data-reveal-section style="--sd:240ms">
-            <span class="about__stat-value"><span data-count="40">40</span><em>+</em></span>
-            <span class="about__stat-label">clientes em produção</span>
-          </div>
-          <div class="about__stat" data-reveal-section style="--sd:300ms">
-            <span class="about__stat-value"><span data-count="24">24</span><em>h</em></span>
-            <span class="about__stat-label">resposta garantida</span>
-          </div>
+      <div class="aval" role="listitem" tabindex="0">
+        <div class="aval__icon aval__icon--cyan" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+          </svg>
         </div>
-
-        <ul class="about__values">
-          <li class="about__value" data-reveal-section style="--sd:200ms">
-            <span class="about__value-icon about__value-icon--blue" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </span>
-            <div class="about__value-body">
-              <b>Código que dura</b>
-              <p>Escrevemos para manter, não para entregar e esquecer.</p>
-            </div>
-          </li>
-
-          <li class="about__value" data-reveal-section style="--sd:260ms">
-            <span class="about__value-icon about__value-icon--cyan" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-              </svg>
-            </span>
-            <div class="about__value-body">
-              <b>Prazos reais</b>
-              <p>Estimativas honestas desde o início, sem surpresas no final.</p>
-            </div>
-          </li>
-
-          <li class="about__value" data-reveal-section style="--sd:320ms">
-            <span class="about__value-icon about__value-icon--violet" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-            </span>
-            <div class="about__value-body">
-              <b>Parceria de longo prazo</b>
-              <p>Acompanhamos depois do lançamento — somos o time de tecnologia da sua empresa.</p>
-            </div>
-          </li>
-
-          <li class="about__value" data-reveal-section style="--sd:380ms">
-            <span class="about__value-icon about__value-icon--pink" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-              </svg>
-            </span>
-            <div class="about__value-body">
-              <b>Foco no impacto</b>
-              <p>Cada funcionalidade precisa justificar sua existência com resultado medível.</p>
-            </div>
-          </li>
-        </ul>
-
+        <div class="aval__body">
+          <b>Prazos reais</b>
+          <p>Estimativas honestas desde o início, sem surpresas no final.</p>
+        </div>
+        <div class="aval__arrow" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+        </div>
       </div>
-    </div><!-- /.about__body -->
 
-  </div>
+      <div class="aval" role="listitem" tabindex="0">
+        <div class="aval__icon aval__icon--violet" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="aval__body">
+          <b>Parceria de longo prazo</b>
+          <p>Somos o time de tecnologia da sua empresa, não só o fornecedor.</p>
+        </div>
+        <div class="aval__arrow" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+        </div>
+      </div>
+
+      <div class="aval" role="listitem" tabindex="0">
+        <div class="aval__icon aval__icon--pink" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="aval__body">
+          <b>Foco no impacto</b>
+          <p>Cada funcionalidade justifica a sua existência com resultado medível.</p>
+        </div>
+        <div class="aval__arrow" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+        </div>
+      </div>
+
+    </div><!-- /.about__values-v2 -->
+
+  </div><!-- /.about__inner--v2 -->
 </section>
 
 <!-- ═══════════════ PRODUTOS ═══════════════ -->
