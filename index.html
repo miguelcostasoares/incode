@@ -237,271 +237,816 @@
   </div><!-- /.thread__scroller -->
 </section>
 
+<!-- ═══════════════ QUOTE SCROLL ═══════════════ -->
+<section class="quote-scroll" id="quote-scroll" aria-label="Filosofia da InCode">
+  <div class="quote-scroll__scroller">
+    <div class="quote-scroll__sticky">
+
+      <!-- Linha decorativa superior -->
+      <div class="quote-scroll__eyebrow" aria-hidden="true">
+        <span class="quote-scroll__line"></span>
+        <span class="quote-scroll__tag">// filosofia</span>
+        <span class="quote-scroll__line"></span>
+      </div>
+
+      <!-- A quote em si — cada palavra é um span animado -->
+      <blockquote class="quote-scroll__block" id="quote-block">
+        <p class="quote-scroll__text" id="quote-text" aria-label="Não entregamos código. Entregamos sistemas que as pessoas confiam para gerir o que mais importa nos seus negócios.">
+          <!-- As palavras são injetadas pelo JS para preservar acessibilidade -->
+        </p>
+        <footer class="quote-scroll__footer" id="quote-footer">
+          <cite class="quote-scroll__cite">
+            <span class="quote-scroll__author">Miguel Costa & Lucas Kauã</span>
+            <span class="quote-scroll__role">Fundadores, InCode</span>
+          </cite>
+        </footer>
+      </blockquote>
+
+      <!-- Indicador de progresso -->
+      <div class="quote-scroll__progress" aria-hidden="true">
+        <div class="quote-scroll__progress-fill" id="quote-progress-fill"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════ SOBRE ═══════════════ -->
 <section class="about" id="sobre" aria-labelledby="sobre-title">
   <canvas class="aurora__canvas aurora__canvas--about" id="aurora-about" aria-hidden="true"></canvas>
   <div class="hero__grid about__grid-overlay" aria-hidden="true"></div>
   <div class="about__veil" aria-hidden="true"></div>
  
-  <div class="container">
-    <div class="about__inner--v2">
+  <!-- VIEW: SOBRE (padrão) -->
+  <div class="about__view" id="about-view-about" data-view="about">
+    <div class="container">
+      <div class="about__inner--v2">
  
-      <!-- COLUNA ESQUERDA -->
-      <div class="about__left-v2">
+        <div class="about__left-v2">
+          <header class="about__head-v2">
+            <p class="section-label">Sobre a InCode</p>
+            <h2 class="about__title-v2" id="sobre-title">
+              Software feito<br>como se fosse<br><em class="grad">nosso.</em>
+            </h2>
+            <p class="about__tagline-v2">
+              Equipe sênior, sem intermediários. Você fala direto com quem projeta
+              e escreve o código — do diagnóstico à manutenção.
+            </p>
+          </header>
  
-        <header class="about__head-v2">
-          <p class="section-label">Sobre a InCode</p>
-          <h2 class="about__title-v2" id="sobre-title">
-            Software feito<br>como se fosse<br><em class="grad">nosso.</em>
-          </h2>
-          <p class="about__tagline-v2">
-            Equipe sênior, sem intermediários. Você fala direto com quem projeta
-            e escreve o código — do diagnóstico à manutenção.
-          </p>
-        </header>
+          <dl class="about__stats-v2">
+            <div class="astat">
+              <dt class="astat__label">Anos de experiência</dt>
+              <dd class="astat__value"><span data-count="8">0</span><em>+</em></dd>
+            </div>
+            <div class="astat">
+              <dt class="astat__label">Projetos entregues</dt>
+              <dd class="astat__value"><span data-count="120">0</span><em>+</em></dd>
+            </div>
+            <div class="astat">
+              <dt class="astat__label">Clientes em produção</dt>
+              <dd class="astat__value"><span data-count="40">0</span><em>+</em></dd>
+            </div>
+            <div class="astat">
+              <dt class="astat__label">Resposta garantida</dt>
+              <dd class="astat__value"><span data-count="24">0</span><em>h</em></dd>
+            </div>
+          </dl>
  
-        <!-- Números -->
-        <dl class="about__stats-v2">
-          <div class="astat">
-            <dt class="astat__label">Anos de experiência</dt>
-            <dd class="astat__value"><span data-count="8">0</span><em>+</em></dd>
+          <div class="about__bottom-v2">
+            <button class="btn btn--primary btn--sm" type="button" id="btn-show-stack">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 5l-2 3 2 3M13 5l2 3-2 3M9.5 2.5l-3 11"/>
+              </svg>
+              A nossa stack
+            </button>
+            <a class="btn btn--ghost btn--sm" href="#contato">
+              Falar conosco
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+            </a>
           </div>
-          <div class="astat">
-            <dt class="astat__label">Projetos entregues</dt>
-            <dd class="astat__value"><span data-count="120">0</span><em>+</em></dd>
-          </div>
-          <div class="astat">
-            <dt class="astat__label">Clientes em produção</dt>
-            <dd class="astat__value"><span data-count="40">0</span><em>+</em></dd>
-          </div>
-          <div class="astat">
-            <dt class="astat__label">Resposta garantida</dt>
-            <dd class="astat__value"><span data-count="24">0</span><em>h</em></dd>
-          </div>
-        </dl>
+        </div><!-- /.about__left-v2 -->
  
-        <!-- Status + CTA -->
-        <div class="about__bottom-v2">
-          <p class="about__status">
-            <span class="about__status-dot" aria-hidden="true"></span>
-            Aceitando novos projetos · resposta em 24h
-          </p>
-          <a class="btn btn--ghost btn--sm" href="#contato">
-            Falar conosco
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
-          </a>
+        <div class="about__right-v2">
+          <p class="about__kicker">// como trabalhamos</p>
+          <ul class="about__values-v2" id="about-values" role="list">
+            <li class="aval">
+              <span class="aval__index" aria-hidden="true">01</span>
+              <span class="aval__icon aval__icon--blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </span>
+              <div class="aval__body">
+                <b>Código que dura</b>
+                <p>Arquitetura clara, revisão e testes desde o primeiro commit. Escrevemos para manter, não para entregar e esquecer.</p>
+              </div>
+            </li>
+            <li class="aval">
+              <span class="aval__index" aria-hidden="true">02</span>
+              <span class="aval__icon aval__icon--cyan" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </span>
+              <div class="aval__body">
+                <b>Prazos reais</b>
+                <p>Estimativa honesta antes de começar e um primeiro protótipo funcionando em até 10 dias.</p>
+              </div>
+            </li>
+            <li class="aval">
+              <span class="aval__index" aria-hidden="true">03</span>
+              <span class="aval__icon aval__icon--violet" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </span>
+              <div class="aval__body">
+                <b>Parceria de longo prazo</b>
+                <p>Somos o time de tecnologia da sua empresa: acompanhamos, medimos e evoluímos o produto depois do lançamento.</p>
+              </div>
+            </li>
+            <li class="aval">
+              <span class="aval__index" aria-hidden="true">04</span>
+              <span class="aval__icon aval__icon--pink" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </span>
+              <div class="aval__body">
+                <b>Foco no impacto</b>
+                <p>Cada funcionalidade precisa justificar a própria existência com um resultado medível no negócio.</p>
+              </div>
+            </li>
+          </ul>
+        </div><!-- /.about__right-v2 -->
+ 
+      </div><!-- /.about__inner--v2 -->
+    </div><!-- /.container -->
+  </div><!-- /#about-view-about -->
+ 
+  <!-- VIEW: STACK (oculta por defeito) -->
+  <div class="about__view about__view--stack" id="about-view-stack" data-view="stack" aria-hidden="true">
+    <div class="container">
+ 
+      <div class="stack-view__head">
+        <div class="stack-view__title-wrap">
+          <p class="section-label">Stack tecnológica</p>
+          <h2 class="stack-view__title">As tecnologias com que<br><em class="grad">trabalhamos.</em></h2>
+          <p class="stack-view__lead">Sem buzzwords. Estas são as ferramentas que usamos todos os dias para construir produtos que funcionam em produção.</p>
         </div>
+      </div>
  
-      </div><!-- /.about__left-v2 -->
  
-      <!-- COLUNA DIREITA — princípios de trabalho -->
-      <div class="about__right-v2">
+      <!-- Barra sticky: filtros + botão voltar lado a lado -->
+      <div class="stack-view__bar">
+        <button class="btn btn--ghost btn--sm stack-view__back" type="button" id="btn-hide-stack-bar" aria-label="Voltar ao Sobre">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.2 8H2.8M7 3.8 2.8 8 7 12.2"/></svg>
+          Voltar
+        </button>
+      <div class="stack__filters" role="tablist" aria-label="Filtrar por categoria">
+        <button class="stack__filter is-active" role="tab" aria-selected="true"  data-filter="all"     >Todas</button>
+        <button class="stack__filter"           role="tab" aria-selected="false" data-filter="frontend" >Frontend</button>
+        <button class="stack__filter"           role="tab" aria-selected="false" data-filter="backend"  >Backend</button>
+        <button class="stack__filter"           role="tab" aria-selected="false" data-filter="database" >Base de Dados</button>
+      </div>
+      </div><!-- /.stack-view__bar -->
  
-        <p class="about__kicker">// como trabalhamos</p>
+      <div class="stack__grid" id="stack-grid">
  
-        <ul class="about__values-v2" id="about-values" role="list">
+        <article class="scard" data-cat="frontend" role="tabpanel">
+          <div class="scard__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 3l1.5 17L12 22l6.5-2L20 3H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M16.5 7.5H8l.5 4.5h7.5L15 16l-3 1-3-1-.2-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">HTML5</h3><span class="scard__badge scard__badge--frontend">Frontend</span></div>
+            <p class="scard__desc">A base de toda a interface. Escrevemos HTML semântico e acessível desde o primeiro elemento.</p>
+            <div class="scard__meta"><span class="scard__since">Desde o início</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">Semântico · WCAG · SEO</span></div>
+          </div>
+        </article>
  
-          <li class="aval">
-            <span class="aval__index" aria-hidden="true">01</span>
-            <span class="aval__icon aval__icon--blue" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </span>
-            <div class="aval__body">
-              <b>Código que dura</b>
-              <p>Arquitetura clara, revisão e testes desde o primeiro commit. Escrevemos para manter, não para entregar e esquecer.</p>
-            </div>
-          </li>
+        <article class="scard" data-cat="frontend" role="tabpanel">
+          <div class="scard__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 3l1.5 17L12 22l6.5-2L20 3H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M16.5 7.5H7.5l.3 3H16l-.5 5-3.5 1-3.5-1-.2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">CSS3</h3><span class="scard__badge scard__badge--frontend">Frontend</span></div>
+            <p class="scard__desc">Design systems, animações e layouts responsivos escritos à mão — sem frameworks desnecessários.</p>
+            <div class="scard__meta"><span class="scard__since">Desde o início</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">Custom Properties · Grid · Animações</span></div>
+          </div>
+        </article>
  
-          <li class="aval">
-            <span class="aval__index" aria-hidden="true">02</span>
-            <span class="aval__icon aval__icon--cyan" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-              </svg>
-            </span>
-            <div class="aval__body">
-              <b>Prazos reais</b>
-              <p>Estimativa honesta antes de começar e um primeiro protótipo funcionando em até 10 dias.</p>
-            </div>
-          </li>
+        <article class="scard" data-cat="frontend" role="tabpanel">
+          <div class="scard__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 17v-6M8 14a2 2 0 0 0 4 0v-3M16 11v3.5A2.5 2.5 0 0 1 11 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">JavaScript</h3><span class="scard__badge scard__badge--frontend">Frontend</span></div>
+            <p class="scard__desc">Vanilla JS no frontend — sem dependências a mais. Interações rápidas, código que qualquer pessoa da equipe entende.</p>
+            <div class="scard__meta"><span class="scard__since">Desde o início</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">ES6+ · Web APIs · Performance</span></div>
+          </div>
+        </article>
  
-          <li class="aval">
-            <span class="aval__index" aria-hidden="true">03</span>
-            <span class="aval__icon aval__icon--violet" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-            </span>
-            <div class="aval__body">
-              <b>Parceria de longo prazo</b>
-              <p>Somos o time de tecnologia da sua empresa: acompanhamos, medimos e evoluímos o produto depois do lançamento.</p>
-            </div>
-          </li>
+        <article class="scard" data-cat="backend" role="tabpanel">
+          <div class="scard__icon scard__icon--backend" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C9 2 7 3.5 7 5.5V9h5v1H5.5C3.5 10 2 11.5 2 14s1.5 4 3.5 4H7v-2.5C7 13.5 9 12 12 12s5 1.5 5 3.5V18h1.5c2 0 3.5-1.5 3.5-4s-1.5-4-3.5-4H17V9h-5V8h5V5.5C17 3.5 15 2 12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="9.5" cy="5.5" r="1" fill="currentColor"/>
+              <circle cx="14.5" cy="18.5" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">Python</h3><span class="scard__badge scard__badge--backend">Backend</span></div>
+            <p class="scard__desc">O coração do backend. APIs, automações, processamento de dados e integrações — tudo em Python.</p>
+            <div class="scard__meta"><span class="scard__since">Stack principal</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">APIs REST · Automação · Integrações</span></div>
+          </div>
+        </article>
  
-          <li class="aval">
-            <span class="aval__index" aria-hidden="true">04</span>
-            <span class="aval__icon aval__icon--pink" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-              </svg>
-            </span>
-            <div class="aval__body">
-              <b>Foco no impacto</b>
-              <p>Cada funcionalidade precisa justificar a própria existência com um resultado medível no negócio.</p>
-            </div>
-          </li>
+        <article class="scard" data-cat="database" role="tabpanel">
+          <div class="scard__icon scard__icon--database" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 14v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">MySQL</h3><span class="scard__badge scard__badge--database">Base de Dados</span></div>
+            <p class="scard__desc">Base de dados relacional para projetos que exigem consistência e estrutura. Schema claro, queries otimizadas.</p>
+            <div class="scard__meta"><span class="scard__since">Stack principal</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">Relacional · Queries otimizadas · Backups</span></div>
+          </div>
+        </article>
  
-        </ul>
-      </div><!-- /.about__right-v2 -->
+        <!-- Node.js -->
+        <article class="scard" data-cat="backend" role="tabpanel">
+          <div class="scard__icon scard__icon--backend" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7l-9-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">Node.js</h3><span class="scard__badge scard__badge--backend">Backend</span></div>
+            <p class="scard__desc">Runtime JavaScript no servidor para APIs rápidas, serviços em tempo real e ferramentas de linha de comando.</p>
+            <div class="scard__meta"><span class="scard__since">Stack principal</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">APIs · WebSockets · CLI</span></div>
+          </div>
+        </article>
  
-    </div><!-- /.about__inner--v2 -->
-  </div><!-- /.container -->
+        <!-- PostgreSQL -->
+        <article class="scard" data-cat="database" role="tabpanel">
+          <div class="scard__icon scard__icon--database" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M18 17v4M16 19h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">PostgreSQL</h3><span class="scard__badge scard__badge--database">Base de Dados</span></div>
+            <p class="scard__desc">Base de dados relacional avançada para projetos que exigem transações complexas, JSON nativo e alta confiabilidade.</p>
+            <div class="scard__meta"><span class="scard__since">Stack principal</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">Relacional · JSON · Alta disponibilidade</span></div>
+          </div>
+        </article>
+ 
+        <!-- MongoDB -->
+        <article class="scard" data-cat="database" role="tabpanel">
+          <div class="scard__icon scard__icon--database" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2c0 0-6 5.5-6 11a6 6 0 0 0 12 0C18 7.5 12 2 12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M12 6v13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="scard__body">
+            <div class="scard__top"><h3 class="scard__name">MongoDB</h3><span class="scard__badge scard__badge--database">Base de Dados</span></div>
+            <p class="scard__desc">Base de dados orientada a documentos para projetos com estruturas flexíveis, escalabilidade horizontal e dados não relacionais.</p>
+            <div class="scard__meta"><span class="scard__since">Quando faz sentido</span><span class="scard__dot" aria-hidden="true"></span><span class="scard__detail">NoSQL · Documentos · Escalável</span></div>
+          </div>
+        </article>
+ 
+      </div><!-- /.stack__grid -->
+ 
+      <p class="stack__note">
+        Quando um projeto exige uma ferramenta diferente, avaliamos e adoptamos — mas sem modas.
+        Cada escolha técnica tem de justificar-se com resultados reais.
+      </p>
+ 
+    </div><!-- /.container -->
+  </div><!-- /#about-view-stack -->
+ 
 </section>
 
 <!-- ═══════════════ PRODUTOS ═══════════════ -->
-<section class="products" id="produtos">
-  <!-- Aurora de fundo própria -->
+<section class="products" id="produtos" aria-labelledby="produtos-title">
   <canvas class="aurora__canvas aurora__canvas--products" id="aurora-products" aria-hidden="true"></canvas>
   <div class="hero__grid products__grid-overlay" aria-hidden="true"></div>
   <div class="products__veil" aria-hidden="true"></div>
 
   <div class="container products__inner">
-    <!-- Cabeçalho da secção -->
-    <div class="section-head" data-reveal-section>
-      <p class="section-label">Produtos</p>
-      <h2 class="section-title">
-        Ferramentas desenvolvidas<br>
-        para <em class="grad">escalar.</em>
+
+    <!-- Cabeçalho -->
+    <header class="products__head" data-reveal-section>
+      <div class="products__head-label">
+        <span class="products__head-line" aria-hidden="true"></span>
+        <p class="section-label">Produtos</p>
+        <span class="products__head-line" aria-hidden="true"></span>
+      </div>
+      <h2 class="section-title" id="produtos-title">
+        Verticais desenvolvidas<br>
+        para <em class="grad">nichos reais.</em>
       </h2>
       <p class="section-lead">
-        Soluções prontas para usar, personalizáveis e mantidas pela InCode.
-        Implemente hoje, adapte amanhã.
+        Sistemas sob medida, com código próprio e manutenção contínua.
+        Cada produto nasce de um problema real de um segmento específico.
       </p>
-    </div>
+      <!-- Indicadores de produto (dots) -->
+      <div class="products__dots" aria-hidden="true">
+        <span class="products__dot products__dot--blue is-active" data-dot="0"></span>
+        <span class="products__dot products__dot--cyan" data-dot="1"></span>
+        <span class="products__dot products__dot--violet" data-dot="2"></span>
+      </div>
+    </header>
 
-    <!-- Grid de cards de produto -->
-    <div class="products__grid">
+    <!-- Showcase principal -->
+    <div class="pshowcase" id="pshowcase" data-reveal-section style="--sd:120ms">
 
-      <article class="pcard pcard--featured" data-reveal-section style="--sd:60ms">
-        <div class="pcard__glow" aria-hidden="true"></div>
-        <div class="pcard__top">
-          <span class="pcard__tag">Mais popular</span>
-          <div class="pcard__icon pcard__icon--blue" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="3"/>
-              <path d="M9 9h6M9 12h6M9 15h4"/>
+      <!-- Nav lateral (desktop) / Tabs (mobile) -->
+      <nav class="pshowcase__nav" aria-label="Selecionar produto" role="tablist">
+
+        <button class="psnav__item is-active" data-product="0" type="button"
+                role="tab" aria-selected="true" aria-controls="pspanel-0" id="pstab-0">
+          <span class="psnav__accent psnav__accent--blue" aria-hidden="true"></span>
+          <span class="psnav__icon psnav__icon--blue" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
-          </div>
-        </div>
-        <h3 class="pcard__name">InCode CMS</h3>
-        <p class="pcard__desc">
-          Sistema de gestão de conteúdo para equipes que precisam publicar rápido
-          sem depender de um desenvolvedor a cada alteração.
-        </p>
-        <ul class="pcard__feats" aria-label="Funcionalidades">
-          <li>Editor visual drag-and-drop</li>
-          <li>Multidioma nativo</li>
-          <li>API headless incluída</li>
-          <li>Histórico de versões</li>
-        </ul>
-        <div class="pcard__footer">
-          <a class="btn btn--primary btn--sm" href="#contato">Começar agora
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
-          </a>
-          <a class="pcard__link" href="#contato">Ver demo →</a>
-        </div>
-      </article>
+          </span>
+          <span class="psnav__text">
+            <b>InRealty</b>
+            <small>CRM para Imobiliárias</small>
+          </span>
+          <span class="psnav__arrow" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.8 10.2 8 6 12.2"/></svg>
+          </span>
+          <span class="psnav__progress" aria-hidden="true"><span class="psnav__progress-fill"></span></span>
+        </button>
 
-      <article class="pcard" data-reveal-section style="--sd:140ms">
-        <div class="pcard__top">
-          <div class="pcard__icon pcard__icon--cyan" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        <button class="psnav__item" data-product="1" type="button"
+                role="tab" aria-selected="false" aria-controls="pspanel-1" id="pstab-1">
+          <span class="psnav__accent psnav__accent--cyan" aria-hidden="true"></span>
+          <span class="psnav__icon psnav__icon--cyan" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
             </svg>
-          </div>
-        </div>
-        <h3 class="pcard__name">InCode Shop</h3>
-        <p class="pcard__desc">
-          Plataforma de e-commerce B2B e B2C com catálogo flexível,
-          checkout otimizado e painel de gestão integrado.
-        </p>
-        <ul class="pcard__feats" aria-label="Funcionalidades">
-          <li>Catálogo ilimitado</li>
-          <li>Pagamentos multi-gateway</li>
-          <li>Área do cliente dedicada</li>
-        </ul>
-        <div class="pcard__footer">
-          <a class="btn btn--ghost btn--sm" href="#contato">Saiba mais
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
-          </a>
-        </div>
-      </article>
+          </span>
+          <span class="psnav__text">
+            <b>InBarber</b>
+            <small>SaaS para Barbearias</small>
+          </span>
+          <span class="psnav__arrow" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.8 10.2 8 6 12.2"/></svg>
+          </span>
+          <span class="psnav__progress" aria-hidden="true"><span class="psnav__progress-fill"></span></span>
+        </button>
 
-      <article class="pcard" data-reveal-section style="--sd:220ms">
-        <div class="pcard__top">
-          <div class="pcard__icon pcard__icon--violet" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <button class="psnav__item" data-product="2" type="button"
+                role="tab" aria-selected="false" aria-controls="pspanel-2" id="pstab-2">
+          <span class="psnav__accent psnav__accent--violet" aria-hidden="true"></span>
+          <span class="psnav__icon psnav__icon--violet" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="10"/>
-              <path d="M12 8v4l3 3"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
-          </div>
-        </div>
-        <h3 class="pcard__name">InCode Flow</h3>
-        <p class="pcard__desc">
-          Automação de processos internos: aprovações, notificações, relatórios
-          e integrações com as ferramentas que você já usa.
-        </p>
-        <ul class="pcard__feats" aria-label="Funcionalidades">
-          <li>Fluxos visuais sem código</li>
-          <li>Integrações REST/Webhook</li>
-          <li>Logs auditáveis</li>
-        </ul>
-        <div class="pcard__footer">
-          <a class="btn btn--ghost btn--sm" href="#contato">Saiba mais
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
-          </a>
-        </div>
-      </article>
+          </span>
+          <span class="psnav__text">
+            <b>InTravel</b>
+            <small>CRM para Agências de Viagem</small>
+          </span>
+          <span class="psnav__arrow" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.8 10.2 8 6 12.2"/></svg>
+          </span>
+          <span class="psnav__progress" aria-hidden="true"><span class="psnav__progress-fill"></span></span>
+        </button>
 
-      <article class="pcard" data-reveal-section style="--sd:300ms">
-        <div class="pcard__top">
-          <div class="pcard__icon pcard__icon--pink" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-        </div>
-        <h3 class="pcard__name">InCode Portal</h3>
-        <p class="pcard__desc">
-          Portal de cliente white-label: documentos, faturas, suporte e
-          histórico de pedidos em um único espaço seguro.
-        </p>
-        <ul class="pcard__feats" aria-label="Funcionalidades">
-          <li>SSO / Multi-tenant</li>
-          <li>Gestão de documentos</li>
-          <li>Chat de suporte integrado</li>
-        </ul>
-        <div class="pcard__footer">
-          <a class="btn btn--ghost btn--sm" href="#contato">Saiba mais
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
-          </a>
-        </div>
-      </article>
+      </nav>
 
-    </div><!-- /.products__grid -->
+      <!-- Wrapper dos painéis -->
+      <div class="pshowcase__panel" id="pshowcase-panel">
+
+        <!-- ── Produto 0: InRealty ── -->
+        <article class="pspanel" id="pspanel-0" data-panel="0"
+                 role="tabpanel" aria-labelledby="pstab-0" aria-hidden="false">
+          <div class="pspanel__inner">
+
+            <!-- Preview -->
+            <div class="pspanel__preview pspanel__preview--blue">
+              <div class="pspanel__preview-glow" aria-hidden="true"></div>
+              <div class="pspanel__preview-noise" aria-hidden="true"></div>
+
+              <!-- SUBSTITUIR IMAGEM AQUI: <img src="assets/screenshots/inrealty.png" alt="Dashboard InRealty" class="pspanel__screenshot"> -->
+              <div class="pspanel__mockup" aria-label="Preview do InRealty">
+                <div class="pmock pmock--realty">
+                  <div class="pmock__bar">
+                    <span class="pmock__dot-r"></span>
+                    <span class="pmock__dot-y"></span>
+                    <span class="pmock__dot-g"></span>
+                    <span class="pmock__url">inrealty.app · Dashboard</span>
+                  </div>
+                  <div class="pmock__body">
+                    <div class="pmock__sidebar">
+                      <div class="pmock__slogo" aria-hidden="true"></div>
+                      <div class="pmock__sitem pmock__sitem--active pmock__sitem--blue"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem" style="margin-top:auto"></div>
+                    </div>
+                    <div class="pmock__content">
+                      <div class="pmock__stat-row">
+                        <div class="pmock__stat pmock__stat--blue">
+                          <span class="pmock__stat-n">142</span>
+                          <span class="pmock__stat-l">Imóveis</span>
+                        </div>
+                        <div class="pmock__stat pmock__stat--cyan">
+                          <span class="pmock__stat-n">38</span>
+                          <span class="pmock__stat-l">Leads</span>
+                        </div>
+                        <div class="pmock__stat pmock__stat--green">
+                          <span class="pmock__stat-n">12</span>
+                          <span class="pmock__stat-l">Visitas</span>
+                        </div>
+                      </div>
+                      <div class="pmock__chart-area">
+                        <div class="pmock__chart-label">Negócios por mês</div>
+                        <div class="pmock__bar-chart">
+                          <div class="pmock__bar-col" style="--h:55%;--i:0"></div>
+                          <div class="pmock__bar-col" style="--h:72%;--i:1"></div>
+                          <div class="pmock__bar-col" style="--h:48%;--i:2"></div>
+                          <div class="pmock__bar-col pmock__bar-col--hi" style="--h:88%;--i:3"></div>
+                          <div class="pmock__bar-col" style="--h:63%;--i:4"></div>
+                          <div class="pmock__bar-col" style="--h:79%;--i:5"></div>
+                        </div>
+                      </div>
+                      <div class="pmock__list">
+                        <div class="pmock__list-item">
+                          <div class="pmock__li-dot pmock__li-dot--blue"></div>
+                          <div class="pmock__li-label">Vendas</div>
+                          <div class="pmock__li-bar" style="--w:78%"></div>
+                        </div>
+                        <div class="pmock__list-item">
+                          <div class="pmock__li-dot pmock__li-dot--cyan"></div>
+                          <div class="pmock__li-label">Locações</div>
+                          <div class="pmock__li-bar pmock__li-bar--cyan" style="--w:55%"></div>
+                        </div>
+                        <div class="pmock__list-item">
+                          <div class="pmock__li-dot pmock__li-dot--blue"></div>
+                          <div class="pmock__li-label">Leads</div>
+                          <div class="pmock__li-bar" style="--w:91%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Badge flutuante -->
+              
+              <div class="pspanel__badge pspanel__badge--br" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="2,10 5,7 8,9 14,4"/></svg>
+                <span class="pspanel__badge-text">+23% esse mês</span>
+              </div>
+            </div>
+
+            <!-- Corpo de texto -->
+            <div class="pspanel__body">
+              <div class="pspanel__tag pspanel__tag--blue">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 9l5-7 5 7v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><polyline points="6 15 6 9 10 9 10 15"/></svg>
+                Imobiliária · CRM Gerencial
+              </div>
+              <h3 class="pspanel__name">InRealty</h3>
+              <p class="pspanel__desc">Pipeline de vendas, gestão de corretores, histórico de visitas e automação de follow-up em um único sistema integrado — feito para imobiliárias que querem crescer.</p>
+
+              <ul class="pspanel__feats" aria-label="Funcionalidades do InRealty">
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--blue" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Pipeline kanban de oportunidades</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--blue" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Gestão de imóveis com fotos e documentos</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--blue" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Relatórios de desempenho por corretor</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--blue" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Agendamento e histórico de visitas</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--blue" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Integração com WhatsApp e portais</span>
+                </li>
+              </ul>
+
+              <div class="pspanel__actions">
+                <a class="btn btn--primary btn--sm" href="#contato">
+                  Solicitar demo
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+                </a>
+                <a class="btn btn--ghost btn--sm" href="#contato">Saiba mais</a>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- ── Produto 1: InBarber ── -->
+        <article class="pspanel" id="pspanel-1" data-panel="1"
+                 role="tabpanel" aria-labelledby="pstab-1" aria-hidden="true">
+          <div class="pspanel__inner">
+
+            <div class="pspanel__preview pspanel__preview--cyan">
+              <div class="pspanel__preview-glow" aria-hidden="true"></div>
+              <div class="pspanel__preview-noise" aria-hidden="true"></div>
+
+              <!-- SUBSTITUIR IMAGEM AQUI: <img src="assets/screenshots/inbarber.png" alt="Agenda InBarber" class="pspanel__screenshot"> -->
+              <div class="pspanel__mockup" aria-label="Preview do InBarber">
+                <div class="pmock pmock--barber">
+                  <div class="pmock__bar">
+                    <span class="pmock__dot-r"></span>
+                    <span class="pmock__dot-y"></span>
+                    <span class="pmock__dot-g"></span>
+                    <span class="pmock__url">inbarber.app · Agenda</span>
+                  </div>
+                  <div class="pmock__body">
+                    <div class="pmock__sidebar">
+                      <div class="pmock__slogo" aria-hidden="true"></div>
+                      <div class="pmock__sitem pmock__sitem--active pmock__sitem--cyan"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem" style="margin-top:auto"></div>
+                    </div>
+                    <div class="pmock__content">
+                      <div class="pmock__agenda">
+                        <div class="pmock__agenda-col">
+                          <div class="pmock__agenda-hdr">Seg</div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:10%;--h:18%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:38%;--h:14%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:65%;--h:20%"></div>
+                        </div>
+                        <div class="pmock__agenda-col">
+                          <div class="pmock__agenda-hdr">Ter</div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:20%;--h:16%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:50%;--h:18%"></div>
+                        </div>
+                        <div class="pmock__agenda-col">
+                          <div class="pmock__agenda-hdr">Qua</div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:8%;--h:20%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:42%;--h:14%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:70%;--h:16%"></div>
+                        </div>
+                        <div class="pmock__agenda-col">
+                          <div class="pmock__agenda-hdr">Qui</div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:15%;--h:18%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:55%;--h:20%"></div>
+                        </div>
+                        <div class="pmock__agenda-col">
+                          <div class="pmock__agenda-hdr">Sex</div>
+                          <div class="pmock__slot pmock__slot--cyan pmock__slot--hi" style="--top:5%;--h:22%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:36%;--h:16%"></div>
+                          <div class="pmock__slot pmock__slot--cyan" style="--top:63%;--h:18%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="pspanel__badge pspanel__badge--br pspanel__badge--cyan" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><polyline points="8,5 8,8 10,10"/></svg>
+                <span class="pspanel__badge-text">Próximo: 14h30</span>
+              </div>
+            </div>
+
+            <div class="pspanel__body">
+              <div class="pspanel__tag pspanel__tag--cyan">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="5" r="2.5"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg>
+                Barbearia · Micro-SaaS
+              </div>
+              <h3 class="pspanel__name">InBarber</h3>
+              <p class="pspanel__desc">Agenda online, gestão de barbeiros, fila de espera digital e controle financeiro — para barbearias que querem parar de depender do caderninho.</p>
+
+              <ul class="pspanel__feats" aria-label="Funcionalidades do InBarber">
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--cyan" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Agendamento online com link próprio</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--cyan" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Fila de espera e check-in digital</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--cyan" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Controle de caixa e comissões</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--cyan" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Notificações automáticas via WhatsApp</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--cyan" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Histórico de clientes e preferências</span>
+                </li>
+              </ul>
+
+              <div class="pspanel__actions">
+                <a class="btn btn--primary btn--sm" href="#contato">
+                  Solicitar demo
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+                </a>
+                <a class="btn btn--ghost btn--sm" href="#contato">Saiba mais</a>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- ── Produto 2: InTravel ── -->
+        <article class="pspanel" id="pspanel-2" data-panel="2"
+                 role="tabpanel" aria-labelledby="pstab-2" aria-hidden="true">
+          <div class="pspanel__inner">
+
+            <div class="pspanel__preview pspanel__preview--violet">
+              <div class="pspanel__preview-glow" aria-hidden="true"></div>
+              <div class="pspanel__preview-noise" aria-hidden="true"></div>
+
+              <!-- SUBSTITUIR IMAGEM AQUI: <img src="assets/screenshots/intravel.png" alt="Pipeline InTravel" class="pspanel__screenshot"> -->
+              <div class="pspanel__mockup" aria-label="Preview do InTravel">
+                <div class="pmock pmock--travel">
+                  <div class="pmock__bar">
+                    <span class="pmock__dot-r"></span>
+                    <span class="pmock__dot-y"></span>
+                    <span class="pmock__dot-g"></span>
+                    <span class="pmock__url">intravel.app · Oportunidades</span>
+                  </div>
+                  <div class="pmock__body">
+                    <div class="pmock__sidebar">
+                      <div class="pmock__slogo" aria-hidden="true"></div>
+                      <div class="pmock__sitem pmock__sitem--active pmock__sitem--violet"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem"></div>
+                      <div class="pmock__sitem" style="margin-top:auto"></div>
+                    </div>
+                    <div class="pmock__content">
+                      <div class="pmock__kanban">
+                        <div class="pmock__kol">
+                          <div class="pmock__kol-hdr pmock__kol-hdr--violet">
+                            <span>Novo</span><span class="pmock__kol-count">4</span>
+                          </div>
+                          <div class="pmock__kcard">
+                            <div class="pmock__kcard-line" style="--w:80%"></div>
+                            <div class="pmock__kcard-line" style="--w:55%"></div>
+                          </div>
+                          <div class="pmock__kcard">
+                            <div class="pmock__kcard-line" style="--w:65%"></div>
+                            <div class="pmock__kcard-line" style="--w:40%"></div>
+                          </div>
+                        </div>
+                        <div class="pmock__kol">
+                          <div class="pmock__kol-hdr pmock__kol-hdr--cyan">
+                            <span>Cotando</span><span class="pmock__kol-count">6</span>
+                          </div>
+                          <div class="pmock__kcard pmock__kcard--hi">
+                            <div class="pmock__kcard-line" style="--w:90%"></div>
+                            <div class="pmock__kcard-line" style="--w:60%"></div>
+                            <div class="pmock__kcard-tag"></div>
+                          </div>
+                          <div class="pmock__kcard">
+                            <div class="pmock__kcard-line" style="--w:70%"></div>
+                            <div class="pmock__kcard-line" style="--w:45%"></div>
+                          </div>
+                          <div class="pmock__kcard">
+                            <div class="pmock__kcard-line" style="--w:55%"></div>
+                            <div class="pmock__kcard-line" style="--w:35%"></div>
+                          </div>
+                        </div>
+                        <div class="pmock__kol">
+                          <div class="pmock__kol-hdr pmock__kol-hdr--blue">
+                            <span>Fechado</span><span class="pmock__kol-count">2</span>
+                          </div>
+                          <div class="pmock__kcard">
+                            <div class="pmock__kcard-line" style="--w:75%"></div>
+                            <div class="pmock__kcard-line" style="--w:50%"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="pspanel__badge pspanel__badge--br pspanel__badge--violet" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2a10 10 0 0 1 3 6 10 10 0 0 1-3 6"/></svg>
+                <span class="pspanel__badge-text">R$ 48k em pipeline</span>
+              </div>
+            </div>
+
+            <div class="pspanel__body">
+              <div class="pspanel__tag pspanel__tag--violet">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2a10 10 0 0 1 3 6 10 10 0 0 1-3 6 10 10 0 0 1-3-6 10 10 0 0 1 3-6z"/></svg>
+                Turismo · CRM Gerencial
+              </div>
+              <h3 class="pspanel__name">InTravel</h3>
+              <p class="pspanel__desc">Pipeline de pacotes, controle de cotações, gestão de fornecedores e acompanhamento pós-venda — para agências que vendem experiências, não só passagens.</p>
+
+              <ul class="pspanel__feats" aria-label="Funcionalidades do InTravel">
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--violet" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Pipeline de vendas de pacotes</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--violet" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Geração de orçamentos e propostas</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--violet" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Controle de embarques e documentação</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--violet" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Relatórios de receita por destino</span>
+                </li>
+                <li class="pspanel__feat">
+                  <span class="pspf__icon pspf__icon--violet" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3,8 6,11 13,5"/></svg>
+                  </span>
+                  <span>Follow-up automático pós-viagem</span>
+                </li>
+              </ul>
+
+              <div class="pspanel__actions">
+                <a class="btn btn--primary btn--sm" href="#contato">
+                  Solicitar demo
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
+                </a>
+                <a class="btn btn--ghost btn--sm" href="#contato">Saiba mais</a>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+      </div><!-- /.pshowcase__panel -->
+    </div><!-- /.pshowcase -->
 
     <!-- CTA inferior -->
-    <div class="products__cta" data-reveal-section style="--sd:380ms">
-      <p>Precisa de algo sob medida? <strong>Desenvolvemos do zero.</strong></p>
+    <div class="products__cta" data-reveal-section style="--sd:200ms">
+      <div class="products__cta-text">
+        <p>Precisa de algo diferente? <strong>Desenvolvemos do zero.</strong></p>
+      </div>
       <a class="btn btn--primary" href="#contato">
         Falar sobre o seu projeto
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2"/></svg>
       </a>
     </div>
+
   </div>
 </section>
 
