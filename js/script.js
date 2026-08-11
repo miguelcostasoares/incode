@@ -781,3 +781,35 @@ var startCounters = (function () {
     obs.observe(el);
   });
 })();
+
+/* ── 13. Realce deslizante nos princípios do Sobre ───────── */
+/*
+  Mesma linguagem de interacção do .nav__indicator: um único
+  realce que desliza entre os itens em vez de 4 hovers isolados.
+  Posição/altura são passadas ao CSS via --my / --mh.
+*/
+(function () {
+  'use strict';
+ 
+  var list = document.getElementById('about-values');
+  if (!list) return;
+ 
+  var items = list.querySelectorAll('.aval');
+  if (!items.length) return;
+ 
+  function move(el) {
+    list.style.setProperty('--my', el.offsetTop + 'px');
+    list.style.setProperty('--mh', el.offsetHeight + 'px');
+    list.classList.add('has-marker');
+  }
+  function clear() {
+    list.classList.remove('has-marker');
+  }
+ 
+  [].forEach.call(items, function (el) {
+    el.addEventListener('mouseenter', function () { move(el); }, { passive: true });
+  });
+ 
+  list.addEventListener('mouseleave', clear, { passive: true });
+  window.addEventListener('resize', clear, { passive: true });
+})();
