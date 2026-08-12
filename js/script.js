@@ -1933,3 +1933,105 @@ var startCounters = (function () {
     });
   }
 })();
+
+/* ── 7b. Aurora da secção Serviços ────────────────────────── */
+(function () {
+  var c3 = document.getElementById("aurora-services");
+  var sec = document.getElementById("servicos");
+  if (!c3 || !sec) return;
+  var ctx3 = c3.getContext("2d", { alpha: true });
+  var w3 = 0,
+    h3 = 0,
+    dpr3 = 1,
+    raf3 = null,
+    t03 = performance.now(),
+    run3 = false;
+
+  var BLOBS3_DARK = [
+    { cx: 0.18, cy: 0.22, rx: 0.4,  ry: 0.34, color: "rgba(139,92,246,", alpha: 0.22, speed: 0.00015, amp: 0.09 },
+    { cx: 0.82, cy: 0.35, rx: 0.38, ry: 0.32, color: "rgba(0,71,255,",   alpha: 0.24, speed: 0.00018, amp: 0.08, phase: 2.6 },
+    { cx: 0.45, cy: 0.82, rx: 0.36, ry: 0.3,  color: "rgba(236,72,153,",alpha: 0.16, speed: 0.0002,  amp: 0.07, phase: 4.1 },
+    { cx: 0.85, cy: 0.85, rx: 0.3,  ry: 0.26, color: "rgba(0,240,255,", alpha: 0.14, speed: 0.00016, amp: 0.06, phase: 1.4 },
+  ];
+  var BLOBS3_LIGHT = BLOBS3_DARK.map(function (b) {
+    return Object.assign({}, b, { alpha: b.alpha * 0.38 });
+  });
+
+  function th3() {
+    return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+  }
+
+  function resize3() {
+    var r = sec.getBoundingClientRect();
+    dpr3 = Math.min(window.devicePixelRatio || 1, 2);
+    w3 = Math.max(r.width, 1);
+    h3 = Math.max(r.height, 1);
+    c3.width = Math.round(w3 * dpr3);
+    c3.height = Math.round(h3 * dpr3);
+    c3.style.width = w3 + "px";
+    c3.style.height = h3 + "px";
+    ctx3.setTransform(dpr3, 0, 0, dpr3, 0, 0);
+  }
+
+  function frame3(now) {
+    var t = now - t03;
+    var blobs = th3() === "dark" ? BLOBS3_DARK : BLOBS3_LIGHT;
+    ctx3.clearRect(0, 0, w3, h3);
+    for (var i = 0; i < blobs.length; i++) {
+      var b = blobs[i], ph = b.phase || 0;
+      var cx = (b.cx + Math.sin(t * b.speed + ph) * b.amp) * w3;
+      var cy = (b.cy + Math.cos(t * b.speed * 0.87 + ph) * b.amp) * h3;
+      var rx = b.rx * w3, ry = b.ry * h3, mx = Math.max(rx, ry);
+      var g = ctx3.createRadialGradient(cx, cy, 0, cx, cy, mx);
+      g.addColorStop(0, b.color + b.alpha + ")");
+      g.addColorStop(0.5, b.color + b.alpha * 0.4 + ")");
+      g.addColorStop(1, b.color + "0)");
+      ctx3.save();
+      ctx3.translate(cx, cy);
+      ctx3.scale(rx / mx, ry / mx);
+      ctx3.translate(-cx, -cy);
+      ctx3.fillStyle = g;
+      ctx3.beginPath();
+      ctx3.arc(cx, cy, mx, 0, Math.PI * 2);
+      ctx3.fill();
+      ctx3.restore();
+    }
+    raf3 = requestAnimationFrame(frame3);
+  }
+
+  function start3() {
+    if (run3) return;
+    run3 = true;
+    t03 = performance.now() - 1;
+    raf3 = requestAnimationFrame(frame3);
+  }
+  function stop3() {
+    run3 = false;
+    if (raf3) {
+      cancelAnimationFrame(raf3);
+      raf3 = null;
+    }
+  }
+
+  var rm3 = window.matchMedia("(prefers-reduced-motion:reduce)");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) start3();
+          else stop3();
+        });
+      },
+      { threshold: 0.02 },
+    ).observe(sec);
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stop3();
+    else if (!rm3.matches) start3();
+  });
+  window.addEventListener("resize", function () {
+    resize3();
+  });
+  resize3();
+  if (!rm3.matches) start3();
+})();
