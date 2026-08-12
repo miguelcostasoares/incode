@@ -2684,21 +2684,16 @@ body.is-ready [data-reveal] {
   background: radial-gradient(70% 90% at 100% 50%, rgba(139,92,246,.08) 0%, transparent 70%);
 }
 .services__cta-text { display: flex; flex-direction: column; gap: 6px; position: relative; z-index: 1; }
-.services__cta-kicker {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: .06em;
-  color: var(--text-soft);
-  margin: 0;
-}
-.services__cta-title {
-  font-size: clamp(1.15rem, 1.05rem + .4vw, 1.5rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+.services__cta-title--main {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1rem + .6vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   color: var(--text-muted);
   margin: 0;
 }
-.services__cta-title strong { color: var(--text); }
+.services__cta-title--main strong { color: var(--text); }
 
 /* ── Responsividade ──────────────────────────────────────── */
 @media (max-width: 900px) {
@@ -2717,4 +2712,243 @@ body.is-ready [data-reveal] {
   .svc__card, .svc__icon, .svc__card-glow, .svc__tags li { transition: none !important; }
   .svc__card:hover { transform: none !important; }
   .svc__card:hover .svc__icon { transform: none !important; }
+}
+
+/* ── 14. Secção Contato ──────────────────────────────────── */
+
+.contact {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 8vw, 6rem) 0 clamp(5rem, 10vw, 7.5rem);
+  background: var(--bg);
+}
+
+.aurora__canvas--contact { z-index: 0; opacity: .6; }
+.contact__grid-overlay   { z-index: 1; }
+
+.contact__veil {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    radial-gradient(110% 45% at 50% 0%, transparent 30%, rgba(9,9,11,0.30) 65%, var(--bg) 100%),
+    radial-gradient(100% 50% at 50% 100%, transparent 30%, rgba(9,9,11,0.40) 72%, var(--bg) 100%);
+}
+[data-theme="light"] .contact__veil {
+  background:
+    radial-gradient(110% 45% at 50% 0%, transparent 30%, rgba(248,250,252,0.30) 65%, var(--bg) 100%),
+    radial-gradient(100% 50% at 50% 100%, transparent 30%, rgba(248,250,252,0.40) 72%, var(--bg) 100%);
+}
+
+.contact__inner {
+  position: relative; z-index: 3;
+  display: flex; flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+/* ── Cabeçalho ───────────────────────────────────────────── */
+.contact__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.contact__head-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.contact__head-line {
+  display: block;
+  height: 1px;
+  width: clamp(28px, 6vw, 56px);
+  background: linear-gradient(to right, transparent, var(--border-hi));
+}
+.contact__head-line:last-child {
+  background: linear-gradient(to left, transparent, var(--border-hi));
+}
+
+.contact__head .section-title {
+  margin-top: 4px;
+  font-size: clamp(2rem, 1.2rem + 2.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.contact__head .section-lead {
+  max-width: 44ch;
+  color: var(--text-muted);
+  font-size: clamp(.9rem, .86rem + .18vw, 1rem);
+  line-height: 1.65;
+}
+
+/* ── WhatsApp — CTA principal ───────────────────────────────*/
+.contact__whats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  max-width: 56rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.whats__card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(1.5rem, 2.6vw, 1.9rem) clamp(1.5rem, 2.6vw, 2rem);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  backdrop-filter: blur(14px);
+  transition:
+    border-color 320ms var(--ease), background 320ms var(--ease),
+    transform 320ms var(--ease), box-shadow 380ms var(--ease);
+}
+.whats__card::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(70% 100% at 0% 50%, rgba(34,197,94,.16) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+  pointer-events: none;
+}
+.whats__card::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(118deg, transparent 15%, rgba(255,255,255,.14) 48%, transparent 82%);
+  translate: -110% 0;
+  transition: translate 560ms var(--ease-out);
+  pointer-events: none;
+}
+.whats__card:hover {
+  border-color: var(--border-hi);
+  background: var(--surface-md);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+.whats__card:hover::before { opacity: 1; }
+.whats__card:hover::after { translate: 110% 0; }
+.whats__card:hover .whats__icon { transform: scale(1.08) rotate(-6deg); }
+.whats__card:hover .whats__arrow svg { transform: translateX(4px); }
+
+.whats__icon {
+  position: relative; z-index: 1;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(34,197,94,.16);
+  color: var(--success);
+  transition: transform var(--tn);
+}
+.whats__icon svg { width: 26px; height: 26px; }
+
+.whats__body {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.whats__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: .06em;
+  color: var(--text-soft);
+}
+.whats__title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, .95rem + .2vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.whats__arrow {
+  position: relative; z-index: 1;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-hi);
+  color: var(--text-muted);
+}
+.whats__arrow svg { width: 15px; height: 15px; transition: transform var(--tn); }
+
+@media (prefers-reduced-motion: reduce) {
+  .whats__card, .whats__icon, .whats__arrow svg { transition: none !important; }
+  .whats__card::before,
+  .whats__card::after { transition: none !important; display: none; }
+  .whats__card:hover { transform: none !important; }
+  .whats__card:hover .whats__icon { transform: none !important; }
+}
+
+/* ── Rodapé: nota + redes sociais ───────────────────────────*/
+.contact__foot {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+  padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--border); border-radius: var(--radius-xl);
+  background: var(--surface); backdrop-filter: blur(16px);
+  position: relative; overflow: hidden;
+}
+.contact__foot::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(70% 90% at 0% 50%, rgba(0,71,255,.06) 0%, transparent 70%);
+}
+.contact__foot-note {
+  position: relative; z-index: 1;
+  max-width: 40ch;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.contact__socials {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.social__link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: border-color 280ms var(--ease), color 280ms var(--ease),
+              background-color 280ms var(--ease), transform 280ms var(--ease);
+}
+.social__link svg { width: 17px; height: 17px; flex-shrink: 0; }
+.social__link:hover {
+  border-color: var(--border-hi);
+  background: var(--surface-md);
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social__link { transition: none !important; }
+  .social__link:hover { transform: none !important; }
+}
+
+/* ── Responsividade ──────────────────────────────────────── */
+@media (max-width: 720px) {
+  .contact__whats { grid-template-columns: 1fr; }
+  .contact__head { align-items: flex-start; text-align: left; }
+  .contact__head-label { justify-content: flex-start; }
+  .contact__head-line:last-child { display: none; }
+  .contact__foot { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .whats__card { flex-wrap: wrap; }
+  .contact__socials { width: 100%; }
+  .social__link { flex: 1; justify-content: center; }
 }
