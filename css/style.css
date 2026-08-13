@@ -2869,53 +2869,23 @@ body.is-ready [data-reveal] {
     transform 760ms var(--ease-out);
 }
 
-/* 3 · Losango — quadrado rotacionado, cantos suaves, leve desfoque */
-.whats__flag-diamond {
+/* 3 · Emblema — recortado das bandeiras oficiais.
+      Uma camada só: no Brasil o losango já traz o globo dentro;
+      em Portugal a esfera armilar já traz o escudo. */
+.whats__flag-emblem {
   position: absolute;
   top: 50%;
   left: var(--flag-x);
-  width: 74px;
-  height: 74px;
-  margin: -37px 0 0 -37px;
-  border-radius: 16px;
-  filter: blur(5px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: blur(2.5px);
   opacity: 0;
-  transform: rotate(30deg) scale(0.5);
+  transform: rotate(var(--emb-rot)) scale(0.5);
   transition:
     opacity 520ms var(--ease-out),
     transform 720ms var(--ease-out);
   transition-delay: 60ms;
-}
-
-/* 4 · Disco — o núcleo, exatamente atrás do ícone */
-.whats__flag-orb {
-  position: absolute;
-  top: 50%;
-  left: var(--flag-x);
-  width: 64px;
-  height: 64px;
-  margin: -32px 0 0 -32px;
-  border-radius: 50%;
-  overflow: hidden;
-  filter: blur(3px);
-  opacity: 0;
-  transform: scale(0.35);
-  transition:
-    opacity 460ms var(--ease-out),
-    transform 640ms var(--ease-out);
-  transition-delay: 140ms;
-}
-/* Faixa diagonal atravessando o disco */
-.whats__flag-orb::after {
-  content: "";
-  position: absolute;
-  inset: -30%;
-  background: linear-gradient(to bottom,
-      transparent 43%,
-      rgba(255, 255, 255, 0.62) 46.5%,
-      rgba(255, 255, 255, 0.62) 53.5%,
-      transparent 57%);
-  transform: rotate(-18deg);
 }
 
 /* 5 · Varredura — o antigo sheen branco */
@@ -2942,16 +2912,10 @@ body.is-ready [data-reveal] {
 [data-theme="light"] .whats__card:hover .whats__flag-halo,
 [data-theme="light"] .whats__card:focus-visible .whats__flag-halo { opacity: 0; }
 
-.whats__card:hover .whats__flag-diamond,
-.whats__card:focus-visible .whats__flag-diamond {
-  opacity: var(--dia-op);
-  transform: rotate(45deg) scale(1);
-}
-
-.whats__card:hover .whats__flag-orb,
-.whats__card:focus-visible .whats__flag-orb {
-  opacity: var(--orb-op);
-  transform: scale(1);
+.whats__card:hover .whats__flag-emblem,
+.whats__card:focus-visible .whats__flag-emblem {
+  opacity: var(--emb-op);
+  transform: rotate(0deg) scale(1);
 }
 
 .whats__card:hover .whats__flag-sheen,
@@ -2965,7 +2929,14 @@ body.is-ready [data-reveal] {
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Brasil ─────────────────────────────────────────────────*/
-.whats--br { --dia-op: .72; --orb-op: .82; }
+/* O emblema mede 152px porque é a largura que faz o globo azul
+   chegar a 64px — o tamanho certo para acolher o ícone de 52px.
+   Proporções conforme a Lei 5.700: losango de 16,6 × 10,6 módulos,
+   globo de 7 módulos. */
+.whats--br {
+  --emb-rot: -8deg;
+  --emb-op: .86;
+}
 .whats--br:hover,
 .whats--br:focus-visible { border-color: rgba(0, 200, 83, .38); }
 
@@ -2981,12 +2952,11 @@ body.is-ready [data-reveal] {
       rgba(0, 190, 90, .14) 38%,
       transparent 66%);
 }
-.whats--br .whats__flag-diamond {
-  background: linear-gradient(150deg, #ffe14d 0%, #ffcc00 55%, #f0b800 100%);
-}
-.whats--br .whats__flag-orb {
-  background: radial-gradient(circle at 40% 34%,
-      #2a5fe0 0%, #12379f 48%, #071c63 100%);
+.whats--br .whats__flag-emblem {
+  width: 152px;
+  height: 97px;
+  margin: -48px 0 0 -76px;
+  background-image: url("../assets/emblema-br.webp");
 }
 
 /* ── Portugal ───────────────────────────────────────────────*/
@@ -2994,7 +2964,10 @@ body.is-ready [data-reveal] {
    e a esfera armilar sobre a linha de encontro (= centro do ícone).
    O vermelho ocupa quase toda a largura, por isso entra bem mais
    leve que o verde — senão o card vira um bloco vermelho. */
-.whats--pt { --dia-op: .85; --orb-op: .80; }
+.whats--pt {
+  --emb-rot: -30deg;
+  --emb-op: .90;
+}
 .whats--pt:hover,
 .whats--pt:focus-visible { border-color: rgba(0, 180, 100, .34); }
 
@@ -3012,51 +2985,273 @@ body.is-ready [data-reveal] {
       rgba(214, 38, 46, .10) 42%,
       transparent 68%);
 }
-
-/* Esfera armilar: anel dourado com as bandas cruzadas */
-.whats--pt .whats__flag-diamond {
-  width: 88px;
-  height: 88px;
-  margin: -44px 0 0 -44px;
-  border-radius: 50%;
-  filter: blur(2px);
-  background: radial-gradient(circle,
-      transparent 0 60%,
-      rgba(255, 206, 84, .95) 64%,
-      rgba(238, 174, 38, .90) 74%,
-      rgba(238, 174, 38, 0) 80%);
-  transform: rotate(-28deg) scale(0.5);
+.whats--pt .whats__flag-emblem {
+  width: 104px;
+  height: 104px;
+  margin: -52px 0 0 -52px;
+  background-image: url("../assets/emblema-pt.webp");
 }
-.whats--pt .whats__flag-diamond::after {
+
+/* ── Ajustes de tema claro ──────────────────────────────────*/
+[data-theme="light"] .whats--br { --emb-op: .90; }
+[data-theme="light"] .whats--pt { --emb-op: .94; }
+
+[data-theme="light"] .whats--br .whats__flag-field {
+  background: linear-gradient(100deg,
+      rgba(0, 150, 62, .15) 0%,
+      rgba(0, 150, 62, .06) 48%,
+      rgba(0, 150, 62, .01) 100%);
+}
+[data-theme="light"] .whats--pt .whats__flag-field {
+  background: linear-gradient(90deg,
+      rgba(0, 140, 74, .28) 0%,
+      rgba(0, 140, 74, .24) calc(var(--flag-x) - 10px),
+      rgba(206, 32, 42, .14) calc(var(--flag-x) + 10px),
+      rgba(206, 32, 42, .06) 42%,
+      rgba(206, 32, 42, 0) 100%);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   BOLHA DE CONVERSA — só onde existe cursor de verdade
+   ═══════════════════════════════════════════════════════════ */
+.whats__pop {
+  position: absolute;
+  right: 18px;
+  bottom: calc(100% - 18px);
+  width: 252px;
+  height: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* As duas bolhas nascem do mesmo canto: o "crescimento" é ilusão
+   de origem compartilhada, e nada de layout é animado. */
+.pop__typing,
+.pop__card {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: var(--pop-bg);
+  border: 1px solid var(--border-hi);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  transform-origin: 100% 100%;
+}
+
+/* ── Fase 1 · digitando ─────────────────────────────────────*/
+.pop__typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 11px 14px;
+  border-radius: 16px 16px 6px 16px;
+  transform: scale(0.8);
+}
+.pop__typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-soft);
+}
+
+/* ── Fase 2 · a mensagem ────────────────────────────────────*/
+.pop__card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  padding: 13px 15px 10px;
+  border-radius: 18px 18px 6px 18px;
+  transform: translateY(6px) scale(0.94);
+}
+/* Rabinho apontando para o card */
+.pop__card::after {
   content: "";
   position: absolute;
-  inset: 13%;
-  border-radius: 50%;
-  background:
-    linear-gradient(to bottom, transparent 45%, rgba(255, 206, 84, .80) 47.5%, rgba(255, 206, 84, .80) 52.5%, transparent 55%),
-    linear-gradient(108deg, transparent 45.5%, rgba(255, 206, 84, .55) 48%, rgba(255, 206, 84, .55) 52%, transparent 54.5%),
-    linear-gradient(72deg,  transparent 45.5%, rgba(255, 206, 84, .40) 48%, rgba(255, 206, 84, .40) 52%, transparent 54.5%);
-}
-.whats--pt:hover .whats__flag-diamond,
-.whats--pt:focus-visible .whats__flag-diamond {
-  transform: rotate(0deg) scale(1);
+  right: 13px;
+  bottom: -7px;
+  width: 13px;
+  height: 13px;
+  background: var(--pop-bg);
+  border-right: 1px solid var(--border-hi);
+  border-bottom: 1px solid var(--border-hi);
+  border-bottom-right-radius: 3px;
+  transform: rotate(45deg);
 }
 
-/* Escudo: disco vermelho, escuro o bastante para o glifo branco */
-.whats--pt .whats__flag-orb {
-  width: 58px;
-  height: 58px;
-  margin: -29px 0 0 -29px;
-  background: radial-gradient(circle at 40% 34%,
-      #e0343c 0%, #c01e26 52%, #8e1218 100%);
+.pop__text {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--text);
 }
-.whats--pt .whats__flag-orb::after {
-  background: linear-gradient(128deg,
-      transparent 38%,
-      rgba(255, 255, 255, .30) 48%,
-      rgba(255, 255, 255, .30) 53%,
-      transparent 62%);
-  transform: none;
+.pop__num {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--success);
+}
+.pop__meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+}
+.pop__meta svg { width: 13px; height: 13px; color: var(--brand-cyan); }
+
+/* ── Coreografia ────────────────────────────────────────────*/
+@keyframes pop-typing {
+  0%   { opacity: 0; transform: scale(0.8); }
+  22%  { opacity: 1; transform: scale(1); }
+  74%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.92); }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pop-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: .40; }
+  30%           { transform: translateY(-3px); opacity: 1; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .whats__card:hover .pop__typing,
+  .whats__card:focus-visible .pop__typing {
+    animation: pop-typing 460ms var(--ease-out) 60ms both;
+  }
+  .whats__card:hover .pop__typing i,
+  .whats__card:focus-visible .pop__typing i {
+    animation: pop-dot 620ms ease-in-out infinite;
+  }
+  .pop__typing i:nth-child(2) { animation-delay: 100ms; }
+  .pop__typing i:nth-child(3) { animation-delay: 200ms; }
+
+  .whats__card:hover .pop__card,
+  .whats__card:focus-visible .pop__card {
+    animation: pop-in 340ms var(--ease-out) 400ms both;
+  }
+}
+
+.whats__phone {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: var(--success);
+  margin-top: 2px;
+}
+
+/* Sem cursor: nada de bolha nem de emblema — o número passa a viver
+   dentro do card. O display:none no emblema também evita que o WebP
+   seja baixado em telas que nunca vão exibi-lo. */
+@media not all and (hover: hover) {
+  .whats__pop { display: none; }
+  .whats__flag-emblem { display: none; }
+  .whats__phone { display: block; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTEÚDO DO CARD
+   ═══════════════════════════════════════════════════════════ */
+.whats__icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(34, 197, 94, .16);
+  color: var(--success);
+  transition: transform var(--tn), background var(--tn), color var(--tn);
+}
+.whats__icon svg { width: 26px; height: 26px; }
+
+/* No hover o ícone cede o fundo para o emblema. A cor do glifo muda
+   por país: sobre o globo azul do Brasil ele embranquece; sobre o
+   escudo branco de Portugal, branco sumiria — então ele escurece. */
+.whats__card:hover .whats__icon,
+.whats__card:focus-visible .whats__icon { background: transparent; }
+
+.whats--br:hover .whats__icon,
+.whats--br:focus-visible .whats__icon { color: #ffffff; }
+
+.whats--pt:hover .whats__icon,
+.whats--pt:focus-visible .whats__icon { color: #0d3b22; }
+
+.whats__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.whats__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: .06em;
+  color: var(--text-soft);
+  transition: color var(--tn);
+}
+.whats__card:hover .whats__kicker { color: var(--text-muted); }
+.whats__title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, .95rem + .2vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.whats__arrow {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-hi);
+  color: var(--text-muted);
+  transition: border-color var(--tn), color var(--tn);
+}
+.whats__arrow svg { width: 15px; height: 15px; transition: transform var(--tn); }
+.whats__card:hover .whats__arrow { border-color: var(--text-soft); color: var(--text); }
+
+/* ── Movimento reduzido ─────────────────────────────────────*/
+@media (prefers-reduced-motion: reduce) {
+  .whats__card,
+  .whats__icon,
+  .whats__arrow,
+  .whats__arrow svg,
+  .whats__kicker,
+  .whats__flag-field,
+  .whats__flag-halo,
+  .whats__flag-emblem { transition: none !important; }
+
+  .whats__flag-sheen { display: none; }
+
+  .whats__card:hover { transform: none !important; }
+  .whats__card:hover .whats__icon { transform: none !important; }
+  .whats__card:hover .whats__flag-emblem { transform: rotate(0deg) scale(1) !important; }
+  .whats__card:hover .whats__flag-halo { transform: scale(1) !important; }
+
+  /* A mensagem aparece direto, sem o beat de digitação */
+  .whats__card:hover .pop__typing,
+  .whats__card:hover .pop__typing i { animation: none !important; opacity: 0; }
+  .whats__card:hover .pop__card {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ── Ajustes de tema claro ──────────────────────────────────*/
