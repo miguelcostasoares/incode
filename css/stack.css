@@ -29,15 +29,14 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 5px 14px;
+  padding: 8px 18px;
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--surface);
   color: var(--text-muted);
   font-family: var(--font-body);
-  font-size: .8rem;
+  font-size: .875rem;
   font-weight: 500;
-  line-height: 1;
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
@@ -84,6 +83,18 @@
 
 /* ── Card ────────────────────────────────────────────────── */
 .scard {
+  /* Cor de realce — trocada por categoria mais abaixo */
+  --sc-rgb: 0, 240, 255;
+  --sc-fill: .12;   /* intensidade do halo interior */
+  --sc-ring: .55;   /* intensidade da moldura luminosa */
+
+  /* Posição do cursor e inclinação — atualizadas pelo JS */
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  --lift: 0px;
+
   position: relative;
   display: flex;
   gap: clamp(14px, 2vw, 18px);
@@ -93,21 +104,40 @@
   background: var(--surface);
   backdrop-filter: blur(12px) saturate(140%);
   overflow: hidden;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--lift));
   transition:
-    border-color var(--tn), transform var(--tn), box-shadow var(--tn),
+    border-color var(--tn), box-shadow var(--tn),
+    transform 420ms var(--ease),
     opacity 280ms var(--ease), scale 280ms var(--ease);
-  will-change: transform, opacity;
 }
 
+/* Realce por categoria */
+.scard[data-cat="backend"]  { --sc-rgb: 139, 92, 246; }
+.scard[data-cat="database"] { --sc-rgb: 0, 71, 255; }
+
+/* Light mode: o ciano puro desaparece sobre branco — tons mais
+   profundos e halo mais discreto para não comer o contraste do texto */
+[data-theme="light"] .scard {
+  --sc-rgb: 0, 148, 190;
+  --sc-fill: .07;
+  --sc-ring: .66;
+}
+
+[data-theme="light"] .scard[data-cat="backend"]  { --sc-rgb: 124, 58, 237; }
+[data-theme="light"] .scard[data-cat="database"] { --sc-rgb: 0, 71, 255; }
+
+/* Moldura de 1px que acende à volta do cursor */
 .scard::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 2;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(140deg,
-      rgba(0, 240, 255, .32) 0%, transparent 45%,
-      transparent 60%, rgba(139, 92, 246, .22) 100%);
+  background: radial-gradient(340px circle at var(--mx) var(--my),
+      rgba(var(--sc-rgb), var(--sc-ring)) 0%,
+      rgba(var(--sc-rgb), .10) 42%,
+      transparent 72%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -117,13 +147,40 @@
   transition: opacity var(--tn);
 }
 
+/* Halo suave que segue o cursor dentro do card */
+.scard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(300px circle at var(--mx) var(--my),
+      rgba(var(--sc-rgb), var(--sc-fill)) 0%,
+      transparent 62%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--tn);
+}
+
+/* Conteúdo sempre acima das camadas de luz */
+.scard__icon,
+.scard__body { position: relative; z-index: 1; }
+
 .scard:hover {
-  transform: translateY(-3px);
+  --lift: -3px;
   box-shadow: var(--shadow-card);
   border-color: var(--border-hi);
 }
 
-.scard:hover::before { opacity: 1; }
+.scard:hover::before,
+.scard:hover::after { opacity: 1; }
+
+/* Com o cursor dentro, a inclinação acompanha-o sem atraso */
+.scard.is-live {
+  will-change: transform;
+  transition-property: border-color, box-shadow, opacity, scale;
+  transition-duration: 320ms, 320ms, 280ms, 280ms;
+}
 
 .scard.is-hidden {
   opacity: 0;
@@ -141,12 +198,17 @@
   border-radius: var(--radius-md);
   background: rgba(0, 240, 255, .10);
   color: var(--brand-cyan);
-  transition: transform var(--tn), background var(--tn);
+  transition: transform var(--tn), background var(--tn), box-shadow var(--tn);
 }
 
 .scard__icon svg { width: 20px; height: 20px; }
 
-.scard:hover .scard__icon { transform: scale(1.06) rotate(-5deg); }
+.scard:hover .scard__icon {
+  transform: scale(1.06) rotate(-5deg);
+  box-shadow:
+    0 0 0 1px rgba(var(--sc-rgb), .24),
+    0 10px 22px -12px rgba(var(--sc-rgb), .70);
+}
 
 .scard__icon--backend  { background: rgba(139, 92, 246, .14); color: var(--brand-violet); }
 .scard__icon--database { background: rgba(0, 71, 255, .14);   color: var(--brand-blue-soft); }
@@ -255,6 +317,7 @@
 @media (prefers-reduced-motion: reduce) {
   .scard,
   .scard::before,
+  .scard::after,
   .scard__icon,
   .stack__filter,
   .stack__filter::after {
@@ -263,5 +326,13 @@
   }
 
   .scard.is-hidden { display: none; }
-  .scard:hover { transform: none !important; }
+
+  /* Sem inclinação nem elevação — o realce fica só na cor */
+  .scard,
+  .scard:hover {
+    --rx: 0deg;
+    --ry: 0deg;
+    --lift: 0px;
+    transform: none !important;
+  }
 }

@@ -87,17 +87,30 @@
 }
 
 /* ── Grid de cards ───────────────────────────────────────── */
+/* Layout fluido: as colunas são definidas por --svc-cols e a última
+   linha fica centrada, sem nenhum card esticado. */
 .svc-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2vw, 1.25rem);
+  --svc-gap: clamp(1rem, 2vw, 1.25rem);
+  --svc-cols: 3;
+  --svc-w: calc((100% - (var(--svc-cols) - 1) * var(--svc-gap)) / var(--svc-cols));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--svc-gap);
 }
 
-.svc__card--wide {
-  grid-column: span 2;
-}
-
+/* ── Card ────────────────────────────────────────────────── */
 .svc__card {
+  --svc-accent: 0, 71, 255;
+  --svc-ty: 0px;
+  --svc-rx: 0deg;
+  --svc-ry: 0deg;
+  --svc-mx: 50%;
+  --svc-my: 0%;
+
+  flex: 1 1 var(--svc-w);
+  max-width: var(--svc-w);
+
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -109,16 +122,30 @@
   border-radius: var(--radius-lg);
   background: var(--surface);
   backdrop-filter: blur(12px);
+  transform:
+    perspective(900px) translate3d(0, var(--svc-ty), 0)
+    rotateX(var(--svc-rx)) rotateY(var(--svc-ry));
   transition:
-    border-color 320ms var(--ease), background 320ms var(--ease),
-    transform 320ms var(--ease), box-shadow 380ms var(--ease);
+    border-color 320ms var(--ease),
+    background 320ms var(--ease),
+    transform 320ms var(--ease),
+    box-shadow 380ms var(--ease);
+}
+
+/* Enquanto o cursor percorre o card, o tilt acompanha em tempo real */
+.svc__card.is-tilting {
+  transition:
+    border-color 320ms var(--ease),
+    background 320ms var(--ease),
+    transform 90ms linear,
+    box-shadow 380ms var(--ease);
 }
 
 .svc__card::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   background: linear-gradient(118deg,
       transparent 15%,
       rgba(255, 255, 255, .055) 48%,
@@ -128,10 +155,11 @@
   pointer-events: none;
 }
 
-.svc__card:hover {
+.svc__card:hover,
+.svc__card.is-active {
+  --svc-ty: -4px;
   border-color: var(--border-hi);
   background: var(--surface-md);
-  transform: translateY(-4px);
   box-shadow: var(--shadow-card);
 }
 
@@ -143,30 +171,101 @@
 .svc__card-glow {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   opacity: 0;
   transition: opacity 400ms var(--ease);
+  background: radial-gradient(60% 80% at 0% 0%,
+      rgba(var(--svc-accent), .085) 0%,
+      transparent 70%);
 }
 
-.svc__card:hover .svc__card-glow {
+.svc__card:hover .svc__card-glow,
+.svc__card.is-active .svc__card-glow {
   opacity: 1;
 }
 
-.svc__card--blue .svc__card-glow {
-  background: radial-gradient(60% 80% at 0% 0%, rgba(0, 71, 255, .08) 0%, transparent 70%);
+/* Luz que segue o cursor */
+.svc__card-spot {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 320ms var(--ease);
+  background: radial-gradient(22rem 22rem at var(--svc-mx) var(--svc-my),
+      rgba(var(--svc-accent), .14) 0%,
+      rgba(var(--svc-accent), .05) 38%,
+      transparent 68%);
 }
 
-.svc__card--cyan .svc__card-glow {
-  background: radial-gradient(60% 80% at 0% 0%, rgba(0, 240, 255, .07) 0%, transparent 70%);
+[data-theme="light"] .svc__card-spot {
+  background: radial-gradient(22rem 22rem at var(--svc-mx) var(--svc-my),
+      rgba(var(--svc-accent), .10) 0%,
+      rgba(var(--svc-accent), .04) 38%,
+      transparent 68%);
 }
 
-.svc__card--violet .svc__card-glow {
-  background: radial-gradient(60% 80% at 0% 0%, rgba(139, 92, 246, .08) 0%, transparent 70%);
+.svc__card:hover .svc__card-spot {
+  opacity: 1;
 }
 
-.svc__card--pink .svc__card-glow {
-  background: radial-gradient(60% 80% at 0% 0%, rgba(236, 72, 153, .07) 0%, transparent 70%);
+/* Fio de luz no topo, na cor do card */
+.svc__card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 1px;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(to right,
+      transparent,
+      rgba(var(--svc-accent), .65) 50%,
+      transparent);
+  transition: opacity 380ms var(--ease);
+}
+
+.svc__card:hover::before,
+.svc__card.is-active::before {
+  opacity: 1;
+}
+
+/* ── Link que cobre o card ───────────────────────────────── */
+.svc__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.svc__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+}
+
+.svc__link-hint {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@supports selector(:has(*)) {
+  .svc__link:focus-visible {
+    outline: none;
+  }
+
+  .svc__card:has(.svc__link:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
 }
 
 /* ── Ícone ───────────────────────────────────────────────── */
@@ -177,7 +276,9 @@
   width: 46px;
   height: 46px;
   border-radius: var(--radius-md);
-  transition: transform var(--tn);
+  background: rgba(var(--svc-accent), .15);
+  color: var(--svc-icon-color);
+  transition: transform var(--tn), box-shadow var(--tn);
 }
 
 .svc__icon svg {
@@ -185,28 +286,33 @@
   height: 20px;
 }
 
-.svc__card:hover .svc__icon {
+.svc__card:hover .svc__icon,
+.svc__card.is-active .svc__icon {
   transform: scale(1.08) rotate(-6deg);
+  box-shadow:
+    0 0 0 1px rgba(var(--svc-accent), .28),
+    0 8px 22px -12px rgba(var(--svc-accent), .8);
 }
 
-.svc__card--blue .svc__icon {
-  background: rgba(0, 71, 255, .16);
-  color: var(--brand-blue-soft);
+/* ── Cores por card ──────────────────────────────────────── */
+.svc__card--blue {
+  --svc-accent: 0, 71, 255;
+  --svc-icon-color: var(--brand-blue-soft);
 }
 
-.svc__card--cyan .svc__icon {
-  background: rgba(0, 240, 255, .14);
-  color: var(--brand-cyan);
+.svc__card--cyan {
+  --svc-accent: 0, 240, 255;
+  --svc-icon-color: var(--brand-cyan);
 }
 
-.svc__card--violet .svc__icon {
-  background: rgba(139, 92, 246, .16);
-  color: var(--brand-violet);
+.svc__card--violet {
+  --svc-accent: 139, 92, 246;
+  --svc-icon-color: var(--brand-violet);
 }
 
-.svc__card--pink .svc__icon {
-  background: rgba(236, 72, 153, .14);
-  color: var(--brand-pink);
+.svc__card--pink {
+  --svc-accent: 236, 72, 153;
+  --svc-icon-color: var(--brand-pink);
 }
 
 /* ── Texto ───────────────────────────────────────────────── */
@@ -248,9 +354,42 @@
   transition: border-color 280ms var(--ease), color 280ms var(--ease);
 }
 
-.svc__card:hover .svc__tags li {
+.svc__card:hover .svc__tags li,
+.svc__card.is-active .svc__tags li {
   border-color: var(--border-hi);
   color: var(--text-muted);
+}
+
+/* ── Chamada dentro do card ──────────────────────────────── */
+.svc__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: auto 0 0;
+  padding-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  transition: color 320ms var(--ease);
+}
+
+.svc__cta svg {
+  width: 14px;
+  height: 14px;
+  opacity: .6;
+  transition: transform 320ms var(--ease), opacity 320ms var(--ease);
+}
+
+.svc__card:hover .svc__cta,
+.svc__card.is-active .svc__cta {
+  color: var(--text);
+}
+
+.svc__card:hover .svc__cta svg,
+.svc__card.is-active .svc__cta svg {
+  opacity: 1;
+  transform: translateX(4px);
 }
 
 /* ── CTA final ───────────────────────────────────────────── */
@@ -300,23 +439,15 @@
 }
 
 /* ── Responsividade ──────────────────────────────────────── */
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .svc-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .svc__card--wide {
-    grid-column: span 2;
+    --svc-cols: 2;
   }
 }
 
 @media (max-width: 620px) {
   .svc-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .svc__card--wide {
-    grid-column: span 1;
+    --svc-cols: 1;
   }
 
   .services__cta {
@@ -341,8 +472,12 @@
 /* ── Reduced motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .svc__card,
+  .svc__card.is-tilting,
   .svc__icon,
   .svc__card-glow,
+  .svc__card-spot,
+  .svc__cta,
+  .svc__cta svg,
   .svc__tags li {
     transition: none !important;
   }
@@ -352,11 +487,20 @@
     display: none;
   }
 
-  .svc__card:hover {
+  .svc__card {
     transform: none !important;
   }
 
-  .svc__card:hover .svc__icon {
+  .svc__card:hover .svc__icon,
+  .svc__card.is-active .svc__icon {
+    transform: none !important;
+  }
+
+  .svc__cta {
+    translate: none !important;
+  }
+
+  .svc__card:hover .svc__cta svg {
     transform: none !important;
   }
 }

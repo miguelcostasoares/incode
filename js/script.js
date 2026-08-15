@@ -1540,9 +1540,11 @@ var startCounters = (function () {
     var FADE = rm.matches ? 0 : 160;
 
     allCards.forEach(function (c) {
-      c.style.transition = 'opacity ' + FADE + 'ms ease, transform ' + FADE + 'ms ease';
+      /* usa `translate` (e não `transform`) para não colidir com a
+         inclinação do card, que vive em transform */
+      c.style.transition = 'opacity ' + FADE + 'ms ease, translate ' + FADE + 'ms ease';
       c.style.opacity    = '0';
-      c.style.transform  = 'translateY(6px)';
+      c.style.translate  = '0 6px';
     });
 
     setTimeout(function () {
@@ -1569,9 +1571,9 @@ var startCounters = (function () {
       void grid.offsetHeight;
 
       visible.forEach(function (c, i) {
-        c.style.transition = 'opacity 280ms ' + (i * 40) + 'ms cubic-bezier(0.16,1,0.3,1), transform 280ms ' + (i * 40) + 'ms cubic-bezier(0.16,1,0.3,1)';
+        c.style.transition = 'opacity 280ms ' + (i * 40) + 'ms cubic-bezier(0.16,1,0.3,1), translate 280ms ' + (i * 40) + 'ms cubic-bezier(0.16,1,0.3,1)';
         c.style.opacity    = '1';
-        c.style.transform  = 'translateY(0)';
+        c.style.translate  = '0 0';
       });
 
       setTimeout(function () { animating = false; }, (visible.length - 1) * 40 + 280);
@@ -2135,4 +2137,207 @@ var startCounters = (function () {
   });
   resize3();
   if (!rm3.matches) start3();
+})();
+
+/* =========================================================
+   InCode — Stack: cards reativos ao cursor
+   Atualiza --mx/--my (halo + moldura) e --rx/--ry (inclinação)
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var grid = document.getElementById('stack-grid');
+  if (!grid) return;
+
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  var rm   = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* Só faz sentido onde existe um cursor real e sem redução de movimento */
+  if (!fine.matches || rm.matches) return;
+
+  var MAX_TILT = 3.2;          /* graus — deliberadamente subtil */
+  var active   = null;
+  var px = 0, py = 0, raf = null;
+
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  function reset(card) {
+    card.classList.remove('is-live');
+    card.style.removeProperty('--mx');
+    card.style.removeProperty('--my');
+    card.style.removeProperty('--rx');
+    card.style.removeProperty('--ry');
+  }
+
+  function release() {
+    if (active) reset(active);
+    active = null;
+  }
+
+  function paint() {
+    raf = null;
+    if (!active) return;
+
+    /* Card escondido por um filtro a meio da interação */
+    if (!active.isConnected || active.offsetParent === null) { release(); return; }
+
+    var r = active.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+
+    var x = clamp01((px - r.left) / r.width);
+    var y = clamp01((py - r.top) / r.height);
+
+    active.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+    active.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+    active.style.setProperty('--ry', ((x - 0.5) * 2 * MAX_TILT).toFixed(2) + 'deg');
+    active.style.setProperty('--rx', ((0.5 - y) * 2 * MAX_TILT).toFixed(2) + 'deg');
+  }
+
+  grid.addEventListener('pointerover', function (e) {
+    var card = e.target.closest && e.target.closest('.scard');
+    if (!card || card === active) return;
+    if (active) reset(active);
+    active = card;
+    card.classList.add('is-live');
+  });
+
+  grid.addEventListener('pointerout', function (e) {
+    if (!active) return;
+    if (e.relatedTarget && active.contains(e.relatedTarget)) return;
+    release();
+  });
+
+  grid.addEventListener('pointermove', function (e) {
+    if (!active) return;
+    px = e.clientX;
+    py = e.clientY;
+    if (!raf) raf = requestAnimationFrame(paint);
+  }, { passive: true });
+
+  /* Segurança: rato sai da janela ou o separador muda */
+  window.addEventListener('blur', release);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) release();
+  });
+})();
+
+/* ── 16. Cards de Serviços — luz e inclinação com o cursor ── */
+(function () {
+  var cards = document.querySelectorAll(".svc__card");
+  if (!cards.length) return;
+
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var rm = window.matchMedia("(prefers-reduced-motion:reduce)");
+
+  var MAX_TILT = 3.2; /* graus — inclinação máxima */
+  var LERP = 0.16;
+
+  var states = [];
+
+  [].forEach.call(cards, function (card) {
+    var link = card.querySelector(".svc__link");
+
+    var st = {
+      card: card,
+      tx: 0,
+      ty: 0,
+      cx: 0,
+      cy: 0,
+      raf: null,
+      active: false,
+    };
+    states.push(st);
+
+    function tick() {
+      st.cx += (st.tx - st.cx) * LERP;
+      st.cy += (st.ty - st.cy) * LERP;
+      card.style.setProperty("--svc-ry", st.cx.toFixed(3) + "deg");
+      card.style.setProperty("--svc-rx", st.cy.toFixed(3) + "deg");
+
+      if (
+        st.active ||
+        Math.abs(st.tx - st.cx) > 0.03 ||
+        Math.abs(st.ty - st.cy) > 0.03
+      ) {
+        st.raf = requestAnimationFrame(tick);
+      } else {
+        st.raf = null;
+        card.style.removeProperty("--svc-rx");
+        card.style.removeProperty("--svc-ry");
+        card.classList.remove("is-tilting");
+      }
+    }
+
+    function start() {
+      if (!st.raf) st.raf = requestAnimationFrame(tick);
+    }
+
+    function rest() {
+      st.active = false;
+      st.tx = 0;
+      st.ty = 0;
+      start();
+    }
+
+    card.addEventListener(
+      "pointerenter",
+      function (e) {
+        if (e.pointerType !== "mouse" || !fine.matches || rm.matches) return;
+        st.active = true;
+        card.classList.add("is-tilting");
+        start();
+      },
+      { passive: true },
+    );
+
+    card.addEventListener(
+      "pointermove",
+      function (e) {
+        if (e.pointerType !== "mouse" || !fine.matches) return;
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+
+        /* Luz segue o cursor — sempre, mesmo com reduced-motion */
+        card.style.setProperty("--svc-mx", (px * 100).toFixed(1) + "%");
+        card.style.setProperty("--svc-my", (py * 100).toFixed(1) + "%");
+
+        if (rm.matches) return;
+        st.tx = (px - 0.5) * MAX_TILT * 2;
+        st.ty = -(py - 0.5) * MAX_TILT * 2;
+      },
+      { passive: true },
+    );
+
+    card.addEventListener("pointerleave", rest, { passive: true });
+    card.addEventListener("pointercancel", rest, { passive: true });
+
+    /* Navegação por teclado recebe o mesmo destaque do hover */
+    if (link) {
+      link.addEventListener("focus", function () {
+        card.classList.add("is-active");
+      });
+      link.addEventListener("blur", function () {
+        card.classList.remove("is-active");
+      });
+    }
+  });
+
+  /* Se a preferência de movimento mudar em runtime, repõe tudo */
+  if (rm.addEventListener) {
+    rm.addEventListener("change", function (e) {
+      if (!e.matches) return;
+      states.forEach(function (st) {
+        st.active = false;
+        if (st.raf) {
+          cancelAnimationFrame(st.raf);
+          st.raf = null;
+        }
+        st.cx = st.cy = st.tx = st.ty = 0;
+        st.card.classList.remove("is-tilting");
+        st.card.style.removeProperty("--svc-rx");
+        st.card.style.removeProperty("--svc-ry");
+      });
+    });
+  }
 })();
