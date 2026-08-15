@@ -29,14 +29,15 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 8px 18px;
+  padding: 5px 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--surface);
   color: var(--text-muted);
   font-family: var(--font-body);
-  font-size: .875rem;
+  font-size: .8rem;
   font-weight: 500;
+  line-height: 1;
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
@@ -232,7 +233,7 @@
 .stack__note {
   max-width: 42rem;
   font-size: .875rem;
-  color: var(--text-soft);
+  color: var(--text-muted);
   line-height: 1.65;
   font-style: italic;
   padding-top: clamp(1rem, 2vw, 1.5rem);

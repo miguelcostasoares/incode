@@ -325,11 +325,6 @@
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.stack-view__back {
-  align-self: flex-start !important;
-  width: auto !important;
-}
-
 .stack-view__title-wrap { max-width: 36rem; }
 
 .stack-view__title {
@@ -348,32 +343,93 @@
   margin: 0;
 }
 
+/* ── Barra sticky: voltar + filtros ──────────────────────── */
 .stack-view__bar {
+  --bar-pad: 6px;
+  --bar-ctl-h: 34px;
+  --bar-shadow: 0 16px 34px -20px rgba(0, 0, 0, .85);
+
   position: sticky;
-  top: calc(var(--nav-h) + 8px);
+  top: calc(var(--nav-h) + 10px);
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  padding: 6px 8px;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
+  padding: var(--bar-pad);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-pill);
   background: var(--nav-bg-scroll);
-  backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  min-height: unset;
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--bar-shadow);
 }
 
-.stack-view__bar .btn--ghost  { padding-top: 6px; padding-bottom: 6px; }
-.stack-view__bar .stack__filter { padding-top: 5px; padding-bottom: 5px; }
+[data-theme="light"] .stack-view__bar {
+  --bar-shadow: 0 16px 30px -20px rgba(9, 20, 60, .30);
+}
+
+/* Todos os controlos com a mesma altura */
+.stack-view__bar .btn,
+.stack-view__bar .stack__filter {
+  flex-shrink: 0;
+  height: var(--bar-ctl-h);
+  padding-block: 0;
+  font-size: .8125rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Botão voltar — seta aponta e move-se para trás */
+.stack-view__bar .stack-view__back {
+  gap: 7px;
+  padding-inline: 14px;
+}
+
+.stack-view__bar .stack-view__back svg { width: 14px; height: 14px; }
+.stack-view__bar .stack-view__back:hover { transform: none; }
+.stack-view__bar .stack-view__back:hover svg { transform: translateX(-3px); }
+
+/* Trilho de filtros — desliza na horizontal quando não cabe */
+.stack-view__bar .stack__filters {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  min-width: 0;
+  margin-block: calc(var(--bar-pad) * -1);
+  padding-block: var(--bar-pad);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.stack-view__bar .stack__filters::-webkit-scrollbar { display: none; }
+
+/* Separador entre o "Voltar" e os filtros */
+.stack-view__bar .stack__filters::before {
+  content: "";
+  flex: 0 0 1px;
+  align-self: center;
+  height: 18px;
+  margin-inline-end: 3px;
+  background: var(--border-hi);
+}
+
+.stack-view__bar .stack__filter { padding-inline: 15px; }
+.stack-view__bar .stack__filter:hover  { transform: none; }
+.stack-view__bar .stack__filter:active { transform: scale(0.96); }
+
+.stack-view__bar .btn:focus-visible,
+.stack-view__bar .stack__filter:focus-visible { outline-offset: 3px; }
 
 .about__view--stack {
   padding: calc(var(--nav-h) + 8px) 0 clamp(4rem, 8vw, 6rem);
 }
 
-.about__view--stack .stack__filters { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
-.about__view--stack .stack__grid    { margin-bottom: clamp(1.5rem, 3vw, 2rem); }
+.about__view--stack .stack__grid { margin-bottom: clamp(1.5rem, 3vw, 2rem); }
 
 /* ── Scroll cue ──────────────────────────────────────────── */
 .stack-view__scroll-cue {
@@ -446,6 +502,23 @@
   }
 
   .about__tagline-v2 { max-width: 52ch; }
+}
+
+@media (max-width: 760px) {
+  .stack-view__bar {
+    width: 100%;
+    gap: 6px;
+  }
+}
+
+/* Abaixo deste ponto os filtros já não cabem: rola e esbate na borda */
+@media (max-width: 540px) {
+  .stack-view__bar .stack__filter { padding-inline: 13px; }
+
+  .stack-view__bar .stack__filters {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+  }
 }
 
 @media (max-width: 680px) {
