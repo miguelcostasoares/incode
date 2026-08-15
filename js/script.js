@@ -980,8 +980,13 @@
   var rm = window.matchMedia("(prefers-reduced-motion:reduce)");
 
   var aboutRevealed = false;
-  var lastP = -1;
   var pending = false;
+
+  /* Progresso monotónico: só avança, nunca recua.
+     Quando chega ao fim, a animação é travada no estado final
+     e o listener de scroll é removido — não volta a correr. */
+  var maxP = 0;
+  var locked = false;
 
   var CX = 0,
     TOP_Y = 0,
@@ -1042,14 +1047,9 @@
     }
   }
 
-  function update() {
-    pending = false;
-    var sr = scroller.getBoundingClientRect();
-    var scrollH = scroller.offsetHeight - (window.innerHeight || 1);
-    var p = -sr.top / scrollH;
-    p = p < 0 ? 0 : p > 1 ? 1 : p;
-    if (Math.abs(p - lastP) < 0.001) return;
-    lastP = p;
+  /* Desenha o estado correspondente a um progresso p (0→1).
+     Os nós só acendem — nunca se apagam. */
+  function render(p) {
     var len = BOT_Y - TOP_Y;
     svgFill.style.strokeDashoffset = len * (1 - p);
     var hy = TOP_Y + p * len;
@@ -1063,9 +1063,32 @@
     }
     [].forEach.call(wraps, function (w) {
       var at = parseFloat(w.getAttribute("data-at") || 0);
-      w.classList.toggle("is-lit", p >= at);
+      if (p >= at) w.classList.add("is-lit");
     });
-    if (p >= 0.995) revealAbout();
+  }
+
+  /* Trava a secção no estado final e deixa de escutar o scroll */
+  function lock() {
+    if (locked) return;
+    locked = true;
+    maxP = 1;
+    window.removeEventListener("scroll", onScroll);
+    render(1);
+    revealAbout();
+  }
+
+  function update() {
+    pending = false;
+    if (locked) return;
+    var sr = scroller.getBoundingClientRect();
+    var scrollH = scroller.offsetHeight - (window.innerHeight || 1);
+    var p = -sr.top / scrollH;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    /* Ignora qualquer recuo: o fio nunca se desfaz */
+    if (p <= maxP + 0.001) return;
+    maxP = p;
+    render(p);
+    if (p >= 0.995) lock();
   }
 
   function onScroll() {
@@ -1087,10 +1110,13 @@
   }
 
   layout();
+  render(maxP);
   update();
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", function () {
     layout();
+    /* layout() repõe a calha a zero — reaplica o progresso já atingido */
+    render(maxP);
     update();
   });
   if (rm.addEventListener)
@@ -1311,27 +1337,24 @@ var startCounters = (function () {
   }
 
   /* ── 2. Scroll driver ──────────────────────────────────── */
-  var lastP = -1;
   var pending = false;
   var eyebrowShown = false;
   var footerShown = false;
   var totalWords = spans.length;
+
+  /* Progresso monotónico: só avança, nunca recua.
+     No fim, a quote fica travada no estado final. */
+  var maxP = 0;
+  var locked = false;
 
   /* Limiar a partir do qual o eyebrow aparece */
   var EYEBROW_AT = 0.04;
   /* Limiar a partir do qual a atribuição e a barra aparecem */
   var FOOTER_AT = 0.88;
 
-  function update() {
-    pending = false;
-    var sr = scroller.getBoundingClientRect();
-    var scrollH = scroller.offsetHeight - window.innerHeight;
-    if (scrollH <= 0) return;
-
-    var p = Math.min(Math.max(-sr.top / scrollH, 0), 1);
-    if (Math.abs(p - lastP) < 0.001) return;
-    lastP = p;
-
+  /* Desenha o estado correspondente a um progresso p (0→1).
+     As palavras só acendem — nunca se apagam. */
+  function render(p) {
     /* Eyebrow */
     if (!eyebrowShown && p >= EYEBROW_AT && eyebrow) {
       eyebrow.classList.add("is-visible");
@@ -1340,9 +1363,7 @@ var startCounters = (function () {
 
     /* Barra de progresso */
     if (progFill) progFill.style.width = p * 100 + "%";
-    if (progBar) {
-      if (p >= EYEBROW_AT) progBar.classList.add("is-visible");
-    }
+    if (progBar && p >= EYEBROW_AT) progBar.classList.add("is-visible");
 
     /* Palavras: ilumina proporcionalmente ao scroll,
        com uma "janela" que vai de 5% a 85% do progresso total */
@@ -1350,23 +1371,38 @@ var startCounters = (function () {
     var litCount = Math.round(wordProgress * totalWords);
 
     spans.forEach(function (span, i) {
-      var shouldBeLit = i < litCount;
-      if (shouldBeLit && !span.classList.contains("is-lit")) {
-        span.classList.add("is-lit");
-      } else if (!shouldBeLit && span.classList.contains("is-lit")) {
-        span.classList.remove("is-lit");
-      }
+      if (i < litCount) span.classList.add("is-lit");
     });
 
     /* Footer / atribuição */
     if (!footerShown && p >= FOOTER_AT) {
       footerShown = true;
       if (footer) footer.classList.add("is-visible");
-    } else if (footerShown && p < FOOTER_AT - 0.05) {
-      /* Se o utilizador voltar atrás, esconde novamente */
-      footerShown = false;
-      if (footer) footer.classList.remove("is-visible");
     }
+  }
+
+  /* Trava a quote no estado final e deixa de escutar o scroll */
+  function lock() {
+    if (locked) return;
+    locked = true;
+    maxP = 1;
+    window.removeEventListener("scroll", onScroll);
+    render(1);
+  }
+
+  function update() {
+    pending = false;
+    if (locked) return;
+    var sr = scroller.getBoundingClientRect();
+    var scrollH = scroller.offsetHeight - window.innerHeight;
+    if (scrollH <= 0) return;
+
+    var p = Math.min(Math.max(-sr.top / scrollH, 0), 1);
+    /* Ignora qualquer recuo: a quote nunca se apaga */
+    if (p <= maxP + 0.001) return;
+    maxP = p;
+    render(p);
+    if (p >= 0.995) lock();
   }
 
   function onScroll() {
