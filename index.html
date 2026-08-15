@@ -2370,6 +2370,7 @@
                   />
                 </svg>
               </span>
+              
               <span class="whats__body">
                 <span class="whats__kicker">WhatsApp · Brasil</span>
                 <span class="whats__title">Falar com o time BR</span>
@@ -2388,7 +2389,7 @@
                 </svg>
               </span>
             </a>
-
+            
             <a
               class="whats__card whats--pt"
               href="https://wa.me/351929393529"
@@ -2455,6 +2456,338 @@
             </a>
           </div>
           <!-- /.contact__whats -->
+
+          <!-- E-mail — formulário direto -->
+          <div class="contact__email" data-reveal-section style="--sd: 180ms">
+            <div class="cform" id="contato-email">
+              <div class="cform__hairline" aria-hidden="true"></div>
+
+              <!-- Coluna de contexto -->
+              <aside class="cform__aside">
+                <div class="cform__aside-head">
+                  <span class="cform__icon" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="2.75" y="4.75" width="18.5" height="14.5" rx="3" />
+                      <path d="m3.6 7.2 7.35 5.05a2 2 0 0 0 2.1 0L20.4 7.2" />
+                    </svg>
+                  </span>
+                  <div class="cform__aside-titles">
+                    <p class="cform__kicker">E-mail</p>
+                    <h3 class="cform__title">Prefere escrever?</h3>
+                  </div>
+                </div>
+
+                <p class="cform__lead">
+                  Quatro campos — o suficiente para entendermos o contexto antes
+                  da primeira conversa. A resposta vai para o mesmo endereço que
+                  você informar.
+                </p>
+
+                <ul class="cform__points" role="list">
+                  <li>
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m2.8 8.4 3.1 3.1 7.3-7.3" />
+                    </svg>
+                    <span>Resposta em até 24h em dias úteis</span>
+                  </li>
+                  <li>
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m2.8 8.4 3.1 3.1 7.3-7.3" />
+                    </svg>
+                    <span>Quem lê é quem desenvolve</span>
+                  </li>
+                  <li>
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m2.8 8.4 3.1 3.1 7.3-7.3" />
+                    </svg>
+                    <span>Sem lista de e-mails, sem automações</span>
+                  </li>
+                </ul>
+
+                <div class="cform__addr">
+                  <span class="cform__addr-label">Ou escreva direto para</span>
+                  <div class="cform__addr-row">
+                    <a
+                      class="cform__addr-link"
+                      href="mailto:incode.support@gmail.com"
+                      >incode.support@gmail.com</a
+                    >
+                    <button
+                      type="button"
+                      class="cform__copy"
+                      id="cform-copy"
+                      data-copy="incode.support@gmail.com"
+                      aria-label="Copiar endereço de e-mail"
+                    >
+                      <span class="cform__copy-ico" aria-hidden="true">
+                        <svg
+                          class="ico-copy"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <rect x="5.5" y="5.5" width="8.5" height="8.5" rx="2" />
+                          <path d="M10.8 5.5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4.8a2 2 0 0 0 2 2h1.5" />
+                        </svg>
+                        <svg
+                          class="ico-check"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.9"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="m2.8 8.4 3.1 3.1 7.3-7.3" />
+                        </svg>
+                      </span>
+                      <span class="cform__copy-txt">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+              </aside>
+
+              <!-- Formulário -->
+              <form
+                class="cform__form"
+                id="contact-form"
+                novalidate
+                aria-labelledby="cform-form-title"
+              >
+                <h4 class="sr-only" id="cform-form-title">
+                  Enviar mensagem por e-mail
+                </h4>
+
+                <div class="cform__fields">
+                  <div class="cform__row">
+                    <div class="field">
+                      <label class="field__label" for="cf-nome">Nome</label>
+                      <div class="field__box">
+                        <input
+                          class="field__input"
+                          type="text"
+                          id="cf-nome"
+                          name="nome"
+                          autocomplete="name"
+                          placeholder="Nome e sobrenome"
+                          aria-describedby="cf-nome-msg"
+                          required
+                        />
+                      </div>
+                      <p class="field__msg" id="cf-nome-msg" hidden></p>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="cf-email">E-mail</label>
+                      <div class="field__box">
+                        <input
+                          class="field__input"
+                          type="email"
+                          id="cf-email"
+                          name="email"
+                          autocomplete="email"
+                          placeholder="nome@empresa.com"
+                          aria-describedby="cf-email-msg"
+                          required
+                        />
+                      </div>
+                      <p class="field__msg" id="cf-email-msg" hidden></p>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="cf-assunto">Assunto</label>
+                    <div class="field__box field__box--select">
+                      <select
+                        class="field__input field__select"
+                        id="cf-assunto"
+                        name="assunto"
+                        aria-describedby="cf-assunto-msg"
+                        required
+                      >
+                        <option value="" selected disabled>
+                          Selecione o motivo do contato
+                        </option>
+                        <option value="orcamento">Orçamento de projeto</option>
+                        <option value="produto">Produto sob medida</option>
+                        <option value="servico">Serviço específico</option>
+                        <option value="parceria">Parceria</option>
+                        <option value="outro">Outro assunto</option>
+                      </select>
+                      <span class="field__chevron" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="m4 6.3 4 4 4-4" />
+                        </svg>
+                      </span>
+                    </div>
+                    <p class="field__msg" id="cf-assunto-msg" hidden></p>
+                  </div>
+
+                  <div class="field field--grow">
+                    <div class="field__label-row">
+                      <label class="field__label" for="cf-mensagem"
+                        >Mensagem</label
+                      >
+                      <span class="field__count" id="cf-count" aria-hidden="true"
+                        >0/1200</span
+                      >
+                    </div>
+                    <div class="field__box">
+                      <textarea
+                        class="field__input field__textarea"
+                        id="cf-mensagem"
+                        name="mensagem"
+                        rows="4"
+                        maxlength="1200"
+                        placeholder="O que você quer construir? Se já tiver prazo, orçamento ou referências, conte aqui."
+                        aria-describedby="cf-mensagem-msg"
+                        required
+                      ></textarea>
+                    </div>
+                    <p class="field__msg" id="cf-mensagem-msg" hidden></p>
+                  </div>
+
+                  <!-- Armadilha anti-spam: invisível para pessoas -->
+                  <div class="cform__trap" aria-hidden="true">
+                    <label for="cf-site">Não preencha este campo</label>
+                    <input
+                      type="text"
+                      id="cf-site"
+                      name="site"
+                      tabindex="-1"
+                      autocomplete="off"
+                    />
+                  </div>
+
+                  <div class="cform__alert" id="cform-alert" hidden>
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="8" cy="8" r="6.4" />
+                      <path d="M8 5v3.6M8 11h.01" />
+                    </svg>
+                    <span>
+                      Não foi possível enviar agora. Tente novamente em instantes
+                      ou escreva para
+                      <a
+                        class="cform__alert-link"
+                        id="cform-alert-mailto"
+                        href="mailto:incode.support@gmail.com"
+                        >incode.support@gmail.com</a
+                      >.
+                    </span>
+                  </div>
+
+                  <div class="cform__actions">
+                    <p class="cform__privacy">
+                      Usamos seus dados apenas para responder.
+                    </p>
+                    <button
+                      class="btn btn--primary cform__submit"
+                      type="submit"
+                      id="cform-submit"
+                    >
+                      <span class="cform__submit-label">Enviar mensagem</span>
+                      <span class="cform__spinner" aria-hidden="true"></span>
+                      <svg
+                        class="cform__submit-arrow"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Estado final -->
+                <div class="cform__done" id="cform-done" tabindex="-1" hidden>
+                  <span class="cform__done-mark" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m9 16.5 4.6 4.6L23 11.4" />
+                    </svg>
+                  </span>
+                  <h4 class="cform__done-title">Mensagem enviada</h4>
+                  <p class="cform__done-text">
+                    Recebemos o seu contato. A resposta chega em
+                    <strong class="cform__done-mail" id="cform-echo"
+                      >seu e-mail</strong
+                    >
+                    em até 24h.
+                  </p>
+                  <button
+                    class="btn btn--ghost btn--sm cform__done-again"
+                    type="button"
+                    id="cform-again"
+                  >
+                    Enviar outra mensagem
+                  </button>
+                </div>
+
+                <p class="sr-only" id="cform-status" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+          </div>
+          <!-- /.contact__email -->
 
           <!-- Rodapé de contato: nota + redes sociais -->
           <div class="contact__foot" data-reveal-section style="--sd: 220ms">

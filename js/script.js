@@ -1421,10 +1421,10 @@ var startCounters = (function () {
   viewStack.style.pointerEvents = 'none';
   viewStack.style.position      = 'absolute';
   viewStack.style.inset         = '0';
-  viewStack.style.zIndex        = '0';
+  viewStack.style.zIndex        = '3';
 
   viewAbout.style.position = 'relative';
-  viewAbout.style.zIndex   = '1';
+  viewAbout.style.zIndex   = '4';
 
   /* ── Mostrar stack ───────────────────────────────────── */
   function showStack() {
@@ -1445,11 +1445,11 @@ var startCounters = (function () {
     setTimeout(function () {
       viewAbout.style.position = 'absolute';
       viewAbout.style.inset    = '0';
-      viewAbout.style.zIndex   = '0';
+      viewAbout.style.zIndex   = '3';
       viewAbout.setAttribute('aria-hidden', 'true');
 
       viewStack.style.position = 'relative';
-      viewStack.style.zIndex   = '1';
+      viewStack.style.zIndex   = '4';
       viewStack.setAttribute('aria-hidden', 'false');
 
       void viewStack.offsetHeight;
@@ -1492,11 +1492,11 @@ var startCounters = (function () {
     setTimeout(function () {
       viewStack.style.position = 'absolute';
       viewStack.style.inset    = '0';
-      viewStack.style.zIndex   = '0';
+      viewStack.style.zIndex   = '3';
       viewStack.setAttribute('aria-hidden', 'true');
 
       viewAbout.style.position  = 'relative';
-      viewAbout.style.zIndex    = '1';
+      viewAbout.style.zIndex    = '4';
       viewAbout.style.transform = 'translateY(12px)';
       viewAbout.setAttribute('aria-hidden', 'false');
 
@@ -2338,6 +2338,275 @@ var startCounters = (function () {
         st.card.style.removeProperty("--svc-rx");
         st.card.style.removeProperty("--svc-ry");
       });
+    });
+  }
+})();
+
+/* =========================================================
+   InCode — Contato: formulário de e-mail
+   Validação progressiva, envio por fetch e estados do botão.
+   ========================================================= */
+(function () {
+  "use strict";
+
+  /* Endpoint do backend. Deve aceitar POST com JSON e responder
+     2xx em caso de sucesso. Ajuste aqui quando a API subir. */
+  var ENDPOINT = "/api/contato";
+  var TIMEOUT = 15000;
+  var EMAIL_FALLBACK = "incode.support@gmail.com";
+
+  var form = document.getElementById("contact-form");
+  if (!form) return;
+
+  var submitBtn = document.getElementById("cform-submit");
+  var submitLabel = form.querySelector(".cform__submit-label");
+  var alertBox = document.getElementById("cform-alert");
+  var alertMailto = document.getElementById("cform-alert-mailto");
+  var doneBox = document.getElementById("cform-done");
+  var echo = document.getElementById("cform-echo");
+  var againBtn = document.getElementById("cform-again");
+  var statusEl = document.getElementById("cform-status");
+  var counter = document.getElementById("cf-count");
+  var trap = document.getElementById("cf-site");
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+  /* Cada regra devolve string (erro) ou "" (válido) */
+  var rules = {
+    nome: function (v) {
+      if (!v) return "Diga-nos como devemos chamar você.";
+      if (v.length < 2) return "Nome muito curto.";
+      return "";
+    },
+    email: function (v) {
+      if (!v) return "Precisamos de um e-mail para responder.";
+      if (!EMAIL_RE.test(v)) return "Esse e-mail não parece válido.";
+      return "";
+    },
+    assunto: function (v) {
+      if (!v) return "Escolha o motivo do contato.";
+      return "";
+    },
+    mensagem: function (v) {
+      if (!v) return "Conte-nos o que você precisa.";
+      if (v.length < 12) return "Escreva um pouco mais — pelo menos uma frase.";
+      return "";
+    }
+  };
+
+  var fields = Object.keys(rules).map(function (name) {
+    var input = form.elements[name];
+    return {
+      name: name,
+      input: input,
+      wrap: input.closest(".field"),
+      msg: document.getElementById(input.getAttribute("aria-describedby"))
+    };
+  });
+
+  var touched = false; /* passa a true depois da primeira tentativa de envio */
+
+  function setError(f, message) {
+    if (message) {
+      f.wrap.classList.add("is-invalid");
+      f.input.setAttribute("aria-invalid", "true");
+      f.msg.textContent = message;
+      f.msg.hidden = false;
+    } else {
+      f.wrap.classList.remove("is-invalid");
+      f.input.removeAttribute("aria-invalid");
+      f.msg.hidden = true;
+      f.msg.textContent = "";
+    }
+  }
+
+  function check(f) {
+    var error = rules[f.name](String(f.input.value || "").trim());
+    setError(f, error);
+    return !error;
+  }
+
+  fields.forEach(function (f) {
+    f.input.addEventListener("blur", function () {
+      if (f.input.value) check(f);
+    });
+    /* Depois da primeira tentativa, o erro some assim que é corrigido */
+    f.input.addEventListener("input", function () {
+      if (touched || f.wrap.classList.contains("is-invalid")) check(f);
+    });
+    if (f.input.tagName === "SELECT") {
+      f.input.addEventListener("change", function () {
+        check(f);
+      });
+    }
+  });
+
+  /* ── Contador da mensagem ──────────────────────────────── */
+  var textarea = form.elements.mensagem;
+  if (counter && textarea) {
+    var max = parseInt(textarea.getAttribute("maxlength"), 10) || 1200;
+    textarea.addEventListener("input", function () {
+      var n = textarea.value.length;
+      counter.textContent = n + "/" + max;
+      counter.classList.toggle("is-near", n > max * 0.9);
+    });
+  }
+
+  /* ── Estados do botão ──────────────────────────────────── */
+  function sending(on) {
+    submitBtn.disabled = on;
+    submitBtn.classList.toggle("is-sending", on);
+    submitLabel.textContent = on ? "Enviando…" : "Enviar mensagem";
+  }
+
+  function say(text) {
+    if (statusEl) statusEl.textContent = text;
+  }
+
+  function showAlert(on, payload) {
+    if (!alertBox) return;
+    alertBox.hidden = !on;
+    if (on && alertMailto && payload) {
+      alertMailto.href =
+        "mailto:" +
+        EMAIL_FALLBACK +
+        "?subject=" +
+        encodeURIComponent("Contato pelo site — " + payload.assunto) +
+        "&body=" +
+        encodeURIComponent(
+          payload.nome + " (" + payload.email + ")\n\n" + payload.mensagem
+        );
+    }
+  }
+
+  /* ── Envio ─────────────────────────────────────────────── */
+  function send(payload) {
+    var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, TIMEOUT) : null;
+
+    return fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (res) {
+      if (timer) clearTimeout(timer);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res;
+    });
+  }
+
+  function succeed(payload) {
+    if (echo) echo.textContent = payload.email;
+    doneBox.hidden = false;
+    /* Um frame antes de animar, para a transição existir */
+    requestAnimationFrame(function () {
+      form.classList.add("is-sent");
+    });
+    say("Mensagem enviada. Responderemos para " + payload.email + " em até 24h.");
+    doneBox.focus();
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    touched = true;
+    showAlert(false);
+
+    var firstInvalid = null;
+    fields.forEach(function (f) {
+      if (!check(f) && !firstInvalid) firstInvalid = f;
+    });
+
+    if (firstInvalid) {
+      say("O formulário tem campos por corrigir.");
+      firstInvalid.input.focus();
+      return;
+    }
+
+    var assuntoField = form.elements.assunto;
+    var payload = {
+      nome: form.elements.nome.value.trim(),
+      email: form.elements.email.value.trim(),
+      assunto: assuntoField.options[assuntoField.selectedIndex].text,
+      assuntoId: assuntoField.value,
+      mensagem: form.elements.mensagem.value.trim(),
+      origem: "site-contato",
+      enviadoEm: new Date().toISOString()
+    };
+
+    /* Bot preencheu a armadilha: encerramos sem chamar a API */
+    if (trap && trap.value) {
+      succeed(payload);
+      return;
+    }
+
+    sending(true);
+    say("Enviando a sua mensagem.");
+
+    send(payload)
+      .then(function () {
+        sending(false);
+        succeed(payload);
+      })
+      .catch(function () {
+        sending(false);
+        showAlert(true, payload);
+        say("Não foi possível enviar. Tente novamente ou escreva para " + EMAIL_FALLBACK + ".");
+        submitBtn.focus();
+      });
+  });
+
+  /* ── Recomeçar ─────────────────────────────────────────── */
+  if (againBtn) {
+    againBtn.addEventListener("click", function () {
+      form.classList.remove("is-sent");
+      form.reset();
+      touched = false;
+      fields.forEach(function (f) { setError(f, ""); });
+      if (counter) {
+        counter.textContent = "0/1200";
+        counter.classList.remove("is-near");
+      }
+      showAlert(false);
+      say("");
+      setTimeout(function () { doneBox.hidden = true; }, 340);
+      form.elements.nome.focus();
+    });
+  }
+
+  /* ── Copiar o endereço ─────────────────────────────────── */
+  var copyBtn = document.getElementById("cform-copy");
+  if (copyBtn) {
+    var copyTxt = copyBtn.querySelector(".cform__copy-txt");
+    var resetTimer = null;
+
+    copyBtn.addEventListener("click", function () {
+      var value = copyBtn.getAttribute("data-copy");
+
+      function done() {
+        copyBtn.classList.add("is-copied");
+        if (copyTxt) copyTxt.textContent = "Copiado";
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(function () {
+          copyBtn.classList.remove("is-copied");
+          if (copyTxt) copyTxt.textContent = "Copiar";
+        }, 1800);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value).then(done, function () {});
+        return;
+      }
+      /* Navegadores sem Clipboard API */
+      var tmp = document.createElement("textarea");
+      tmp.value = value;
+      tmp.setAttribute("readonly", "");
+      tmp.style.position = "absolute";
+      tmp.style.left = "-9999px";
+      document.body.appendChild(tmp);
+      tmp.select();
+      try { document.execCommand("copy"); done(); } catch (err) {}
+      document.body.removeChild(tmp);
     });
   }
 })();

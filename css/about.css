@@ -39,7 +39,7 @@
   z-index: 2;
   pointer-events: none;
   background:
-    radial-gradient(110% 50% at 70% 50%, transparent 40%, var(--bg) 100%),
+    radial-gradient(125% 85% at 70% 50%, transparent 50%, var(--bg) 100%),
     radial-gradient(80% 60% at 0% 50%, var(--glow-c) 0%, transparent 70%);
 }
 
@@ -315,6 +315,8 @@
 
 /* ── Stack view toggle ───────────────────────────────────── */
 .about__view {
+  position: relative;
+  z-index: 4; /* acima do .about__veil (z-2) — conteúdo nunca é escurecido */
   width: 100%;
 }
 

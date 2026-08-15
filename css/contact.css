@@ -793,3 +793,748 @@
     justify-content: center;
   }
 }
+
+/* =========================================================
+   E-MAIL — formulário direto
+   Duas colunas: contexto à esquerda, campos à direita.
+   Reaproveita tokens, .btn e o mesmo vocabulário visual
+   dos cards de WhatsApp (raio, superfície, hairline mono).
+   ========================================================= */
+.contact__email {
+  max-width: 56rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.cform {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+
+  /* Superfícies dos campos — um degrau abaixo do card */
+  --field-bg: rgba(255, 255, 255, 0.035);
+  --field-bg-hover: rgba(255, 255, 255, 0.055);
+  --field-bg-focus: rgba(255, 255, 255, 0.075);
+  --field-ring: rgba(0, 240, 255, 0.15);
+  --field-danger-ring: rgba(239, 68, 68, 0.16);
+
+  transition: border-color var(--tn), box-shadow var(--tn);
+}
+
+[data-theme="light"] .cform {
+  --field-bg: rgba(255, 255, 255, 0.72);
+  --field-bg-hover: rgba(255, 255, 255, 0.88);
+  --field-bg-focus: #ffffff;
+  --field-ring: rgba(0, 71, 255, 0.13);
+  --field-danger-ring: rgba(239, 68, 68, 0.13);
+}
+
+/* O card acende quando alguém está a escrever nele */
+.cform:focus-within {
+  border-color: var(--border-hi);
+  box-shadow: var(--shadow-card);
+}
+
+/* Fio de luz no topo — a marca, discreta */
+.cform__hairline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: 2;
+  background: var(--grad-brand);
+  opacity: 0.35;
+  transform: scaleX(0.34);
+  transform-origin: 0 50%;
+  transition: transform 720ms var(--ease-out), opacity 420ms var(--ease);
+  pointer-events: none;
+}
+
+.cform:focus-within .cform__hairline {
+  transform: scaleX(1);
+  opacity: 0.9;
+}
+
+/* ── Coluna de contexto ──────────────────────────────────── */
+.cform__aside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(1.6rem, 3vw, 2.25rem);
+  border-right: 1px solid var(--border);
+  background: linear-gradient(160deg,
+      rgba(0, 71, 255, 0.05) 0%,
+      transparent 58%);
+}
+
+[data-theme="light"] .cform__aside {
+  background: linear-gradient(160deg,
+      rgba(0, 71, 255, 0.045) 0%,
+      transparent 62%);
+}
+
+.cform__aside-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.cform__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-hi);
+  background: rgba(0, 71, 255, 0.12);
+  color: var(--accent);
+  transition: transform var(--tn), background var(--tn);
+}
+
+.cform__icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.cform:focus-within .cform__icon {
+  transform: translateY(-2px);
+  background: rgba(0, 71, 255, 0.18);
+}
+
+.cform__aside-titles {
+  min-width: 0;
+}
+
+.cform__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.cform__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.05rem + 0.35vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.cform__lead {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  max-width: 34ch;
+}
+
+.cform__points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cform__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.cform__points svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--success);
+}
+
+/* Endereço + copiar */
+.cform__addr {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.cform__addr-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+}
+
+.cform__addr-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cform__addr-link {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  border-bottom: 1px solid transparent;
+  transition: color var(--tf), border-color var(--tf);
+}
+
+.cform__addr-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.cform__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--tf), color var(--tf), background var(--tf);
+}
+
+.cform__copy:hover {
+  border-color: var(--border-hi);
+  background: var(--surface-md);
+  color: var(--text);
+}
+
+.cform__copy-ico {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+}
+
+.cform__copy-ico svg {
+  grid-area: 1 / 1;
+  width: 14px;
+  height: 14px;
+  transition: opacity 200ms var(--ease), transform 260ms var(--ease-out);
+}
+
+.cform__copy .ico-check {
+  opacity: 0;
+  transform: scale(0.6);
+  color: var(--success);
+}
+
+.cform__copy.is-copied {
+  border-color: rgba(34, 197, 94, 0.4);
+  color: var(--success);
+}
+
+.cform__copy.is-copied .ico-copy {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.cform__copy.is-copied .ico-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Coluna do formulário ────────────────────────────────── */
+.cform__form {
+  position: relative;
+  display: grid;
+  padding: clamp(1.6rem, 3vw, 2.25rem);
+}
+
+.cform__fields,
+.cform__done {
+  grid-area: 1 / 1;
+}
+
+.cform__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: opacity 300ms var(--ease), transform 380ms var(--ease-out);
+}
+
+.cform__form.is-sent .cform__fields {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+.cform__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* ── Campo ───────────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.field--grow {
+  flex: 1;
+}
+
+.field__label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.field__label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  /* Rótulo de campo é informação essencial: contraste acima do
+     dos kickers decorativos da secção. */
+  color: var(--text-muted);
+  transition: color var(--tf);
+}
+
+.field:focus-within .field__label {
+  color: var(--text);
+}
+
+.field__count {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--text-soft);
+  transition: color var(--tf);
+}
+
+.field__count.is-near {
+  color: var(--warning);
+}
+
+.field__box {
+  position: relative;
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--field-bg);
+  transition: border-color var(--tf), background var(--tf), box-shadow var(--tf);
+}
+
+.field__box:hover {
+  background: var(--field-bg-hover);
+}
+
+.field__box:focus-within {
+  border-color: var(--accent);
+  background: var(--field-bg-focus);
+  box-shadow: 0 0 0 3px var(--field-ring);
+}
+
+.field__input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.field__input::placeholder {
+  color: var(--text-soft);
+}
+
+.field__input:focus {
+  outline: none;
+}
+
+/* O anel do .field__box já sinaliza o foco; o outline global
+   duplicaria a moldura. Teclado continua coberto. */
+.field__input:focus-visible {
+  outline: none;
+}
+
+.field__textarea {
+  resize: vertical;
+  min-height: 104px;
+}
+
+/* Select com seta própria */
+.field__select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.field__select:invalid {
+  color: var(--text-soft);
+}
+
+.field__select option {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.field__chevron {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  color: var(--text-soft);
+  pointer-events: none;
+  transition: transform var(--tn), color var(--tf);
+}
+
+.field__chevron svg {
+  width: 15px;
+  height: 15px;
+}
+
+.field__box--select:focus-within .field__chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+/* Estado de erro */
+.field.is-invalid .field__box {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px var(--field-danger-ring);
+}
+
+.field.is-invalid .field__label {
+  color: var(--danger);
+}
+
+.field__msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--danger);
+  animation: cf-msg-in 220ms var(--ease-out) both;
+}
+
+/* display:flex venceria o [hidden] do HTML — reposto aqui */
+.field__msg[hidden],
+.cform__alert[hidden] {
+  display: none;
+}
+
+@keyframes cf-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Armadilha anti-spam */
+.cform__trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── Aviso de falha ──────────────────────────────────────── */
+.cform__alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px 14px;
+  border: 1px solid rgba(239, 68, 68, 0.32);
+  border-radius: var(--radius-md);
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  animation: cf-msg-in 260ms var(--ease-out) both;
+}
+
+.cform__alert svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--danger);
+}
+
+.cform__alert-link {
+  color: var(--text);
+  border-bottom: 1px solid var(--border-hi);
+  transition: color var(--tf), border-color var(--tf);
+}
+
+.cform__alert-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ── Ações ───────────────────────────────────────────────── */
+.cform__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 2px;
+}
+
+.cform__privacy {
+  max-width: 22ch;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.cform__submit {
+  flex-shrink: 0;
+}
+
+.cform__submit[disabled] {
+  cursor: progress;
+  opacity: 0.9;
+}
+
+.cform__submit[disabled]:hover {
+  transform: none;
+}
+
+/* Botão: rótulo → spinner. Uma peça de cada vez. */
+.cform__spinner {
+  display: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  animation: cf-spin 680ms linear infinite;
+}
+
+.cform__submit.is-sending .cform__spinner {
+  display: block;
+}
+
+.cform__submit.is-sending .cform__submit-arrow {
+  display: none;
+}
+
+@keyframes cf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Estado final ────────────────────────────────────────── */
+.cform__done {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 380ms var(--ease-out) 120ms,
+    transform 460ms var(--ease-out) 120ms;
+}
+
+.cform__done[hidden] {
+  display: none;
+}
+
+.cform__form.is-sent .cform__done {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.cform__done:focus-visible {
+  outline: none;
+}
+
+.cform__done-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(34, 197, 94, 0.38);
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--success);
+}
+
+.cform__done-mark svg {
+  width: 26px;
+  height: 26px;
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+}
+
+.cform__form.is-sent .cform__done-mark svg {
+  animation: cf-draw 480ms var(--ease-out) 320ms forwards;
+}
+
+@keyframes cf-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.cform__done-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.05rem + 0.35vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.cform__done-text {
+  max-width: 38ch;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.cform__done-mail {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.cform__done-again {
+  margin-top: 4px;
+}
+
+/* ── Movimento reduzido ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+  .cform,
+  .cform__hairline,
+  .cform__icon,
+  .cform__fields,
+  .cform__done,
+  .cform__copy-ico svg,
+  .field__box,
+  .field__chevron {
+    transition: none !important;
+  }
+
+  .cform__hairline {
+    transform: scaleX(1);
+  }
+
+  .cform:focus-within .cform__icon {
+    transform: none;
+  }
+
+  .field__box--select:focus-within .field__chevron {
+    transform: rotate(180deg);
+  }
+
+  .field__msg,
+  .cform__alert {
+    animation: none !important;
+  }
+
+  .cform__done-mark svg {
+    stroke-dashoffset: 0;
+  }
+
+  .cform__form.is-sent .cform__done-mark svg {
+    animation: none !important;
+  }
+
+  /* O spinner fica: é o único sinal de que o envio está em curso */
+  .cform__spinner {
+    animation-duration: 1.4s;
+  }
+}
+
+/* ── Responsividade ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  .cform {
+    grid-template-columns: 1fr;
+  }
+
+  .cform__aside {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cform__addr {
+    margin-top: 4px;
+  }
+
+  /* Coluna larga: a medida de leitura pode crescer */
+  .cform__lead {
+    max-width: 56ch;
+  }
+}
+
+@media (max-width: 560px) {
+  .cform__row {
+    grid-template-columns: 1fr;
+  }
+
+  .cform__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cform__privacy {
+    max-width: none;
+    order: 2;
+  }
+
+  .cform__submit {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cform__addr-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
