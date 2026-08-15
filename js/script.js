@@ -1517,6 +1517,51 @@ var startCounters = (function () {
   btnShow.addEventListener('click', showStack);
   if (btnHideBar) btnHideBar.addEventListener('click', hideStack);
 
+  /* ── Abrir a stack a partir de fora da secção ──────────
+     Qualquer link com [data-open-stack] (ex.: footer) leva
+     o utilizador ao #sobre e abre a view da stack.
+     Sem JS, o href="#sobre" continua a funcionar.        */
+  function stackIsOpen() {
+    return viewStack.getAttribute('aria-hidden') === 'false';
+  }
+
+  /* Leva a secção ao topo e só depois corre o callback,
+     para a transição não competir com o scroll. */
+  function bringSectionIntoView(done) {
+    var navH   = 80;
+    var target = window.scrollY + section.getBoundingClientRect().top - navH;
+
+    if (rm.matches || Math.abs(window.scrollY - target) < 4) {
+      window.scrollTo({ top: target, behavior: 'auto' });
+      done();
+      return;
+    }
+
+    window.scrollTo({ top: target, behavior: 'smooth' });
+
+    var last = -1, still = 0, ticks = 0;
+    var timer = setInterval(function () {
+      still = (window.scrollY === last) ? still + 1 : 0;
+      last  = window.scrollY;
+      if (still >= 2 || ++ticks > 40) {
+        clearInterval(timer);
+        done();
+      }
+    }, 50);
+  }
+
+  document.addEventListener('click', function (e) {
+    var trigger = e.target && e.target.closest
+      ? e.target.closest('[data-open-stack]')
+      : null;
+    if (!trigger) return;
+
+    e.preventDefault();
+    bringSectionIntoView(function () {
+      if (!stackIsOpen()) showStack();
+    });
+  });
+
   /* ══════════════════════════════════════════════════════
      FILTROS — reflow real
      ══════════════════════════════════════════════════════ */
