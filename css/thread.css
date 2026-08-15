@@ -1,0 +1,276 @@
+/* =========================================================
+   InCode — Fio de Execução (Thread)
+   Secção sticky scroll com SVG animado e nós de etapas
+   ========================================================= */
+
+.thread {
+  position: relative;
+  background: var(--bg);
+}
+
+.thread__scroller {
+  height: 300vh;
+  position: relative;
+}
+
+.thread__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ── Kicker ──────────────────────────────────────────────── */
+.thread__kicker {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 clamp(1.5rem, 3vh, 2.5rem);
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  letter-spacing: .04em;
+  color: var(--text-soft);
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: thread-kicker-in 600ms 200ms var(--ease-out) forwards;
+}
+
+@keyframes thread-kicker-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.thread__kicker::before,
+.thread__kicker::after {
+  content: "";
+  height: 1px;
+  width: clamp(32px, 7vw, 80px);
+  background: linear-gradient(to right, transparent, var(--border-hi));
+}
+
+.thread__kicker::after {
+  background: linear-gradient(to left, transparent, var(--border-hi));
+}
+
+/* ── Canvas (área de desenho) ────────────────────────────── */
+.thread__canvas {
+  position: relative;
+  width: min(100% - 2rem, 860px);
+  height: clamp(340px, 52vh, 500px);
+}
+
+/* ── SVG da calha ────────────────────────────────────────── */
+.thread__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.thread__svg-base {
+  stroke: var(--border-hi);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: .55;
+}
+
+.thread__svg-fill {
+  stroke: url(#thread-grad);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(0, 240, 255, .55));
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  will-change: stroke-dashoffset;
+}
+
+.thread__svg-head {
+  fill: #00f0ff;
+  filter:
+    drop-shadow(0 0 4px rgba(0, 240, 255, .9))
+    drop-shadow(0 0 12px rgba(0, 240, 255, .6));
+  opacity: 0;
+  will-change: cy, opacity;
+  transition: opacity 200ms ease;
+}
+
+/* ── Nós (node wraps) ────────────────────────────────────── */
+.thread__node-wrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 26px);
+  transform: translateY(-50%);
+}
+
+.thread__node-wrap[data-side="left"] {
+  flex-direction: row-reverse;
+}
+
+.thread__node-wrap[data-side="right"] {
+  flex-direction: row;
+}
+
+.thread__node {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid var(--border-hi);
+  position: relative;
+  z-index: 3;
+  transition:
+    border-color 500ms var(--ease),
+    box-shadow 500ms var(--ease),
+    transform 500ms var(--ease),
+    width 500ms var(--ease),
+    height 500ms var(--ease);
+}
+
+.thread__node::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #00f0ff;
+  opacity: 0;
+  transition: opacity 500ms var(--ease);
+}
+
+.thread__node-wrap--key .thread__node {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.thread__node-wrap--key .thread__node::after {
+  inset: 5px;
+}
+
+.thread__node-wrap.is-lit .thread__node {
+  border-color: #00f0ff;
+  transform: scale(1.15);
+  box-shadow:
+    0 0 0 5px rgba(0, 240, 255, .12),
+    0 0 20px rgba(0, 240, 255, .50);
+}
+
+.thread__node-wrap.is-lit .thread__node::after {
+  opacity: 1;
+}
+
+.thread__node-wrap--key.is-lit .thread__node {
+  box-shadow:
+    0 0 0 8px rgba(0, 240, 255, .12),
+    0 0 32px rgba(0, 240, 255, .60);
+}
+
+/* ── Labels dos nós ──────────────────────────────────────── */
+.thread__label {
+  max-width: min(280px, 35vw);
+  opacity: 0;
+  transform: translateX(0) translateY(8px);
+  transition:
+    opacity 640ms var(--ease-out),
+    transform 640ms var(--ease-out);
+}
+
+.thread__node-wrap[data-side="left"] .thread__label {
+  text-align: right;
+}
+
+.thread__node-wrap[data-side="right"] .thread__label {
+  text-align: left;
+}
+
+.thread__node-wrap.is-lit .thread__label {
+  opacity: 1;
+  transform: none;
+}
+
+.thread__key {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  color: var(--brand-cyan);
+  margin-bottom: 4px;
+  text-transform: lowercase;
+}
+
+.thread__label b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, .95rem + .4vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+.thread__label p {
+  font-size: .845rem;
+  color: var(--text-muted);
+  line-height: 1.58;
+  margin: 0;
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .thread__kicker {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .thread__svg-fill {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+
+  .thread__node,
+  .thread__node::after,
+  .thread__label {
+    transition: none;
+  }
+
+  .thread__node-wrap .thread__label {
+    opacity: 1;
+    transform: none;
+  }
+
+  .thread__node-wrap .thread__node {
+    border-color: #00f0ff;
+  }
+
+  .thread__node-wrap .thread__node::after {
+    opacity: 1;
+  }
+
+  .thread__svg-head {
+    opacity: 1;
+    transition: none;
+  }
+
+  .thread__scroller {
+    height: auto;
+  }
+
+  .thread__sticky {
+    position: relative;
+    height: auto;
+    padding: clamp(4rem, 10vh, 7rem) 0;
+  }
+}

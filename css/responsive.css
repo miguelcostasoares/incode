@@ -1,0 +1,85 @@
+/* =========================================================
+   InCode — Responsividade e Movimento Reduzido globais
+   Media queries que afetam múltiplas secções em simultâneo
+   ========================================================= */
+
+/* ── Tipografia e layout global ──────────────────────────── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 1.2rem + 2.2vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.038em;
+  line-height: 1.08;
+  color: var(--text);
+  margin: 0;
+}
+
+.section-lead {
+  font-size: clamp(.9rem, .86rem + .18vw, 1rem);
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Scroll suave global ─────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Reduced motion global ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .about,
+  .about.about--reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .about.about--reveal .about__head-v2,
+  .about.about--reveal .about__stats-v2,
+  .about.about--reveal .about__bottom-v2,
+  .about.about--reveal .about__kicker,
+  .about.about--reveal .aval {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .about__values-v2::before {
+    transition: none !important;
+  }
+
+  .aval::before {
+    transition: none;
+  }
+
+  .aval__arrow {
+    opacity: 1;
+    transform: none;
+  }
+}

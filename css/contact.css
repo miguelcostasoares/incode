@@ -1,0 +1,795 @@
+/* =========================================================
+   InCode — Secção Contato
+   Inclui: WhatsApp cards com bandeiras, bolha de conversa,
+   rodapé de redes sociais
+   ========================================================= */
+
+.contact {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 8vw, 6rem) 0 clamp(5rem, 10vw, 7.5rem);
+  background: var(--bg);
+}
+
+.aurora__canvas--contact {
+  z-index: 0;
+  opacity: .6;
+}
+
+.contact__grid-overlay {
+  z-index: 1;
+}
+
+.contact__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(110% 45% at 50% 0%, transparent 30%, rgba(9, 9, 11, 0.30) 65%, var(--bg) 100%),
+    radial-gradient(100% 50% at 50% 100%, transparent 30%, rgba(9, 9, 11, 0.40) 72%, var(--bg) 100%);
+}
+
+[data-theme="light"] .contact__veil {
+  background:
+    radial-gradient(110% 45% at 50% 0%, transparent 30%, rgba(248, 250, 252, 0.30) 65%, var(--bg) 100%),
+    radial-gradient(100% 50% at 50% 100%, transparent 30%, rgba(248, 250, 252, 0.40) 72%, var(--bg) 100%);
+}
+
+.contact__inner {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+/* ── Cabeçalho ───────────────────────────────────────────── */
+.contact__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.contact__head-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.contact__head-line {
+  display: block;
+  height: 1px;
+  width: clamp(28px, 6vw, 56px);
+  background: linear-gradient(to right, transparent, var(--border-hi));
+}
+
+.contact__head-line:last-child {
+  background: linear-gradient(to left, transparent, var(--border-hi));
+}
+
+.contact__head .section-title {
+  margin-top: 4px;
+  font-size: clamp(2rem, 1.2rem + 2.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.contact__head .section-lead {
+  max-width: 44ch;
+  color: var(--text-muted);
+  font-size: clamp(.9rem, .86rem + .18vw, 1rem);
+  line-height: 1.65;
+}
+
+/* ── WhatsApp — CTA principal ───────────────────────────── */
+.contact__whats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  max-width: 56rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.whats__card {
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(1.5rem, 2.6vw, 1.9rem) clamp(1.5rem, 2.6vw, 2rem);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  /* Centro da bandeira = centro do ícone */
+  --flag-x: calc(clamp(1.5rem, 2.6vw, 2rem) + 26px);
+  /* Fundo sólido da bolha de conversa */
+  --pop-bg: #15161b;
+  transition:
+    border-color 320ms var(--ease), background 320ms var(--ease),
+    transform 320ms var(--ease), box-shadow 380ms var(--ease);
+}
+
+[data-theme="light"] .whats__card {
+  --pop-bg: #ffffff;
+}
+
+.whats__card:hover,
+.whats__card:focus-visible {
+  background: var(--surface-md);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+  z-index: 5;
+}
+
+.whats__card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BANDEIRA EM LUZ — surge no hover, camada por camada
+   ═══════════════════════════════════════════════════════════ */
+
+/* Recorta a bandeira. É esta camada — e não o card — que tem
+   overflow: hidden, para a bolha de conversa poder flutuar fora. */
+.whats__card-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* 1 · Campo — a luz base, colorida pela bandeira */
+.whats__flag-field {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+}
+
+/* 2 · Halo — amarra o núcleo à luz de fundo */
+.whats__flag-halo {
+  position: absolute;
+  top: 50%;
+  left: var(--flag-x);
+  width: 200px;
+  height: 200px;
+  margin: -100px 0 0 -100px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 560ms var(--ease-out),
+    transform 760ms var(--ease-out);
+}
+
+/* 3 · Emblema — recortado das bandeiras oficiais */
+.whats__flag-emblem {
+  position: absolute;
+  top: 50%;
+  left: var(--flag-x);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: blur(2.5px);
+  opacity: 0;
+  transform: rotate(var(--emb-rot)) scale(0.5);
+  transition:
+    opacity 520ms var(--ease-out),
+    transform 720ms var(--ease-out);
+  transition-delay: 60ms;
+}
+
+/* 4 · Sheen — varredura de luz */
+.whats__flag-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, transparent 15%, rgba(255, 255, 255, .14) 48%, transparent 82%);
+  translate: -110% 0;
+  transition: translate 620ms var(--ease-out);
+}
+
+[data-theme="light"] .whats__flag-sheen {
+  background: linear-gradient(118deg, transparent 15%, rgba(255, 255, 255, .55) 48%, transparent 82%);
+}
+
+/* ── Estados ────────────────────────────────────────────── */
+.whats__card:hover .whats__flag-field,
+.whats__card:focus-visible .whats__flag-field {
+  opacity: 1;
+}
+
+.whats__card:hover .whats__flag-halo,
+.whats__card:focus-visible .whats__flag-halo {
+  opacity: .9;
+  transform: scale(1);
+}
+
+[data-theme="light"] .whats__card:hover .whats__flag-halo,
+[data-theme="light"] .whats__card:focus-visible .whats__flag-halo {
+  opacity: 0;
+}
+
+.whats__card:hover .whats__flag-emblem,
+.whats__card:focus-visible .whats__flag-emblem {
+  opacity: var(--emb-op);
+  transform: rotate(0deg) scale(1);
+}
+
+.whats__card:hover .whats__flag-sheen,
+.whats__card:focus-visible .whats__flag-sheen {
+  translate: 110% 0;
+}
+
+.whats__card:hover .whats__icon {
+  transform: scale(1.08) rotate(-6deg);
+}
+
+.whats__card:hover .whats__arrow svg {
+  transform: translateX(4px);
+}
+
+/* ── Brasil ──────────────────────────────────────────────── */
+.whats--br {
+  --emb-rot: -8deg;
+  --emb-op: .86;
+}
+
+.whats--br:hover,
+.whats--br:focus-visible {
+  border-color: rgba(0, 200, 83, .38);
+}
+
+.whats--br .whats__flag-field {
+  background: linear-gradient(100deg,
+      rgba(0, 176, 80, .22) 0%,
+      rgba(0, 176, 80, .07) 52%,
+      rgba(0, 176, 80, 0) 100%);
+}
+
+.whats--br .whats__flag-halo {
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 205, 0, .22) 0%,
+      rgba(0, 190, 90, .14) 38%,
+      transparent 66%);
+}
+
+.whats--br .whats__flag-emblem {
+  width: 152px;
+  height: 97px;
+  margin: -48px 0 0 -76px;
+  background-image: url("../assets/emblema-br.webp");
+}
+
+/* ── Portugal ────────────────────────────────────────────── */
+.whats--pt {
+  --emb-rot: -30deg;
+  --emb-op: .90;
+}
+
+.whats--pt:hover,
+.whats--pt:focus-visible {
+  border-color: rgba(0, 180, 100, .34);
+}
+
+.whats--pt .whats__flag-field {
+  background: linear-gradient(90deg,
+      rgba(0, 158, 84, .40) 0%,
+      rgba(0, 158, 84, .36) calc(var(--flag-x) - 10px),
+      rgba(214, 38, 46, .22) calc(var(--flag-x) + 10px),
+      rgba(214, 38, 46, .09) 42%,
+      rgba(214, 38, 46, 0) 100%);
+}
+
+.whats--pt .whats__flag-halo {
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 200, 60, .16) 0%,
+      rgba(214, 38, 46, .10) 42%,
+      transparent 68%);
+}
+
+.whats--pt .whats__flag-emblem {
+  width: 104px;
+  height: 104px;
+  margin: -52px 0 0 -52px;
+  background-image: url("../assets/emblema-pt.webp");
+}
+
+/* ── Ajustes de tema claro ───────────────────────────────── */
+[data-theme="light"] .whats--br {
+  --emb-op: .90;
+}
+
+[data-theme="light"] .whats--pt {
+  --emb-op: .94;
+}
+
+[data-theme="light"] .whats--br .whats__flag-field {
+  background: linear-gradient(100deg,
+      rgba(0, 150, 62, .15) 0%,
+      rgba(0, 150, 62, .06) 48%,
+      rgba(0, 150, 62, .01) 100%);
+}
+
+[data-theme="light"] .whats--pt .whats__flag-field {
+  background: linear-gradient(90deg,
+      rgba(0, 140, 74, .28) 0%,
+      rgba(0, 140, 74, .24) calc(var(--flag-x) - 10px),
+      rgba(206, 32, 42, .14) calc(var(--flag-x) + 10px),
+      rgba(206, 32, 42, .06) 42%,
+      rgba(206, 32, 42, 0) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BOLHA DE CONVERSA — só onde existe cursor de verdade
+   ═══════════════════════════════════════════════════════════ */
+.whats__pop {
+  position: absolute;
+  right: 18px;
+  bottom: calc(100% - 18px);
+  width: 252px;
+  height: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.pop__typing,
+.pop__card {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: var(--pop-bg);
+  border: 1px solid var(--border-hi);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  transform-origin: 100% 100%;
+}
+
+/* ── Fase 1 · digitando ────────────────────────────────── */
+.pop__typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 11px 14px;
+  border-radius: 16px 16px 6px 16px;
+  transform: scale(0.8);
+}
+
+.pop__typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-soft);
+}
+
+/* ── Fase 2 · a mensagem ───────────────────────────────── */
+.pop__card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  padding: 13px 15px 10px;
+  border-radius: 18px 18px 6px 18px;
+  transform: translateY(6px) scale(0.94);
+}
+
+/* Rabinho apontando para o card */
+.pop__card::after {
+  content: "";
+  position: absolute;
+  right: 13px;
+  bottom: -7px;
+  width: 13px;
+  height: 13px;
+  background: var(--pop-bg);
+  border-right: 1px solid var(--border-hi);
+  border-bottom: 1px solid var(--border-hi);
+  border-bottom-right-radius: 3px;
+  transform: rotate(45deg);
+}
+
+.pop__text {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.pop__num {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--success);
+}
+
+.pop__meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+}
+
+.pop__meta svg {
+  width: 13px;
+  height: 13px;
+  color: var(--brand-cyan);
+}
+
+/* ── Keyframes da bolha ────────────────────────────────── */
+@keyframes pop-typing {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  22% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  74% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pop-dot {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: .40;
+  }
+
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+/* ── Coreografia da bolha (só com cursor real) ──────────── */
+@media (hover: hover) and (pointer: fine) {
+  .whats__card:hover .pop__typing,
+  .whats__card:focus-visible .pop__typing {
+    animation: pop-typing 460ms var(--ease-out) 60ms both;
+  }
+
+  .whats__card:hover .pop__typing i,
+  .whats__card:focus-visible .pop__typing i {
+    animation: pop-dot 620ms ease-in-out infinite;
+  }
+
+  .pop__typing i:nth-child(2) {
+    animation-delay: 100ms;
+  }
+
+  .pop__typing i:nth-child(3) {
+    animation-delay: 200ms;
+  }
+
+  .whats__card:hover .pop__card,
+  .whats__card:focus-visible .pop__card {
+    animation: pop-in 340ms var(--ease-out) 400ms both;
+  }
+}
+
+/* Telefone visível quando não há cursor */
+.whats__phone {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: var(--success);
+  margin-top: 2px;
+}
+
+@media not all and (hover: hover) {
+  .whats__pop {
+    display: none;
+  }
+
+  .whats__flag-emblem {
+    display: none;
+  }
+
+  .whats__phone {
+    display: block;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTEÚDO DO CARD
+   ═══════════════════════════════════════════════════════════ */
+.whats__icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(34, 197, 94, .16);
+  color: var(--success);
+  transition: transform var(--tn), background var(--tn), color var(--tn);
+}
+
+.whats__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* No hover o ícone cede o fundo para o disco da bandeira */
+.whats__card:hover .whats__icon,
+.whats__card:focus-visible .whats__icon {
+  background: transparent;
+  color: #ffffff;
+}
+
+.whats__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.whats__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: .06em;
+  color: var(--text-soft);
+  transition: color var(--tn);
+}
+
+.whats__card:hover .whats__kicker {
+  color: var(--text-muted);
+}
+
+.whats__title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, .95rem + .2vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.whats__arrow {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-hi);
+  color: var(--text-muted);
+  transition: border-color var(--tn), color var(--tn);
+}
+
+.whats__arrow svg {
+  width: 15px;
+  height: 15px;
+  transition: transform var(--tn);
+}
+
+.whats__card:hover .whats__arrow {
+  border-color: var(--text-soft);
+  color: var(--text);
+}
+
+/* ── Rodapé: nota + redes sociais ───────────────────────── */
+.contact__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact__foot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(70% 90% at 0% 50%, rgba(0, 71, 255, .06) 0%, transparent 70%);
+}
+
+.contact__foot-note {
+  position: relative;
+  z-index: 1;
+  max-width: 40ch;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.contact__socials {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.social__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition:
+    border-color 280ms var(--ease), color 280ms var(--ease),
+    background-color 280ms var(--ease), transform 280ms var(--ease);
+}
+
+.social__link svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.social__link:hover {
+  transform: translateY(-2px);
+}
+
+.social__link-instagram:hover {
+  border-color: rgba(225, 48, 108, 0.6);
+  background: linear-gradient(135deg,
+      rgba(64, 93, 230, 0.22) 0%,
+      rgba(131, 58, 180, 0.25) 25%,
+      rgba(225, 48, 108, 0.28) 55%,
+      rgba(253, 150, 50, 0.22) 100%);
+  color: white;
+  box-shadow:
+    0 6px 20px -6px rgba(225, 48, 108, 0.5),
+    0 0 0 1px rgba(253, 150, 50, 0.15);
+}
+
+.social__link-facebook:hover {
+  border-color: rgba(24, 119, 242, 0.55);
+  background: rgba(24, 119, 242, 0.12);
+  color: white;
+  box-shadow: 0 6px 18px -8px rgba(24, 119, 242, 0.40);
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .whats__card,
+  .whats__icon,
+  .whats__arrow,
+  .whats__arrow svg,
+  .whats__kicker,
+  .whats__flag-field,
+  .whats__flag-halo,
+  .whats__flag-emblem,
+  .whats__flag-sheen {
+    transition: none !important;
+  }
+
+  .whats__flag-sheen {
+    display: none;
+  }
+
+  .whats__card:hover {
+    transform: none !important;
+  }
+
+  .whats__card:hover .whats__icon {
+    transform: none !important;
+  }
+
+  .whats__card:hover .whats__flag-emblem {
+    transform: rotate(0deg) scale(1) !important;
+  }
+
+  .whats__card:hover .whats__flag-halo {
+    transform: scale(1) !important;
+  }
+
+  /* Mensagem aparece direta, sem beat de digitação */
+  .whats__card:hover .pop__typing,
+  .whats__card:hover .pop__typing i {
+    animation: none !important;
+    opacity: 0;
+  }
+
+  .whats__card:hover .pop__card {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .social__link {
+    transition: none !important;
+  }
+
+  .social__link:hover {
+    transform: none !important;
+  }
+}
+
+/* ── Responsividade ──────────────────────────────────────── */
+@media (max-width: 720px) {
+  .contact__whats {
+    grid-template-columns: 1fr;
+  }
+
+  .contact__head {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .contact__head-label {
+    justify-content: flex-start;
+  }
+
+  .contact__head-line:last-child {
+    display: none;
+  }
+
+  .contact__foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .whats__card {
+    flex-wrap: wrap;
+  }
+
+  .contact__socials {
+    width: 100%;
+  }
+
+  .social__link {
+    flex: 1;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,383 @@
+/* =========================================================
+   InCode — Hero Section
+   Inclui: aurora canvas, grid, logo showcase, badges
+   ========================================================= */
+
+/* ── Secção ──────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--nav-h) + 42px) 0 0;
+  background: var(--bg);
+}
+
+/* ── Camadas de fundo ────────────────────────────────────── */
+.aurora__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(80% 60% at 50% 40%, #000 10%, transparent 80%);
+  mask-image: radial-gradient(80% 60% at 50% 40%, #000 10%, transparent 80%);
+}
+
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--veil);
+}
+
+/* ── Grid interior ───────────────────────────────────────── */
+.hero__inner {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 6rem);
+}
+
+/* ── Conteúdo textual ────────────────────────────────────── */
+.hero__content {
+  max-width: 38rem;
+}
+
+.hero__title {
+  font-size: clamp(2.2rem, 1.2rem + 3vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.038em;
+  margin-bottom: 22px;
+  max-width: 16ch;
+}
+
+.hero__lead {
+  max-width: 30rem;
+  color: var(--text-muted);
+  font-size: clamp(0.9375rem, 0.875rem + 0.25vw, 1.0625rem);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 0;
+}
+
+/* ── Visual (showcase da logo) ───────────────────────────── */
+.hero__visual {
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Logo Showcase ───────────────────────────────────────── */
+.logo-scene {
+  width: 100%;
+  height: 100%;
+  perspective: 900px;
+  perspective-origin: 50% 45%;
+}
+
+.logo-showcase {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transform: rotateY(-12deg) rotateX(5deg);
+  transition: transform 1.2s var(--ease-out);
+}
+
+.hero__visual:hover .logo-showcase {
+  transform: rotateY(-4deg) rotateX(2deg);
+}
+
+/* ── Órbitas ─────────────────────────────────────────────── */
+.orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid;
+  pointer-events: none;
+}
+
+.orbit--1 {
+  width: 72%;
+  height: 72%;
+  border-color: var(--orbit-color);
+  opacity: 0.35;
+  animation: spin 22s linear infinite;
+}
+
+.orbit--2 {
+  width: 88%;
+  height: 88%;
+  border-color: var(--orbit-color);
+  border-style: dashed;
+  opacity: 0.18;
+  animation: spin 38s linear infinite reverse;
+}
+
+.orbit--3 {
+  width: 100%;
+  height: 100%;
+  border-color: var(--orbit-color);
+  opacity: 0.10;
+  animation: spin 60s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Canvas de órbita (JS) ───────────────────────────────── */
+.orbit-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Halo da logo ────────────────────────────────────────── */
+.logo-halo {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--halo-b) 0%, var(--halo-a) 45%, transparent 72%);
+  filter: blur(32px);
+  animation: halopulse 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes halopulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: .8;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+/* ── Logo principal (grande) ─────────────────────────────── */
+.logo-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter:
+    drop-shadow(0 0 18px rgba(0, 71, 255, .65)) drop-shadow(0 0 48px rgba(0, 240, 255, .35)) drop-shadow(0 0 90px rgba(0, 71, 255, .22));
+  animation: logofloat 7s ease-in-out infinite;
+}
+
+@keyframes logofloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-14px) scale(1.025);
+  }
+}
+
+.logo-big {
+  width: clamp(90px, 12vw, 148px);
+  height: auto;
+}
+
+[data-theme="light"] .logo-wrap {
+  filter:
+    drop-shadow(0 0 14px rgba(0, 71, 255, .35)) drop-shadow(0 0 36px rgba(0, 120, 255, .18));
+}
+
+/* ── Badges flutuantes ───────────────────────────────────── */
+.badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px 10px 10px;
+  border: 1px solid var(--border-hi);
+  border-radius: var(--radius-md);
+  background: var(--badge-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: var(--shadow-card);
+  min-width: 130px;
+}
+
+.badge--tl {
+  top: 6%;
+  left: -6%;
+  transform: translateZ(40px) rotateY(8deg);
+  animation: floaty-tl 8s ease-in-out infinite;
+}
+
+.badge--tr {
+  top: 18%;
+  right: -6%;
+  transform: translateZ(32px) rotateY(-7deg);
+  animation: floaty-tr 9s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.badge--bl {
+  bottom: 18%;
+  left: -6%;
+  transform: translateZ(22px) rotateY(6deg);
+  animation: floaty-bl 10s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.badge--br {
+  bottom: 6%;
+  right: -6%;
+  transform: translateZ(28px) rotateY(-6deg);
+  animation: floaty-br 8s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+@keyframes floaty-tl {
+  0%, 100% { transform: translateZ(40px) rotateY(8deg) translateY(0); }
+  50%       { transform: translateZ(40px) rotateY(8deg) translateY(-9px); }
+}
+
+@keyframes floaty-tr {
+  0%, 100% { transform: translateZ(32px) rotateY(-7deg) translateY(0); }
+  50%       { transform: translateZ(32px) rotateY(-7deg) translateY(-11px); }
+}
+
+@keyframes floaty-bl {
+  0%, 100% { transform: translateZ(22px) rotateY(6deg) translateY(0); }
+  50%       { transform: translateZ(22px) rotateY(6deg) translateY(-8px); }
+}
+
+@keyframes floaty-br {
+  0%, 100% { transform: translateZ(28px) rotateY(-6deg) translateY(0); }
+  50%       { transform: translateZ(28px) rotateY(-6deg) translateY(-9px); }
+}
+
+/* ── Ícone do badge ──────────────────────────────────────── */
+.badge__icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 71, 255, .16);
+  color: var(--brand-blue-soft);
+}
+
+.badge__icon--ok     { background: rgba(34, 197, 94, .16);   color: var(--success); }
+.badge__icon--violet { background: rgba(139, 92, 246, .18);  color: var(--brand-violet); }
+.badge__icon--cyan   { background: rgba(0, 240, 255, .12);   color: var(--brand-cyan); }
+.badge__icon--blue   { background: rgba(0, 71, 255, .16);    color: var(--brand-blue-soft); }
+
+.badge__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.badge b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+
+.badge small {
+  font-size: .7rem;
+  color: var(--text-soft);
+  margin-top: 2px;
+  display: block;
+}
+
+/* ── Responsividade ──────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .hero__visual {
+    justify-self: center;
+    max-width: 360px;
+    aspect-ratio: 1;
+  }
+
+  .hero__content {
+    max-width: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .hero {
+    padding: calc(var(--nav-h) + 44px) 0 56px;
+  }
+
+  .hero__title {
+    font-size: clamp(1.9rem, 7vw, 2.75rem);
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .badge--tl { top: 2%;  left: 0; }
+  .badge--tr { top: 10%; right: 0; }
+  .badge--bl { bottom: 18%; left: 0; }
+  .badge--br { bottom: 2%; right: 0; }
+
+  .hero__visual {
+    overflow: hidden;
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .badge b {
+    font-size: .8rem;
+  }
+
+  .orbit--2,
+  .orbit--3 {
+    display: none;
+  }
+}

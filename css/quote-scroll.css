@@ -1,0 +1,235 @@
+/* =========================================================
+   InCode — Quote Scroll
+   Secção de citação animada com scroll sticky
+   ========================================================= */
+
+.quote-scroll {
+  position: relative;
+  background: var(--bg);
+}
+
+.quote-scroll__scroller {
+  height: 280vh;
+  position: relative;
+}
+
+.quote-scroll__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+  overflow: hidden;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  background: var(--bg);
+}
+
+/* Vinheta de topo e fundo */
+.quote-scroll__sticky::before,
+.quote-scroll__sticky::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 180px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.quote-scroll__sticky::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+}
+
+.quote-scroll__sticky::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+
+/* ── Eyebrow ─────────────────────────────────────────────── */
+.quote-scroll__eyebrow {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+}
+
+.quote-scroll__eyebrow.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.quote-scroll__line {
+  height: 1px;
+  width: clamp(32px, 8vw, 80px);
+  background: linear-gradient(to right, transparent, var(--border-hi));
+}
+
+.quote-scroll__line:last-child {
+  background: linear-gradient(to left, transparent, var(--border-hi));
+}
+
+.quote-scroll__tag {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .14em;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+/* ── Blockquote ──────────────────────────────────────────── */
+.quote-scroll__block {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+  max-width: min(860px, 88vw);
+  text-align: center;
+}
+
+.quote-scroll__text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 1rem + 2.4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.032em;
+  color: var(--text);
+}
+
+/* Palavras animadas individualmente */
+.quote-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.22em);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+  margin-right: 0.28em;
+}
+
+.quote-word:last-child { margin-right: 0; }
+
+.quote-word.is-lit {
+  opacity: 1;
+  transform: none;
+}
+
+/* Palavras de destaque */
+.quote-word[data-accent] {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Footer / atribuição ─────────────────────────────────── */
+.quote-scroll__footer {
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+}
+
+.quote-scroll__footer.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.quote-scroll__cite {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.quote-scroll__author {
+  font-family: var(--font-display);
+  font-size: clamp(.9rem, .85rem + .2vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--text);
+}
+
+.quote-scroll__role {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  color: var(--text-soft);
+}
+
+.quote-scroll__cite::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--border-hi);
+  margin-bottom: 10px;
+}
+
+/* ── Barra de progresso ──────────────────────────────────── */
+.quote-scroll__progress {
+  position: relative;
+  z-index: 3;
+  width: min(200px, 40vw);
+  height: 2px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.quote-scroll__progress.is-visible { opacity: 1; }
+
+.quote-scroll__progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--brand-cyan), var(--brand-blue));
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 8px rgba(0, 240, 255, .45);
+  transition: width 80ms linear;
+}
+
+/* ── Responsividade ──────────────────────────────────────── */
+@media (max-width: 680px) {
+  .quote-scroll__text {
+    font-size: clamp(1.45rem, 6vw, 1.9rem);
+    line-height: 1.22;
+  }
+
+  .quote-word { margin-right: 0.22em; }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .quote-word {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .quote-scroll__footer,
+  .quote-scroll__eyebrow {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .quote-scroll__scroller { height: auto; }
+
+  .quote-scroll__sticky {
+    position: relative;
+    height: auto;
+    padding: clamp(4rem, 10vh, 7rem) clamp(1.25rem, 5vw, 4rem);
+  }
+
+  .quote-scroll__progress { display: none; }
+}

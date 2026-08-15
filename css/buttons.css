@@ -1,0 +1,85 @@
+/* =========================================================
+   InCode — Botões
+   ========================================================= */
+
+.btn {
+  --py: 14px;
+  --px: 28px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: var(--py) var(--px);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform var(--tf), box-shadow var(--tn),
+    border-color var(--tf), background-color var(--tf), color var(--tf);
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--tn);
+}
+
+.btn:hover svg {
+  transform: translateX(4px);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* ── Tamanho pequeno ─────────────────────────────────────── */
+.btn--sm {
+  --py: 10px;
+  --px: 20px;
+  font-size: 0.875rem;
+}
+
+/* ── Primário (gradiente da marca) ───────────────────────── */
+.btn--primary {
+  background: var(--grad-brand);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-btn);
+}
+
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.42) 50%, transparent 80%);
+  translate: -130% 0;
+  transition: translate 700ms var(--ease-out);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+}
+
+.btn--primary:hover::after {
+  translate: 130% 0;
+}
+
+/* ── Ghost (translúcido) ─────────────────────────────────── */
+.btn--ghost {
+  background: var(--surface);
+  border-color: var(--border-hi);
+  color: var(--text);
+  backdrop-filter: blur(10px);
+}
+
+.btn--ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: var(--surface-md);
+}

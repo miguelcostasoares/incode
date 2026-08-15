@@ -1,0 +1,48 @@
+/* =========================================================
+   InCode — Tokens
+   Design System v2 — Variáveis globais
+   ========================================================= */
+
+:root {
+  /* ── Cores da marca ──────────────────────────────────────── */
+  --brand-blue: #0047ff;
+  --brand-cyan: #00f0ff;
+  --brand-violet: #8b5cf6;
+  --brand-pink: #ec4899;
+  --brand-blue-soft: #3b82f6;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  --grad-brand: linear-gradient(110deg, #0047ff 0%, #1060ff 55%, #0a72ff 100%);
+
+  /* ── Tipografia ──────────────────────────────────────────── */
+  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ── Border Radius ───────────────────────────────────────── */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ── Easing e transições ─────────────────────────────────── */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --tf: 160ms var(--ease);
+  --tn: 320ms var(--ease);
+  --ts: 620ms var(--ease-out);
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --container: 1280px;
+  --nav-h: 72px;
+
+  /* ── Navbar (transições específicas) ─────────────────────── */
+  --nav-t-wrap: 560ms;
+  --nav-t-inner: 480ms;
+  --nav-t-fade: 220ms;
+  --nav-t-slide: 380ms;
+  --nav-ease: cubic-bezier(0.32, 0.72, 0, 1);
+}

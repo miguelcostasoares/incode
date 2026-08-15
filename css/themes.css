@@ -1,0 +1,65 @@
+/* =========================================================
+   InCode — Temas (Dark / Light)
+   ========================================================= */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #09090b;
+  --bg-deep: #050507;
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-md: rgba(255, 255, 255, 0.08);
+  --surface-hi: rgba(255, 255, 255, 0.11);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-hi: rgba(255, 255, 255, 0.17);
+  --text: #f8fafc;
+  --text-muted: rgba(248, 250, 252, 0.64);
+  --text-soft: rgba(248, 250, 252, 0.40);
+  --accent: var(--brand-cyan);
+  --on-accent: #ffffff;
+  --grad-text: linear-gradient(110deg, #1a8cff 0%, #28d8ff 50%, #00f0ff 100%);
+  --nav-bg: rgba(9, 9, 11, 0.50);
+  --nav-bg-scroll: rgba(9, 9, 11, 0.78);
+  --glow-a: rgba(0, 71, 255, 0.28);
+  --glow-b: rgba(0, 240, 255, 0.14);
+  --glow-c: rgba(139, 92, 246, 0.22);
+  --glow-d: rgba(236, 72, 153, 0.14);
+  --shadow-card: 0 30px 70px -24px rgba(0, 0, 0, 0.95);
+  --shadow-btn: 0 12px 32px -12px rgba(0, 180, 255, 0.60), 0 0 0 1px rgba(0, 240, 255, 0.20) inset;
+  --grid-line: rgba(255, 255, 255, 0.05);
+  --veil: radial-gradient(130% 90% at 50% 0%, transparent 38%, rgba(9, 9, 11, 0.42) 70%, #09090b 100%);
+  --orbit-color: rgba(0, 240, 255, 0.55);
+  --halo-a: rgba(0, 71, 255, 0.22);
+  --halo-b: rgba(0, 240, 255, 0.14);
+  --badge-bg: rgba(14, 14, 18, 0.82);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --bg-deep: #eef2f8;
+  --surface: rgba(255, 255, 255, 0.75);
+  --surface-md: rgba(255, 255, 255, 0.88);
+  --surface-hi: rgba(255, 255, 255, 0.96);
+  --border: rgba(9, 9, 11, 0.09);
+  --border-hi: rgba(9, 9, 11, 0.17);
+  --text: #09090b;
+  --text-muted: rgba(9, 9, 11, 0.62);
+  --text-soft: rgba(9, 9, 11, 0.42);
+  --accent: var(--brand-blue);
+  --on-accent: #ffffff;
+  --grad-text: linear-gradient(110deg, #0047ff 0%, #1860ff 50%, #7c3aed 100%);
+  --nav-bg: rgba(248, 250, 252, 0.62);
+  --nav-bg-scroll: rgba(248, 250, 252, 0.86);
+  --glow-a: rgba(0, 71, 255, 0.13);
+  --glow-b: rgba(0, 240, 255, 0.18);
+  --glow-c: rgba(139, 92, 246, 0.11);
+  --glow-d: rgba(236, 72, 153, 0.08);
+  --shadow-card: 0 28px 56px -24px rgba(9, 20, 60, 0.25);
+  --shadow-btn: 0 12px 28px -12px rgba(0, 71, 255, 0.50), 0 0 0 1px rgba(0, 240, 255, 0.30) inset;
+  --grid-line: rgba(9, 9, 11, 0.045);
+  --veil: radial-gradient(130% 90% at 50% 0%, transparent 42%, rgba(248, 250, 252, 0.52) 72%, #f8fafc 100%);
+  --orbit-color: rgba(0, 71, 255, 0.45);
+  --halo-a: rgba(0, 71, 255, 0.18);
+  --halo-b: rgba(0, 240, 255, 0.22);
+  --badge-bg: rgba(255, 255, 255, 0.90);
+}

@@ -1,0 +1,760 @@
+/* =========================================================
+   InCode — Footer
+   ========================================================= */
+
+/* ── Wrapper ─────────────────────────────────────────────── */
+.footer {
+  position: relative;
+  background: var(--bg-deep);
+  overflow: hidden;
+  padding-top: clamp(4rem, 8vw, 6rem);
+}
+
+/* ── Glow ambiente ───────────────────────────────────────── */
+.footer__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 80%, rgba(0, 71, 255, 0.20) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 85% 20%, rgba(0, 180, 255, 0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 50% 110%, rgba(0, 240, 255, 0.10) 0%, transparent 70%);
+}
+
+/* ── Linha divisória superior gradiente ──────────────────── */
+.footer__rule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--brand-blue) 25%,
+      var(--brand-cyan) 50%,
+      var(--brand-blue) 75%,
+      transparent 100%);
+  opacity: 0.50;
+}
+
+/* ── Grid de 4 colunas ───────────────────────────────────── */
+.footer__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 3rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+/* ── Coluna marca ────────────────────────────────────────── */
+.footer__logo {
+  margin-bottom: 20px;
+}
+
+.footer__tagline {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 22ch;
+  margin-bottom: 24px;
+}
+
+/* Chips de presença geográfica */
+.footer__flags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer__flag-chip {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 5px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition:
+    border-color 280ms var(--ease), color 280ms var(--ease),
+    background 280ms var(--ease), transform 280ms var(--ease),
+    box-shadow 320ms var(--ease);
+  cursor: default;
+}
+
+/* Brilho varredura */
+.footer__flag-chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, .22) 50%, transparent 80%);
+  translate: -130% 0;
+  transition: translate 560ms var(--ease-out);
+  pointer-events: none;
+}
+
+.footer__flag-chip:hover::after {
+  translate: 130% 0;
+}
+
+.footer__flag-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 320ms var(--ease);
+}
+
+.footer__flag-chip:hover .footer__flag-icon {
+  transform: scale(1.18) rotate(-4deg);
+}
+
+.footer__flag-chip span:last-child {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Pill Brasil ─────────────────────────────────────────── */
+.footer__flag-chip--br:hover {
+  border-color: rgba(0, 200, 83, 0.65);
+  background: linear-gradient(115deg,
+      rgba(255, 205, 0, 0.16) 0%,
+      rgba(0, 176, 80, 0.24) 55%,
+      rgba(0, 56, 168, 0.14) 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px rgba(0, 176, 80, 0.45), 0 0 0 1px rgba(0, 176, 80, 0.12) inset;
+}
+
+/* ── Pill Portugal ───────────────────────────────────────── */
+.footer__flag-chip--pt:hover {
+  border-color: rgba(0, 158, 84, 0.60);
+  background: linear-gradient(115deg,
+      rgba(0, 158, 84, 0.26) 0%,
+      rgba(0, 158, 84, 0.14) 45%,
+      rgba(214, 38, 46, 0.20) 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px rgba(214, 38, 46, 0.40), 0 0 0 1px rgba(0, 158, 84, 0.12) inset;
+}
+
+[data-theme="light"] .footer__flag-chip--br:hover {
+  color: #0d3b1e;
+  box-shadow: 0 8px 20px -8px rgba(0, 176, 80, 0.30), 0 0 0 1px rgba(0, 176, 80, 0.10) inset;
+}
+
+[data-theme="light"] .footer__flag-chip--pt:hover {
+  color: #3b0d10;
+  box-shadow: 0 8px 20px -8px rgba(214, 38, 46, 0.26), 0 0 0 1px rgba(0, 158, 84, 0.10) inset;
+}
+
+/* ── Colunas nav ─────────────────────────────────────────── */
+.footer__col-title {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin: 0 0 20px;
+}
+
+.footer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Links padrão ────────────────────────────────────────── */
+.footer__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: color var(--tf), gap var(--tf);
+}
+
+.footer__link:hover {
+  color: var(--accent);
+  gap: 10px;
+}
+
+/* Seta nos links */
+.footer__link-arrow {
+  width: 13px;
+  height: 13px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity var(--tf), transform var(--tf);
+  flex-shrink: 0;
+}
+
+.footer__link:hover .footer__link-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* Ponto colorido por produto */
+.footer__link-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform var(--tf);
+}
+
+.footer__link:hover .footer__link-dot {
+  transform: scale(1.4);
+}
+
+.footer__link--inrealty .footer__link-dot  { background: var(--brand-blue-soft); }
+.footer__link--inbarber .footer__link-dot  { background: var(--brand-cyan); }
+.footer__link--intravel .footer__link-dot  { background: var(--brand-violet); }
+
+.footer__link--inrealty:hover { color: var(--brand-blue-soft); }
+.footer__link--inbarber:hover { color: var(--brand-cyan); }
+.footer__link--intravel:hover { color: var(--brand-violet); }
+
+/* ── Links de contato ────────────────────────────────────── */
+.footer__list--contact {
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.footer__link--contact {
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  --flag-x: calc(14px + 18px);
+  transition:
+    border-color 320ms var(--ease), background 320ms var(--ease),
+    color var(--tn), transform 320ms var(--ease), box-shadow 380ms var(--ease);
+}
+
+/* ═══ Bandeira em luz no footer (mesmo efeito da seção Contato) ═══ */
+.footer__contact-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.footer__contact-flag-field {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+}
+
+.footer__contact-flag-halo {
+  position: absolute;
+  top: 50%;
+  left: var(--flag-x);
+  width: 130px;
+  height: 130px;
+  margin: -65px 0 0 -65px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 560ms var(--ease-out),
+    transform 760ms var(--ease-out);
+}
+
+.footer__contact-flag-emblem {
+  position: absolute;
+  top: 50%;
+  left: var(--flag-x);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: blur(1.8px);
+  opacity: 0;
+  transform: rotate(var(--emb-rot)) scale(0.5);
+  transition:
+    opacity 520ms var(--ease-out),
+    transform 720ms var(--ease-out);
+  transition-delay: 60ms;
+}
+
+.footer__contact-flag-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, transparent 15%, rgba(255, 255, 255, .14) 48%, transparent 82%);
+  translate: -110% 0;
+  transition: translate 620ms var(--ease-out);
+}
+
+[data-theme="light"] .footer__contact-flag-sheen {
+  background: linear-gradient(118deg, transparent 15%, rgba(255, 255, 255, .55) 48%, transparent 82%);
+}
+
+/* ── Estados do footer contact flag ─────────────────────── */
+.footer__link--contact:hover .footer__contact-flag-field,
+.footer__link--contact:focus-visible .footer__contact-flag-field {
+  opacity: 1;
+}
+
+.footer__link--contact:hover .footer__contact-flag-halo,
+.footer__link--contact:focus-visible .footer__contact-flag-halo {
+  opacity: .9;
+  transform: scale(1);
+}
+
+[data-theme="light"] .footer__link--contact:hover .footer__contact-flag-halo,
+[data-theme="light"] .footer__link--contact:focus-visible .footer__contact-flag-halo {
+  opacity: 0;
+}
+
+.footer__link--contact:hover .footer__contact-flag-emblem,
+.footer__link--contact:focus-visible .footer__contact-flag-emblem {
+  opacity: var(--emb-op);
+  transform: rotate(0deg) scale(1);
+}
+
+.footer__link--contact:hover .footer__contact-flag-sheen,
+.footer__link--contact:focus-visible .footer__contact-flag-sheen {
+  translate: 110% 0;
+}
+
+/* ── Paleta Brasil ───────────────────────────────────────── */
+.footer__link--whats-br {
+  --emb-rot: -8deg;
+  --emb-op: .86;
+}
+
+.footer__link--whats-br:hover,
+.footer__link--whats-br:focus-visible {
+  border-color: rgba(0, 176, 80, 0.40);
+  color: var(--text);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -12px rgba(0, 176, 80, 0.28);
+}
+
+.footer__link--whats-br .footer__contact-flag-field {
+  background: linear-gradient(100deg,
+      rgba(0, 176, 80, .22) 0%,
+      rgba(0, 176, 80, .07) 52%,
+      rgba(0, 176, 80, 0) 100%);
+}
+
+.footer__link--whats-br .footer__contact-flag-halo {
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 205, 0, .22) 0%,
+      rgba(0, 190, 90, .14) 38%,
+      transparent 66%);
+}
+
+.footer__link--whats-br .footer__contact-flag-emblem {
+  width: 106px;
+  height: 68px;
+  margin: -34px 0 0 -53px;
+  background-image: url("../assets/emblema-br.webp");
+}
+
+/* ── Paleta Portugal ─────────────────────────────────────── */
+.footer__link--whats-pt {
+  --emb-rot: -30deg;
+  --emb-op: .90;
+}
+
+.footer__link--whats-pt:hover,
+.footer__link--whats-pt:focus-visible {
+  border-color: rgba(0, 158, 84, 0.38);
+  color: var(--text);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -12px rgba(0, 158, 84, 0.24);
+}
+
+.footer__link--whats-pt .footer__contact-flag-field {
+  background: linear-gradient(90deg,
+      rgba(0, 158, 84, .40) 0%,
+      rgba(0, 158, 84, .36) calc(var(--flag-x) - 8px),
+      rgba(214, 38, 46, .22) calc(var(--flag-x) + 8px),
+      rgba(214, 38, 46, .09) 42%,
+      rgba(214, 38, 46, 0) 100%);
+}
+
+.footer__link--whats-pt .footer__contact-flag-halo {
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 200, 60, .16) 0%,
+      rgba(214, 38, 46, .10) 42%,
+      transparent 68%);
+}
+
+.footer__link--whats-pt .footer__contact-flag-emblem {
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  background-image: url("../assets/emblema-pt.webp");
+}
+
+/* ── Ajustes de tema claro ───────────────────────────────── */
+[data-theme="light"] .footer__link--whats-br { --emb-op: .90; }
+[data-theme="light"] .footer__link--whats-pt { --emb-op: .94; }
+
+[data-theme="light"] .footer__link--whats-br .footer__contact-flag-field {
+  background: linear-gradient(100deg,
+      rgba(0, 150, 62, .15) 0%,
+      rgba(0, 150, 62, .06) 48%,
+      rgba(0, 150, 62, .01) 100%);
+}
+
+[data-theme="light"] .footer__link--whats-pt .footer__contact-flag-field {
+  background: linear-gradient(90deg,
+      rgba(0, 140, 74, .28) 0%,
+      rgba(0, 140, 74, .24) calc(var(--flag-x) - 8px),
+      rgba(206, 32, 42, .14) calc(var(--flag-x) + 8px),
+      rgba(206, 32, 42, .06) 42%,
+      rgba(206, 32, 42, 0) 100%);
+}
+
+/* Apagar a seta nos links de contato (já têm ícone) */
+.footer__link--contact .footer__link-arrow {
+  display: none;
+}
+
+.footer__contact-icon {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: transform var(--tn), background var(--tn), color var(--tn);
+}
+
+.footer__contact-icon--whats {
+  background: rgba(34, 197, 94, .14);
+  color: var(--success);
+}
+
+.footer__contact-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer__link--contact:hover .footer__contact-icon {
+  transform: scale(1.08);
+  background: transparent;
+}
+
+.footer__link--whats-br:hover .footer__contact-icon,
+.footer__link--whats-br:focus-visible .footer__contact-icon {
+  color: #ffffff;
+}
+
+.footer__link--whats-pt:hover .footer__contact-icon,
+.footer__link--whats-pt:focus-visible .footer__contact-icon {
+  color: #0d3b22;
+}
+
+.footer__contact-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.footer__contact-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  transition: color var(--tn);
+}
+
+.footer__link--contact:hover .footer__contact-label {
+  color: var(--text);
+}
+
+.footer__contact-number {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Redes sociais ───────────────────────────────────────── */
+.footer__socials {
+  display: flex;
+  gap: 8px;
+}
+
+.footer__social {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-muted);
+  transition:
+    border-color var(--tf), background var(--tf),
+    color var(--tf), transform var(--tf), box-shadow var(--tf);
+}
+
+.footer__social svg {
+  width: 16px;
+  height: 16px;
+}
+
+.footer__social--instagram:hover {
+  border-color: rgba(225, 48, 108, 0.6);
+  background: linear-gradient(135deg,
+      rgba(64, 93, 230, 0.22) 0%,
+      rgba(131, 58, 180, 0.25) 25%,
+      rgba(225, 48, 108, 0.28) 55%,
+      rgba(253, 150, 50, 0.22) 100%);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow:
+    0 6px 20px -6px rgba(225, 48, 108, 0.5),
+    0 0 0 1px rgba(253, 150, 50, 0.15);
+}
+
+.footer__social--facebook:hover {
+  border-color: rgba(24, 119, 242, 0.55);
+  background: rgba(24, 119, 242, 0.12);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px -8px rgba(24, 119, 242, 0.40);
+}
+
+.footer__social--linkedin:hover {
+  border-color: rgba(10, 102, 194, 0.55);
+  background: rgba(10, 102, 194, 0.12);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px -8px rgba(10, 102, 194, 0.40);
+}
+
+[data-theme="light"] .footer__social--instagram:hover {
+  box-shadow: 0 6px 18px -8px rgba(225, 48, 108, 0.35);
+}
+
+[data-theme="light"] .footer__social--facebook:hover {
+  box-shadow: 0 6px 18px -8px rgba(24, 119, 242, 0.30);
+}
+
+[data-theme="light"] .footer__social--linkedin:hover {
+  box-shadow: 0 6px 18px -8px rgba(10, 102, 194, 0.30);
+}
+
+/* ── Barra inferior ──────────────────────────────────────── */
+.footer__bottom {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+}
+
+.footer__bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-block: 20px;
+}
+
+.footer__copy {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer__copy-mark {
+  font-size: 1em;
+  line-height: 1;
+}
+
+/* Badge de status operacional */
+.footer__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 10px;
+  border: 1px solid rgba(34, 197, 94, .20);
+  border-radius: var(--radius-pill);
+  background: rgba(34, 197, 94, .06);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--success);
+}
+
+.footer__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  animation: status-pulse 2.4s ease-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes status-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+  60%  { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.footer__legal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer__legal-link {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  transition: color var(--tf);
+}
+
+.footer__legal-link:hover {
+  color: var(--accent);
+}
+
+.footer__legal-sep {
+  color: var(--border-hi);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+/* ── Responsividade ──────────────────────────────────────── */
+@media (max-width: 960px) {
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 20px;
+  }
+
+  .footer__tagline {
+    margin-bottom: 0;
+  }
+
+  .footer__flags {
+    justify-content: flex-end;
+    align-self: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem 0;
+  }
+
+  .footer__brand {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .footer__flags {
+    justify-content: flex-start;
+  }
+
+  .footer__bottom-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer__status {
+    order: -1;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .footer__status-dot {
+    animation: none;
+  }
+
+  .footer__link,
+  .footer__link-arrow,
+  .footer__flag-chip,
+  .footer__social,
+  .footer__link--contact,
+  .footer__contact-icon,
+  .footer__contact-flag-field,
+  .footer__contact-flag-halo,
+  .footer__contact-flag-emblem {
+    transition: none !important;
+  }
+
+  .footer__link:hover,
+  .footer__flag-chip:hover,
+  .footer__flag-chip--br:hover,
+  .footer__flag-chip--pt:hover,
+  .footer__social:hover,
+  .footer__link--contact:hover {
+    transform: none !important;
+  }
+
+  .footer__flag-chip::after {
+    display: none;
+  }
+
+  .footer__flag-chip:hover .footer__flag-icon {
+    transform: none !important;
+  }
+
+  .footer__contact-flag-sheen {
+    display: none;
+  }
+
+  .footer__link--contact:hover .footer__contact-icon {
+    transform: none !important;
+  }
+
+  .footer__link--contact:hover .footer__contact-flag-emblem {
+    transform: rotate(0deg) scale(1) !important;
+  }
+
+  .footer__link--contact:hover .footer__contact-flag-halo {
+    transform: scale(1) !important;
+  }
+
+  .footer__legal-link {
+    transition: none !important;
+  }
+}
