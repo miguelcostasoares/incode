@@ -1896,125 +1896,81 @@ var startCounters = (function () {
 })();
 
 
-/* ── Paralaxe do mouse nos mockups da secção Produtos ─────── */
+/* ── Produtos — animação de surgimento via IntersectionObserver ── */
 /*
-  Mesma filosofia do efeito na hero logo:
-  - O mouse move o mockup em rotateX / rotateY suavemente
-  - Interpolação lerp frame a frame (coeficiente 0.06 — mais suave que a hero)
-  - Ao entrar no preview: pausa a animação de float e aplica o tilt
-  - Ao sair: retorna suavemente à posição base e retoma o float
-  - prefers-reduced-motion: efeito completamente desativado
+  Sem paralaxe de mouse. O mockup surge com inclinação 3D + float
+  suave contínuo, totalmente via CSS. O JS apenas garante que a
+  animação re-dispara cada vez que o painel se torna visível e que
+  o surgimento ocorre quando a secção entra na viewport.
 */
 (function () {
   "use strict";
 
   var rm = window.matchMedia("(prefers-reduced-motion:reduce)");
-  if (rm.matches) return;
 
-  /* Parâmetros do efeito — ajuste aqui se quiser mais/menos intensidade */
-  var MAX_ROTATE_Y = 14;   /* graus máximos de rotação horizontal */
-  var MAX_ROTATE_X = 8;    /* graus máximos de rotação vertical */
-  var BASE_Y = -6;         /* rotação Y base (igual à animação CSS) */
-  var BASE_X = 3;          /* rotação X base (igual à animação CSS) */
-  var LERP   = 0.06;       /* coeficiente de interpolação (0.05–0.10 = suave) */
+  /* ── Re-dispara animação ao trocar de painel ──────────────── */
+  /* O showcase JS já faz isso via aria-hidden; aqui garantimos
+     que o .pspanel__mockup também reinicia o float ao aparecer */
+  var showcase = document.getElementById("pshowcase");
+  if (!showcase) return;
 
-  /* Cada preview tem seu próprio estado de animação */
-  var previews = document.querySelectorAll(".pspanel__preview");
-  if (!previews.length) return;
+  var panels = showcase.querySelectorAll(".pspanel");
 
-  var activeStates = [];
+  function resetMockupAnim(panel) {
+    if (rm.matches) return;
+    var mockup = panel.querySelector(".pspanel__mockup");
+    var emerge = panel.querySelector(".pspanel__mockup-emerge");
+    if (mockup) {
+      mockup.style.animation = "none";
+      void mockup.offsetHeight; /* força reflow */
+      mockup.style.animation = "";
+    }
+    if (emerge) {
+      emerge.style.animation = "none";
+      void emerge.offsetHeight; /* força reflow */
+      emerge.style.animation = "";
+    }
+  }
 
-  [].forEach.call(previews, function (preview) {
-    var mockup = preview.querySelector(".pspanel__mockup");
-    if (!mockup) return;
-
-    var state = {
-      preview : preview,
-      mockup  : mockup,
-      active  : false,   /* mouse está sobre o preview? */
-      /* posição alvo (definida pelo mouse) */
-      targetX : BASE_X,
-      targetY : BASE_Y,
-      /* posição actual interpolada */
-      currentX: BASE_X,
-      currentY: BASE_Y,
-      raf     : null,
-    };
-    activeStates.push(state);
-
-    /* ── Tick de interpolação ── */
-    function tick() {
-      /* Lerp: aproxima o current do target a cada frame */
-      state.currentX += (state.targetX - state.currentX) * LERP;
-      state.currentY += (state.targetY - state.currentY) * LERP;
-
-      /* Aplica transform — sem translateY para não conflitar com o float CSS */
-      mockup.style.transform =
-        "perspective(900px) rotateY(" + state.currentY.toFixed(3) + "deg) rotateX(" + state.currentX.toFixed(3) + "deg)";
-
-      /* Continua o loop se ainda está convergindo ou se o mouse está ativo */
-      var diffX = Math.abs(state.targetX - state.currentX);
-      var diffY = Math.abs(state.targetY - state.currentY);
-      if (state.active || diffX > 0.04 || diffY > 0.04) {
-        state.raf = requestAnimationFrame(tick);
-      } else {
-        /* Convergiu — para o loop e liberta o float CSS */
-        state.raf = null;
-        mockup.style.transform = "";
-        preview.classList.remove("is-returning");
+  /* Observa mudanças de aria-hidden nos painéis */
+  var mo = new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      if (m.type === "attributes" && m.attributeName === "aria-hidden") {
+        var panel = m.target;
+        if (panel.getAttribute("aria-hidden") === "false") {
+          resetMockupAnim(panel);
+        }
       }
-    }
-
-    function startTick() {
-      if (!state.raf) state.raf = requestAnimationFrame(tick);
-    }
-
-    /* ── Mouse entra no preview ── */
-    preview.addEventListener("mouseenter", function () {
-      state.active = true;
-      preview.classList.add("is-tilting");
-      preview.classList.remove("is-returning");
-      startTick();
-    }, { passive: true });
-
-    /* ── Mouse move dentro do preview ── */
-    preview.addEventListener("mousemove", function (e) {
-      if (!state.active) return;
-      var rect = preview.getBoundingClientRect();
-      /* Normaliza: -1 a +1 relativo ao centro do preview */
-      var nx = (e.clientX - rect.left)  / rect.width  - 0.5;   /* -0.5 … +0.5 */
-      var ny = (e.clientY - rect.top)   / rect.height - 0.5;
-
-      /* rotateY: mouse à direita → inclinação positiva
-         rotateX: mouse em baixo  → inclinação negativa (efeito natural) */
-      state.targetY = BASE_Y + nx * MAX_ROTATE_Y * 2;
-      state.targetX = BASE_X - ny * MAX_ROTATE_X * 2;
-    }, { passive: true });
-
-    /* ── Mouse sai do preview ── */
-    preview.addEventListener("mouseleave", function () {
-      state.active = false;
-      /* Retorna suavemente à posição base */
-      state.targetX = BASE_X;
-      state.targetY = BASE_Y;
-      preview.classList.remove("is-tilting");
-      preview.classList.add("is-returning");
-      startTick();
-    }, { passive: true });
+    });
   });
 
-  /* Se reduced-motion mudar em runtime, remove os transforms */
-  if (rm.addEventListener) {
-    rm.addEventListener("change", function (e) {
-      if (!e.matches) return;
-      activeStates.forEach(function (s) {
-        s.active = false;
-        if (s.raf) { cancelAnimationFrame(s.raf); s.raf = null; }
-        s.mockup.style.transform = "";
-        s.preview.classList.remove("is-tilting", "is-returning");
-      });
+  [].forEach.call(panels, function (p) {
+    mo.observe(p, { attributes: true });
+  });
+
+  /* ── Surge ao entrar na viewport pela primeira vez ────────── */
+  if (!("IntersectionObserver" in window)) return;
+
+  var section = document.getElementById("produtos");
+  if (!section) return;
+
+  var triggered = false;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        /* Pequeno delay para deixar o scroll assentar */
+        setTimeout(function () {
+          var activePanel = showcase.querySelector(".pspanel[aria-hidden='false']");
+          if (activePanel) resetMockupAnim(activePanel);
+        }, 80);
+        io.disconnect();
+      }
     });
-  }
+  }, { threshold: 0.15 });
+
+  io.observe(section);
 })();
 
 /* ── 7b. Aurora da secção Serviços ────────────────────────── */

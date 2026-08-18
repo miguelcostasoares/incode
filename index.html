@@ -1218,7 +1218,7 @@
             </div>
           </header>
 
-          <!-- Showcase principal -->
+                    <!-- Showcase principal -->
           <div
             class="pshowcase"
             id="pshowcase"
@@ -1383,6 +1383,7 @@
 
             <!-- Wrapper dos painéis -->
             <div class="pshowcase__panel" id="pshowcase-panel">
+
               <!-- ── Produto 0: InRealty ── -->
               <article
                 class="pspanel"
@@ -1391,43 +1392,82 @@
                 role="tabpanel"
                 aria-labelledby="pstab-0"
                 aria-hidden="false"
+                style="--circuit-color: rgba(0,80,255,0.75); --circuit-glow: rgba(0,80,255,0.22);"
               >
                 <div class="pspanel__inner">
-                  <!-- Preview -->
                   <div class="pspanel__preview pspanel__preview--blue">
-                    <div class="pspanel__preview-glow" aria-hidden="true"></div>
-                    <div
-                      class="pspanel__preview-noise"
-                      aria-hidden="true"
-                    ></div>
-
-                    <!-- SUBSTITUIR IMAGEM AQUI: <img src="assets/screenshots/inrealty.png" alt="Dashboard InRealty" class="pspanel__screenshot"> -->
-                    <div
-                      class="pspanel__mockup"
-                      aria-label="Preview do InRealty"
-                    >
-                      <div class="pmock pmock--realty">
-                        <div class="pmock__bar">
-                          <span class="pmock__dot-r"></span>
-                          <span class="pmock__dot-y"></span>
-                          <span class="pmock__dot-g"></span>
-                          <span class="pmock__url"
-                            >inrealty.app · Dashboard</span
-                          >
-                        </div>
-                        <div class="pmock__body pmock__body--iframe">
-                          <img
-                            src="assets/screenshots/Screenshot_1.png"
-                            alt="Dashboard InRealty"
-                            class="pmock__screenshot-img"
-                            loading="lazy"
-                            draggable="false"
-                          />
+                    <div class="pspanel__mockup-emerge">
+                      <div
+                        class="pspanel__mockup"
+                        aria-label="Preview do InRealty"
+                      >
+                        <div class="pmock pmock--realty">
+                          <div class="pmock__bar">
+                            <span class="pmock__dot-r"></span>
+                            <span class="pmock__dot-y"></span>
+                            <span class="pmock__dot-g"></span>
+                            <span class="pmock__url"
+                              >inrealty.app · Dashboard</span
+                            >
+                          </div>
+                          <div class="pmock__body pmock__body--iframe">
+                            <img
+                              src="assets/screenshots/Screenshot_1.png"
+                              alt="Dashboard InRealty"
+                              class="pmock__screenshot-img"
+                              loading="lazy"
+                              draggable="false"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <!-- Badge flutuante -->
+                      <!-- Linhas de circuito — InRealty -->
+                      <div class="pspanel__circuit-overlay" aria-hidden="true">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                          <defs>
+                            <filter id="glow-blue">
+                              <feGaussianBlur stdDeviation="0.8" result="blur"/>
+                              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                          </defs>
+                          <!-- Linha esq. topo: sai da borda esquerda ~18% altura → curva 90° → horizontal saindo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 0,18 H 6 Q 8,18 8,20 V 26 Q 8,28 6,28 H 0"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:200ms;"
+                          />
+                          <!-- Nó no ponto de junção esq. topo -->
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="18" r="1.6" style="--node-delay:780ms;"/>
+                          <!-- Linha esq. meio: saindo da borda esquerda ~48% -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 0,48 H 10 Q 12,48 12,50 V 54 Q 12,56 10,56 H 0"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:400ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="48" r="1.6" style="--node-delay:970ms;"/>
+                          <!-- Linha dir. topo: saindo borda direita ~22% -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 100,22 H 94 Q 92,22 92,24 V 30 Q 92,32 94,32 H 100"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:300ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="22" r="1.6" style="--node-delay:860ms;"/>
+                          <!-- Linha dir. meio: saindo borda direita ~52% -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 100,52 H 90 Q 88,52 88,54 V 60 Q 88,62 90,62 H 100"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:500ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="52" r="1.6" style="--node-delay:1060ms;"/>
+                        </svg>
+                        <!-- Labels posicionados via CSS (top em %) -->
+                        <span class="circuit-label circuit-label--left is-visible" style="top:15%; transform:translateY(-50%);">Pipeline de imóveis</span>
+                        <span class="circuit-label circuit-label--left is-visible" style="top:45%; transform:translateY(-50%);">Gestão de contratos</span>
+                        <span class="circuit-label circuit-label--right is-visible" style="top:19%; transform:translateY(-50%);">Captação integrada</span>
+                        <span class="circuit-label circuit-label--right is-visible" style="top:49%; transform:translateY(-50%);">Relatórios em tempo real</span>
+                      </div>
+                    </div>
 
                     <div
                       class="pspanel__badge pspanel__badge--br"
@@ -1445,143 +1485,6 @@
                       <span class="pspanel__badge-text">+23% esse mês</span>
                     </div>
                   </div>
-
-                  <!-- Corpo de texto -->
-                  <div class="pspanel__body">
-                    <div class="pspanel__tag pspanel__tag--blue">
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M3 9l5-7 5 7v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"
-                        />
-                        <polyline points="6 15 6 9 10 9 10 15" />
-                      </svg>
-                      Imobiliária · CRM Gerencial
-                    </div>
-                    <h3 class="pspanel__name">InRealty</h3>
-                    <p class="pspanel__desc">
-                      Pipeline de vendas, gestão de corretores, histórico de
-                      visitas e automação de follow-up em um único sistema
-                      integrado — feito para imobiliárias que querem crescer.
-                    </p>
-
-                    <ul
-                      class="pspanel__feats"
-                      aria-label="Funcionalidades do InRealty"
-                    >
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--blue"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Pipeline kanban de oportunidades</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--blue"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Gestão de imóveis com fotos e documentos</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--blue"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Relatórios de desempenho por corretor</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--blue"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Agendamento e histórico de visitas</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--blue"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Integração com WhatsApp e portais</span>
-                      </li>
-                    </ul>
-
-                    <div class="pspanel__actions">
-                      <a class="btn btn--primary btn--sm" href="#contato">
-                        Solicitar demo
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2" />
-                        </svg>
-                      </a>
-                      <a class="btn btn--ghost btn--sm" href="#contato"
-                        >Saiba mais</a
-                      >
-                    </div>
-                  </div>
                 </div>
               </article>
 
@@ -1593,37 +1496,70 @@
                 role="tabpanel"
                 aria-labelledby="pstab-1"
                 aria-hidden="true"
+                style="--circuit-color: rgba(0,220,240,0.75); --circuit-glow: rgba(0,220,240,0.20);"
               >
                 <div class="pspanel__inner">
                   <div class="pspanel__preview pspanel__preview--cyan">
-                    <div class="pspanel__preview-glow" aria-hidden="true"></div>
-                    <div
-                      class="pspanel__preview-noise"
-                      aria-hidden="true"
-                    ></div>
+                    <div class="pspanel__mockup-emerge">
+                      <div
+                        class="pspanel__mockup"
+                        aria-label="Preview do InBarber"
+                      >
+                        <div class="pmock pmock--barber">
+                          <div class="pmock__bar">
+                            <span class="pmock__dot-r"></span>
+                            <span class="pmock__dot-y"></span>
+                            <span class="pmock__dot-g"></span>
+                            <span class="pmock__url">inbarber.app · Agenda</span>
+                          </div>
+                          <div class="pmock__body pmock__body--iframe">
+                            <img
+                              src="assets/screenshots/Screenshot_2.png"
+                              alt="Agenda InBarber"
+                              class="pmock__screenshot-img"
+                              loading="lazy"
+                              draggable="false"
+                            />
+                          </div>
+                        </div>
+                      </div>
 
-                    <!-- SUBSTITUIR IMAGEM AQUI: <img src="assets/screenshots/inbarber.png" alt="Agenda InBarber" class="pspanel__screenshot"> -->
-                    <div
-                      class="pspanel__mockup"
-                      aria-label="Preview do InBarber"
-                    >
-                      <!-- DEPOIS -->
-                      <div class="pmock pmock--barber">
-                        <div class="pmock__bar">
-                          <span class="pmock__dot-r"></span>
-                          <span class="pmock__dot-y"></span>
-                          <span class="pmock__dot-g"></span>
-                          <span class="pmock__url">inbarber.app · Agenda</span>
-                        </div>
-                        <div class="pmock__body pmock__body--iframe">
-                          <img
-                            src="assets/screenshots/Screenshot_2.png"
-                            alt="Agenda InBarber"
-                            class="pmock__screenshot-img"
-                            loading="lazy"
-                            draggable="false"
+                      <!-- Linhas de circuito — InBarber -->
+                      <div class="pspanel__circuit-overlay" aria-hidden="true">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                          <!-- Linha esq. topo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 0,20 H 7 Q 9,20 9,22 V 28 Q 9,30 7,30 H 0"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:200ms;"
                           />
-                        </div>
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="20" r="1.6" style="--node-delay:780ms;"/>
+                          <!-- Linha esq. baixo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 0,50 H 11 Q 13,50 13,52 V 58 Q 13,60 11,60 H 0"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:420ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="50" r="1.6" style="--node-delay:990ms;"/>
+                          <!-- Linha dir. topo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 100,24 H 93 Q 91,24 91,26 V 32 Q 91,34 93,34 H 100"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:310ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="24" r="1.6" style="--node-delay:880ms;"/>
+                          <!-- Linha dir. baixo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 100,54 H 89 Q 87,54 87,56 V 62 Q 87,64 89,64 H 100"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:530ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="54" r="1.6" style="--node-delay:1090ms;"/>
+                        </svg>
+                        <span class="circuit-label circuit-label--left is-visible" style="top:17%; transform:translateY(-50%);">Agenda online</span>
+                        <span class="circuit-label circuit-label--left is-visible" style="top:47%; transform:translateY(-50%);">Lembretes automáticos</span>
+                        <span class="circuit-label circuit-label--right is-visible" style="top:21%; transform:translateY(-50%);">Fila de espera</span>
+                        <span class="circuit-label circuit-label--right is-visible" style="top:51%; transform:translateY(-50%);">Histórico do cliente</span>
                       </div>
                     </div>
 
@@ -1645,140 +1581,6 @@
                       <span class="pspanel__badge-text">Próximo: 14h30</span>
                     </div>
                   </div>
-
-                  <div class="pspanel__body">
-                    <div class="pspanel__tag pspanel__tag--cyan">
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        aria-hidden="true"
-                      >
-                        <circle cx="8" cy="5" r="2.5" />
-                        <path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5" />
-                      </svg>
-                      Barbearia · Micro-SaaS
-                    </div>
-                    <h3 class="pspanel__name">InBarber</h3>
-                    <p class="pspanel__desc">
-                      Agenda online, gestão de barbeiros, fila de espera digital
-                      e controle financeiro — para barbearias que querem parar
-                      de depender do caderninho.
-                    </p>
-
-                    <ul
-                      class="pspanel__feats"
-                      aria-label="Funcionalidades do InBarber"
-                    >
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--cyan"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Agendamento online com link próprio</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--cyan"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Fila de espera e check-in digital</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--cyan"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Controle de caixa e comissões</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--cyan"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Notificações automáticas via WhatsApp</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--cyan"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Histórico de clientes e preferências</span>
-                      </li>
-                    </ul>
-
-                    <div class="pspanel__actions">
-                      <a class="btn btn--primary btn--sm" href="#contato">
-                        Solicitar demo
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2" />
-                        </svg>
-                      </a>
-                      <a class="btn btn--ghost btn--sm" href="#contato"
-                        >Saiba mais</a
-                      >
-                    </div>
-                  </div>
                 </div>
               </article>
 
@@ -1790,39 +1592,72 @@
                 role="tabpanel"
                 aria-labelledby="pstab-2"
                 aria-hidden="true"
+                style="--circuit-color: rgba(139,92,246,0.80); --circuit-glow: rgba(139,92,246,0.22);"
               >
                 <div class="pspanel__inner">
                   <div class="pspanel__preview pspanel__preview--violet">
-                    <div class="pspanel__preview-glow" aria-hidden="true"></div>
-                    <div
-                      class="pspanel__preview-noise"
-                      aria-hidden="true"
-                    ></div>
+                    <div class="pspanel__mockup-emerge">
+                      <div
+                        class="pspanel__mockup"
+                        aria-label="Preview do InTravel"
+                      >
+                        <div class="pmock pmock--travel">
+                          <div class="pmock__bar">
+                            <span class="pmock__dot-r"></span>
+                            <span class="pmock__dot-y"></span>
+                            <span class="pmock__dot-g"></span>
+                            <span class="pmock__url"
+                              >intravel.app · Oportunidades</span
+                            >
+                          </div>
+                          <div class="pmock__body pmock__body--iframe">
+                            <img
+                              src="assets/screenshots/Screenshot_3.png"
+                              alt="Dashboard InTravel"
+                              class="pmock__screenshot-img"
+                              loading="lazy"
+                              draggable="false"
+                            />
+                          </div>
+                        </div>
+                      </div>
 
-                    <!-- SUBSTITUIR IMAGEM AQUI: <img src="assets/screenshots/intravel.png" alt="Pipeline InTravel" class="pspanel__screenshot"> -->
-                    <div
-                      class="pspanel__mockup"
-                      aria-label="Preview do InTravel"
-                    >
-                      <!-- DEPOIS -->
-                      <div class="pmock pmock--travel">
-                        <div class="pmock__bar">
-                          <span class="pmock__dot-r"></span>
-                          <span class="pmock__dot-y"></span>
-                          <span class="pmock__dot-g"></span>
-                          <span class="pmock__url"
-                            >intravel.app · Oportunidades</span
-                          >
-                        </div>
-                        <div class="pmock__body pmock__body--iframe">
-                          <img
-                            src="assets/screenshots/Screenshot_3.png"
-                            alt="Dashboard InTravel"
-                            class="pmock__screenshot-img"
-                            loading="lazy"
-                            draggable="false"
+                      <!-- Linhas de circuito — InTravel -->
+                      <div class="pspanel__circuit-overlay" aria-hidden="true">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                          <!-- Linha esq. topo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 0,16 H 6 Q 8,16 8,18 V 24 Q 8,26 6,26 H 0"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:200ms;"
                           />
-                        </div>
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="16" r="1.6" style="--node-delay:780ms;"/>
+                          <!-- Linha esq. baixo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 0,46 H 10 Q 12,46 12,48 V 54 Q 12,56 10,56 H 0"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:410ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="46" r="1.6" style="--node-delay:980ms;"/>
+                          <!-- Linha dir. topo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 100,20 H 92 Q 90,20 90,22 V 28 Q 90,30 92,30 H 100"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:305ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="20" r="1.6" style="--node-delay:870ms;"/>
+                          <!-- Linha dir. baixo -->
+                          <path
+                            class="pscircuit__line pscircuit__line--animated"
+                            d="M 100,50 H 88 Q 86,50 86,52 V 58 Q 86,60 88,60 H 100"
+                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:520ms;"
+                          />
+                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="50" r="1.6" style="--node-delay:1080ms;"/>
+                        </svg>
+                        <span class="circuit-label circuit-label--left is-visible" style="top:13%; transform:translateY(-50%);">Funil de vendas</span>
+                        <span class="circuit-label circuit-label--left is-visible" style="top:43%; transform:translateY(-50%);">Cotações automáticas</span>
+                        <span class="circuit-label circuit-label--right is-visible" style="top:17%; transform:translateY(-50%);">Pacotes personalizados</span>
+                        <span class="circuit-label circuit-label--right is-visible" style="top:47%; transform:translateY(-50%);">Pipeline de oportunidades</span>
                       </div>
                     </div>
 
@@ -1846,144 +1681,9 @@
                       >
                     </div>
                   </div>
-
-                  <div class="pspanel__body">
-                    <div class="pspanel__tag pspanel__tag--violet">
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        aria-hidden="true"
-                      >
-                        <circle cx="8" cy="8" r="6" />
-                        <path
-                          d="M2 8h12M8 2a10 10 0 0 1 3 6 10 10 0 0 1-3 6 10 10 0 0 1-3-6 10 10 0 0 1 3-6z"
-                        />
-                      </svg>
-                      Turismo · CRM Gerencial
-                    </div>
-                    <h3 class="pspanel__name">InTravel</h3>
-                    <p class="pspanel__desc">
-                      Pipeline de pacotes, controle de cotações, gestão de
-                      fornecedores e acompanhamento pós-venda — para agências
-                      que vendem experiências, não só passagens.
-                    </p>
-
-                    <ul
-                      class="pspanel__feats"
-                      aria-label="Funcionalidades do InTravel"
-                    >
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--violet"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Pipeline de vendas de pacotes</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--violet"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Geração de orçamentos e propostas</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--violet"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Controle de embarques e documentação</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--violet"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Relatórios de receita por destino</span>
-                      </li>
-                      <li class="pspanel__feat">
-                        <span
-                          class="pspf__icon pspf__icon--violet"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                          >
-                            <polyline points="3,8 6,11 13,5" />
-                          </svg>
-                        </span>
-                        <span>Follow-up automático pós-viagem</span>
-                      </li>
-                    </ul>
-
-                    <div class="pspanel__actions">
-                      <a class="btn btn--primary btn--sm" href="#contato">
-                        Solicitar demo
-                        <svg
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M2.8 8h10.4M9 3.8 13.2 8 9 12.2" />
-                        </svg>
-                      </a>
-                      <a class="btn btn--ghost btn--sm" href="#contato"
-                        >Saiba mais</a
-                      >
-                    </div>
-                  </div>
                 </div>
               </article>
+
             </div>
             <!-- /.pshowcase__panel -->
           </div>
