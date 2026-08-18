@@ -1392,7 +1392,6 @@
                 role="tabpanel"
                 aria-labelledby="pstab-0"
                 aria-hidden="false"
-                style="--circuit-color: rgba(0,80,255,0.75); --circuit-glow: rgba(0,80,255,0.22);"
               >
                 <div class="pspanel__inner">
                   <div class="pspanel__preview pspanel__preview--blue">
@@ -1420,52 +1419,6 @@
                             />
                           </div>
                         </div>
-                      </div>
-
-                      <!-- Linhas de circuito — InRealty -->
-                      <div class="pspanel__circuit-overlay" aria-hidden="true">
-                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                          <defs>
-                            <filter id="glow-blue">
-                              <feGaussianBlur stdDeviation="0.8" result="blur"/>
-                              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                            </filter>
-                          </defs>
-                          <!-- Linha esq. topo: sai da borda esquerda ~18% altura → curva 90° → horizontal saindo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 0,18 H 6 Q 8,18 8,20 V 26 Q 8,28 6,28 H 0"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:200ms;"
-                          />
-                          <!-- Nó no ponto de junção esq. topo -->
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="18" r="1.6" style="--node-delay:780ms;"/>
-                          <!-- Linha esq. meio: saindo da borda esquerda ~48% -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 0,48 H 10 Q 12,48 12,50 V 54 Q 12,56 10,56 H 0"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:400ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="48" r="1.6" style="--node-delay:970ms;"/>
-                          <!-- Linha dir. topo: saindo borda direita ~22% -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 100,22 H 94 Q 92,22 92,24 V 30 Q 92,32 94,32 H 100"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:300ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="22" r="1.6" style="--node-delay:860ms;"/>
-                          <!-- Linha dir. meio: saindo borda direita ~52% -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 100,52 H 90 Q 88,52 88,54 V 60 Q 88,62 90,62 H 100"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:500ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="52" r="1.6" style="--node-delay:1060ms;"/>
-                        </svg>
-                        <!-- Labels posicionados via CSS (top em %) -->
-                        <span class="circuit-label circuit-label--left is-visible" style="top:15%; transform:translateY(-50%);">Pipeline de imóveis</span>
-                        <span class="circuit-label circuit-label--left is-visible" style="top:45%; transform:translateY(-50%);">Gestão de contratos</span>
-                        <span class="circuit-label circuit-label--right is-visible" style="top:19%; transform:translateY(-50%);">Captação integrada</span>
-                        <span class="circuit-label circuit-label--right is-visible" style="top:49%; transform:translateY(-50%);">Relatórios em tempo real</span>
                       </div>
                     </div>
 
@@ -1496,7 +1449,6 @@
                 role="tabpanel"
                 aria-labelledby="pstab-1"
                 aria-hidden="true"
-                style="--circuit-color: rgba(0,220,240,0.75); --circuit-glow: rgba(0,220,240,0.20);"
               >
                 <div class="pspanel__inner">
                   <div class="pspanel__preview pspanel__preview--cyan">
@@ -1522,44 +1474,6 @@
                             />
                           </div>
                         </div>
-                      </div>
-
-                      <!-- Linhas de circuito — InBarber -->
-                      <div class="pspanel__circuit-overlay" aria-hidden="true">
-                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                          <!-- Linha esq. topo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 0,20 H 7 Q 9,20 9,22 V 28 Q 9,30 7,30 H 0"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:200ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="20" r="1.6" style="--node-delay:780ms;"/>
-                          <!-- Linha esq. baixo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 0,50 H 11 Q 13,50 13,52 V 58 Q 13,60 11,60 H 0"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:420ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="50" r="1.6" style="--node-delay:990ms;"/>
-                          <!-- Linha dir. topo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 100,24 H 93 Q 91,24 91,26 V 32 Q 91,34 93,34 H 100"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:310ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="24" r="1.6" style="--node-delay:880ms;"/>
-                          <!-- Linha dir. baixo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 100,54 H 89 Q 87,54 87,56 V 62 Q 87,64 89,64 H 100"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:530ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="54" r="1.6" style="--node-delay:1090ms;"/>
-                        </svg>
-                        <span class="circuit-label circuit-label--left is-visible" style="top:17%; transform:translateY(-50%);">Agenda online</span>
-                        <span class="circuit-label circuit-label--left is-visible" style="top:47%; transform:translateY(-50%);">Lembretes automáticos</span>
-                        <span class="circuit-label circuit-label--right is-visible" style="top:21%; transform:translateY(-50%);">Fila de espera</span>
-                        <span class="circuit-label circuit-label--right is-visible" style="top:51%; transform:translateY(-50%);">Histórico do cliente</span>
                       </div>
                     </div>
 
@@ -1592,7 +1506,6 @@
                 role="tabpanel"
                 aria-labelledby="pstab-2"
                 aria-hidden="true"
-                style="--circuit-color: rgba(139,92,246,0.80); --circuit-glow: rgba(139,92,246,0.22);"
               >
                 <div class="pspanel__inner">
                   <div class="pspanel__preview pspanel__preview--violet">
@@ -1620,44 +1533,6 @@
                             />
                           </div>
                         </div>
-                      </div>
-
-                      <!-- Linhas de circuito — InTravel -->
-                      <div class="pspanel__circuit-overlay" aria-hidden="true">
-                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                          <!-- Linha esq. topo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 0,16 H 6 Q 8,16 8,18 V 24 Q 8,26 6,26 H 0"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:200ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="16" r="1.6" style="--node-delay:780ms;"/>
-                          <!-- Linha esq. baixo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 0,46 H 10 Q 12,46 12,48 V 54 Q 12,56 10,56 H 0"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:410ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="0" cy="46" r="1.6" style="--node-delay:980ms;"/>
-                          <!-- Linha dir. topo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 100,20 H 92 Q 90,20 90,22 V 28 Q 90,30 92,30 H 100"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:305ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="20" r="1.6" style="--node-delay:870ms;"/>
-                          <!-- Linha dir. baixo -->
-                          <path
-                            class="pscircuit__line pscircuit__line--animated"
-                            d="M 100,50 H 88 Q 86,50 86,52 V 58 Q 86,60 88,60 H 100"
-                            style="--dash-len:60; --draw-dur:600ms; --draw-delay:520ms;"
-                          />
-                          <circle class="pscircuit__node pscircuit__node--pulse" cx="100" cy="50" r="1.6" style="--node-delay:1080ms;"/>
-                        </svg>
-                        <span class="circuit-label circuit-label--left is-visible" style="top:13%; transform:translateY(-50%);">Funil de vendas</span>
-                        <span class="circuit-label circuit-label--left is-visible" style="top:43%; transform:translateY(-50%);">Cotações automáticas</span>
-                        <span class="circuit-label circuit-label--right is-visible" style="top:17%; transform:translateY(-50%);">Pacotes personalizados</span>
-                        <span class="circuit-label circuit-label--right is-visible" style="top:47%; transform:translateY(-50%);">Pipeline de oportunidades</span>
                       </div>
                     </div>
 

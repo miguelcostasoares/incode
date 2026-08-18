@@ -227,6 +227,38 @@
   margin: 0;
 }
 
+/* ── Mobile layout ───────────────────────────────────────── */
+@media (max-width: 680px) {
+  .thread__canvas {
+    width: min(100% - 1.5rem, 860px);
+  }
+
+  /* Força todos os nós a mostrar o label à direita do dot */
+  .thread__node-wrap,
+  .thread__node-wrap[data-side="left"],
+  .thread__node-wrap[data-side="right"] {
+    flex-direction: row !important;
+  }
+
+  .thread__node-wrap[data-side="left"] .thread__label,
+  .thread__node-wrap[data-side="right"] .thread__label {
+    text-align: left;
+  }
+
+  .thread__label {
+    max-width: min(260px, 70vw);
+  }
+
+  .thread__label b {
+    font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.15rem);
+  }
+
+  .thread__label p {
+    font-size: .8rem;
+    line-height: 1.5;
+  }
+}
+
 /* ── Reduced motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .thread__kicker {

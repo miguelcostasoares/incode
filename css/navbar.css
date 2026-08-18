@@ -18,8 +18,20 @@
   padding: 10px 0;
 }
 
-.nav.is-mini {
-  padding: 10px 0;
+/* is-scrolled: esconder theme toggle com transição suave */
+.nav.is-scrolled .theme-toggle {
+  opacity: 0;
+  pointer-events: none;
+  max-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  overflow: hidden;
+  transition:
+    opacity 280ms var(--ease),
+    max-width 360ms var(--nav-ease),
+    padding 360ms var(--nav-ease),
+    margin 360ms var(--nav-ease);
 }
 
 /* ── Wrapper com largura dinâmica ────────────────────────── */
@@ -32,9 +44,6 @@
     width var(--nav-t-wrap) var(--nav-ease);
 }
 
-.nav.is-mini .nav__wrap {
-  max-width: 860px;
-}
 
 /* ── Inner (a "pill" da navbar) ──────────────────────────── */
 .nav__inner {
@@ -65,11 +74,6 @@
   box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.75);
 }
 
-.nav.is-mini .nav__inner {
-  min-height: 52px;
-  gap: 8px;
-  padding: 8px 20px 8px 22px;
-}
 
 /* ── Borda iluminada (gradiente de luz radial no centro) ─── */
 .nav__inner {
@@ -96,8 +100,7 @@
   transition: opacity var(--tn);
 }
 
-.nav.is-scrolled .nav__inner::before,
-.nav.is-mini .nav__inner::before {
+.nav.is-scrolled .nav__inner::before {
   opacity: 1;
 }
 
@@ -114,14 +117,6 @@
     margin var(--nav-t-slide) var(--nav-ease);
 }
 
-.nav.is-mini .nav__cta,
-.nav.is-entering-mini .nav__cta {
-  opacity: 0;
-  pointer-events: none;
-  max-width: 0;
-  padding: 0;
-  margin: 0;
-}
 
 /* ── Logo ────────────────────────────────────────────────── */
 .logo {
@@ -167,12 +162,6 @@
     max-width var(--nav-t-slide) var(--nav-ease);
 }
 
-.nav.is-mini .logo__word,
-.nav.is-entering-mini .logo__word,
-.nav.is-leaving-mini .logo__word {
-  opacity: 0;
-  max-width: 0;
-}
 
 /* ── Menu de navegação ───────────────────────────────────── */
 .nav__menu {
@@ -247,7 +236,12 @@
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  transition: border-color var(--tf), background-color var(--tf), transform var(--tf);
+  transition:
+    border-color var(--tf),
+    background-color var(--tf),
+    transform var(--tf),
+    opacity 280ms var(--ease),
+    max-width 360ms var(--nav-ease);
 }
 
 .theme-toggle:hover {
@@ -316,13 +310,6 @@
     max-width var(--nav-t-slide) var(--nav-ease);
 }
 
-.nav.is-mini .burger,
-.nav.is-entering-mini .burger {
-  opacity: 0;
-  pointer-events: none;
-  max-width: 0;
-  overflow: hidden;
-}
 
 .burger span {
   position: absolute;

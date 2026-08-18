@@ -47,17 +47,8 @@
       } catch (x) {}
     });
 
-  /* ── 2. Navbar ────────────────────────────────────────── */
+  /* ── 2. Navbar (scroll gerido por navbar.js) ──────────── */
   var nav = document.getElementById("nav");
-  var lastY = -1;
-  function onScroll() {
-    var y = window.scrollY;
-    if (y === lastY) return;
-    lastY = y;
-    nav.classList.toggle("is-scrolled", y > 28);
-  }
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
 
   /* Indicador deslizante */
   var navMenu = document.getElementById("nav-menu");
@@ -998,7 +989,7 @@
     var cr = canvas.getBoundingClientRect();
     canvasW = cr.width;
     canvasH = cr.height;
-    CX = canvasW / 2;
+    CX = window.innerWidth <= 680 ? canvasW * 0.08 : canvasW / 2;
     TOP_Y = canvasH * 0.04;
     BOT_Y = canvasH * 0.96;
     svg.setAttribute("viewBox", "0 0 " + canvasW + " " + canvasH);
@@ -1677,6 +1668,8 @@ var startCounters = (function () {
 
 })();
 
+
+
 /* ── Produtos — showcase interativo com autoplay (v2 fixed) ─ */
 (function () {
   "use strict";
@@ -1920,15 +1913,17 @@ var startCounters = (function () {
     if (rm.matches) return;
     var mockup = panel.querySelector(".pspanel__mockup");
     var emerge = panel.querySelector(".pspanel__mockup-emerge");
+    if (emerge) {
+      emerge.style.animation = "none";
+      emerge.style.opacity = "0";
+      void emerge.offsetHeight; /* força reflow */
+      emerge.style.animation = "";
+      emerge.style.opacity = "";
+    }
     if (mockup) {
       mockup.style.animation = "none";
       void mockup.offsetHeight; /* força reflow */
       mockup.style.animation = "";
-    }
-    if (emerge) {
-      emerge.style.animation = "none";
-      void emerge.offsetHeight; /* força reflow */
-      emerge.style.animation = "";
     }
   }
 
