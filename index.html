@@ -1218,173 +1218,103 @@
             </div>
           </header>
 
-                    <!-- Showcase principal -->
+          <!-- Showcase interativo de produtos -->
           <div
             class="pshowcase"
             id="pshowcase"
             data-reveal-section
             style="--sd: 120ms"
           >
-            <!-- Nav lateral (desktop) / Tabs (mobile) -->
-            <nav
-              class="pshowcase__nav"
-              aria-label="Selecionar produto"
-              role="tablist"
-            >
+            <!-- Seleção de produto -->
+            <div class="pshowcase__side">
+              <nav class="pshowcase__nav" aria-label="Selecionar produto" role="tablist">
               <button
                 class="psnav__item is-active"
-                data-product="0"
                 type="button"
                 role="tab"
-                aria-selected="true"
-                aria-controls="pspanel-0"
                 id="pstab-0"
+                aria-controls="pspanel-0"
+                aria-selected="true"
+                tabindex="0"
+                data-product="0"
+                style="--ps: #3b82f6; --ps-strong: #0047ff; --ps-rgb: 59,130,246"
               >
-                <span
-                  class="psnav__accent psnav__accent--blue"
-                  aria-hidden="true"
-                ></span>
-                <span class="psnav__icon psnav__icon--blue" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                  </svg>
+                <span class="psnav__accent" aria-hidden="true"></span>
+                <span class="psnav__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 </span>
                 <span class="psnav__text">
                   <b>InRealty</b>
                   <small>CRM para Imobiliárias</small>
                 </span>
                 <span class="psnav__arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M6 3.8 10.2 8 6 12.2" />
-                  </svg>
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.8 10.2 8 6 12.2"/></svg>
                 </span>
-                <span class="psnav__progress" aria-hidden="true"
-                  ><span class="psnav__progress-fill"></span
-                ></span>
+                <span class="psnav__progress" aria-hidden="true"><span class="psnav__progress-fill"></span></span>
               </button>
-
               <button
                 class="psnav__item"
-                data-product="1"
                 type="button"
                 role="tab"
-                aria-selected="false"
-                aria-controls="pspanel-1"
                 id="pstab-1"
+                aria-controls="pspanel-1"
+                aria-selected="false"
+                tabindex="-1"
+                data-product="1"
+                style="--ps: #00f0ff; --ps-strong: #00b8d4; --ps-rgb: 0,240,255"
               >
-                <span
-                  class="psnav__accent psnav__accent--cyan"
-                  aria-hidden="true"
-                ></span>
-                <span class="psnav__icon psnav__icon--cyan" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
+                <span class="psnav__accent" aria-hidden="true"></span>
+                <span class="psnav__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
                 </span>
                 <span class="psnav__text">
                   <b>InBarber</b>
                   <small>SaaS para Barbearias</small>
                 </span>
                 <span class="psnav__arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M6 3.8 10.2 8 6 12.2" />
-                  </svg>
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.8 10.2 8 6 12.2"/></svg>
                 </span>
-                <span class="psnav__progress" aria-hidden="true"
-                  ><span class="psnav__progress-fill"></span
-                ></span>
+                <span class="psnav__progress" aria-hidden="true"><span class="psnav__progress-fill"></span></span>
               </button>
-
               <button
                 class="psnav__item"
-                data-product="2"
                 type="button"
                 role="tab"
-                aria-selected="false"
-                aria-controls="pspanel-2"
                 id="pstab-2"
+                aria-controls="pspanel-2"
+                aria-selected="false"
+                tabindex="-1"
+                data-product="2"
+                style="--ps: #8b5cf6; --ps-strong: #7c3aed; --ps-rgb: 139,92,246"
               >
-                <span
-                  class="psnav__accent psnav__accent--violet"
-                  aria-hidden="true"
-                ></span>
-                <span
-                  class="psnav__icon psnav__icon--violet"
-                  aria-hidden="true"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path
-                      d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                    />
-                  </svg>
+                <span class="psnav__accent" aria-hidden="true"></span>
+                <span class="psnav__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </span>
                 <span class="psnav__text">
                   <b>InTravel</b>
                   <small>CRM para Agências de Viagem</small>
                 </span>
                 <span class="psnav__arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M6 3.8 10.2 8 6 12.2" />
-                  </svg>
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.8 10.2 8 6 12.2"/></svg>
                 </span>
-                <span class="psnav__progress" aria-hidden="true"
-                  ><span class="psnav__progress-fill"></span
-                ></span>
+                <span class="psnav__progress" aria-hidden="true"><span class="psnav__progress-fill"></span></span>
               </button>
-            </nav>
+              </nav>
 
-            <!-- Wrapper dos painéis -->
+              <aside class="pscta">
+                <p class="pscta__text">
+                  Quer ver a plataforma rodando com os dados da sua empresa?
+                </p>
+                <a class="btn btn--ghost btn--sm pscta__btn" href="#contato">
+                  Agendar demonstração
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 8h9.4M8.6 4.4 12.2 8l-3.6 3.6"/></svg>
+                </a>
+              </aside>
+            </div>
+
+            <!-- Painéis -->
             <div class="pshowcase__panel" id="pshowcase-panel">
-
-              <!-- ── Produto 0: InRealty ── -->
               <article
                 class="pspanel"
                 id="pspanel-0"
@@ -1392,56 +1322,123 @@
                 role="tabpanel"
                 aria-labelledby="pstab-0"
                 aria-hidden="false"
+                style="--ps: #3b82f6; --ps-strong: #0047ff; --ps-rgb: 59,130,246"
               >
-                <div class="pspanel__inner">
-                  <div class="pspanel__preview pspanel__preview--blue">
-                    <div class="pspanel__mockup-emerge">
-                      <div
-                        class="pspanel__mockup"
-                        aria-label="Preview do InRealty"
-                      >
-                        <div class="pmock pmock--realty">
-                          <div class="pmock__bar">
-                            <span class="pmock__dot-r"></span>
-                            <span class="pmock__dot-y"></span>
-                            <span class="pmock__dot-g"></span>
-                            <span class="pmock__url"
-                              >inrealty.app · Dashboard</span
-                            >
-                          </div>
-                          <div class="pmock__body pmock__body--iframe">
+                <div class="pdemo">
+                  <!-- Palco: janela do produto com câmera guiada -->
+                  <div class="pdemo__stage">
+                    <div class="pdemo__tilt" data-tilt>
+                      <div class="pmock">
+                        <div class="pmock__bar">
+                          <span class="pmock__lights" aria-hidden="true">
+                            <i class="pmock__light pmock__light--r"></i>
+                            <i class="pmock__light pmock__light--y"></i>
+                            <i class="pmock__light pmock__light--g"></i>
+                          </span>
+                          <span class="pmock__url">inrealty.app · Gestão</span>
+                          <span class="pmock__live" aria-hidden="true"><i></i>ao vivo</span>
+                        </div>
+
+                        <div class="pmock__screen">
+                          <div class="pmock__camera" data-camera>
                             <img
+                              class="pmock__img"
                               src="assets/screenshots/Screenshot_1.png"
-                              alt="Dashboard InRealty"
-                              class="pmock__screenshot-img"
+                              alt="Painel de gestão do InRealty com faturamento, metas e desempenho da equipe"
                               loading="lazy"
+                              decoding="async"
                               draggable="false"
                             />
+                            <span class="pmock__focus" data-focus aria-hidden="true">
+                              <i></i><i></i><i></i><i></i>
+                            </span>
                           </div>
+                          <span class="pmock__sweep" data-sweep aria-hidden="true"></span>
+                          <span class="pmock__inner-shadow" aria-hidden="true"></span>
+                          <p class="pmock__caption" data-caption aria-hidden="true">
+                            <span class="pmock__caption-dot"></span>
+                            <span class="pmock__caption-text" data-caption-text>Visão geral da operação</span>
+                          </p>
                         </div>
                       </div>
-                    </div>
 
-                    <div
-                      class="pspanel__badge pspanel__badge--br"
-                      aria-hidden="true"
-                    >
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                      >
-                        <polyline points="2,10 5,7 8,9 14,4" />
-                      </svg>
-                      <span class="pspanel__badge-text">+23% esse mês</span>
+                      <span class="pdemo__badge" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,10 5,7 8,9 14,4"/><polyline points="10.5,4 14,4 14,7.5"/></svg>
+                        +23% de conversão no mês
+                      </span>
                     </div>
+                    <span class="pdemo__reflection" aria-hidden="true"></span>
                   </div>
+
+                  <!-- Slides: pontos principais do produto -->
+                  <ol class="pdemo__steps" data-steps aria-label="Pontos principais do InRealty">
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep is-active"
+                      type="button"
+                      data-step="0"
+                      data-cam="50 50 1"
+                      aria-current="true"
+                    >
+                      <span class="pstep__num" aria-hidden="true">01</span>
+                      <span class="pstep__txt">
+                        <b>Visão geral da operação</b>
+                        <small>Faturamento, equipe, fechamentos e pendências num único painel, atualizado em tempo real.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="1"
+                      data-cam="55 26 1.5"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">02</span>
+                      <span class="pstep__txt">
+                        <b>Resumo do dia</b>
+                        <small>Ao abrir, o gestor já vê quanto falta para a meta, quantas visitas ocorreram e quais propostas aguardam resposta.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="2"
+                      data-cam="50 37 1.45"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">03</span>
+                      <span class="pstep__txt">
+                        <b>Alertas inteligentes</b>
+                        <small>O sistema aponta imóveis parados, corretores fora da meta e destaques da equipe antes de virar problema.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="3"
+                      data-cam="50 60 1.5"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">04</span>
+                      <span class="pstep__txt">
+                        <b>Indicadores do mês</b>
+                        <small>Ticket médio, visitas realizadas e taxa de conversão comparados com o período anterior.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  </ol>
                 </div>
               </article>
-
-              <!-- ── Produto 1: InBarber ── -->
               <article
                 class="pspanel"
                 id="pspanel-1"
@@ -1449,56 +1446,123 @@
                 role="tabpanel"
                 aria-labelledby="pstab-1"
                 aria-hidden="true"
+                style="--ps: #00f0ff; --ps-strong: #00b8d4; --ps-rgb: 0,240,255"
               >
-                <div class="pspanel__inner">
-                  <div class="pspanel__preview pspanel__preview--cyan">
-                    <div class="pspanel__mockup-emerge">
-                      <div
-                        class="pspanel__mockup"
-                        aria-label="Preview do InBarber"
-                      >
-                        <div class="pmock pmock--barber">
-                          <div class="pmock__bar">
-                            <span class="pmock__dot-r"></span>
-                            <span class="pmock__dot-y"></span>
-                            <span class="pmock__dot-g"></span>
-                            <span class="pmock__url">inbarber.app · Agenda</span>
-                          </div>
-                          <div class="pmock__body pmock__body--iframe">
+                <div class="pdemo">
+                  <!-- Palco: janela do produto com câmera guiada -->
+                  <div class="pdemo__stage">
+                    <div class="pdemo__tilt" data-tilt>
+                      <div class="pmock">
+                        <div class="pmock__bar">
+                          <span class="pmock__lights" aria-hidden="true">
+                            <i class="pmock__light pmock__light--r"></i>
+                            <i class="pmock__light pmock__light--y"></i>
+                            <i class="pmock__light pmock__light--g"></i>
+                          </span>
+                          <span class="pmock__url">inbarber.app · Dashboard</span>
+                          <span class="pmock__live" aria-hidden="true"><i></i>ao vivo</span>
+                        </div>
+
+                        <div class="pmock__screen">
+                          <div class="pmock__camera" data-camera>
                             <img
+                              class="pmock__img"
                               src="assets/screenshots/Screenshot_2.png"
-                              alt="Agenda InBarber"
-                              class="pmock__screenshot-img"
+                              alt="Dashboard do InBarber com faturamento, agendamentos e ocupação da barbearia"
                               loading="lazy"
+                              decoding="async"
                               draggable="false"
                             />
+                            <span class="pmock__focus" data-focus aria-hidden="true">
+                              <i></i><i></i><i></i><i></i>
+                            </span>
                           </div>
+                          <span class="pmock__sweep" data-sweep aria-hidden="true"></span>
+                          <span class="pmock__inner-shadow" aria-hidden="true"></span>
+                          <p class="pmock__caption" data-caption aria-hidden="true">
+                            <span class="pmock__caption-dot"></span>
+                            <span class="pmock__caption-text" data-caption-text>Visão geral do dia</span>
+                          </p>
                         </div>
                       </div>
-                    </div>
 
-                    <div
-                      class="pspanel__badge pspanel__badge--br pspanel__badge--cyan"
-                      aria-hidden="true"
-                    >
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        aria-hidden="true"
-                      >
-                        <circle cx="8" cy="8" r="6" />
-                        <polyline points="8,5 8,8 10,10" />
-                      </svg>
-                      <span class="pspanel__badge-text">Próximo: 14h30</span>
+                      <span class="pdemo__badge" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12A6 6 0 1 1 13.4 12"/><path d="M8 12 10.6 8.4"/></svg>
+                        78% de ocupação hoje
+                      </span>
                     </div>
+                    <span class="pdemo__reflection" aria-hidden="true"></span>
                   </div>
+
+                  <!-- Slides: pontos principais do produto -->
+                  <ol class="pdemo__steps" data-steps aria-label="Pontos principais do InBarber">
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep is-active"
+                      type="button"
+                      data-step="0"
+                      data-cam="50 50 1"
+                      aria-current="true"
+                    >
+                      <span class="pstep__num" aria-hidden="true">01</span>
+                      <span class="pstep__txt">
+                        <b>Visão geral do dia</b>
+                        <small>Faturamento, agendamentos, ticket médio e no-shows da barbearia numa tela só.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="1"
+                      data-cam="32 22 1.55"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">02</span>
+                      <span class="pstep__txt">
+                        <b>Faturamento em tempo real</b>
+                        <small>Acompanhe o mês e o dia sem fechar caixa na mão — cada serviço lançado já entra no resultado.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="2"
+                      data-cam="47 70 1.5"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">03</span>
+                      <span class="pstep__txt">
+                        <b>Ocupação por horário</b>
+                        <small>Veja os horários vazios da semana e ajuste a equipe antes de perder faturamento.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="3"
+                      data-cam="84 55 1.5"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">04</span>
+                      <span class="pstep__txt">
+                        <b>Clientes e estoque</b>
+                        <small>Quem sumiu, quem faz aniversário e o que está acabando na prateleira, com ação em um clique.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  </ol>
                 </div>
               </article>
-
-              <!-- ── Produto 2: InTravel ── -->
               <article
                 class="pspanel"
                 id="pspanel-2"
@@ -1506,59 +1570,123 @@
                 role="tabpanel"
                 aria-labelledby="pstab-2"
                 aria-hidden="true"
+                style="--ps: #8b5cf6; --ps-strong: #7c3aed; --ps-rgb: 139,92,246"
               >
-                <div class="pspanel__inner">
-                  <div class="pspanel__preview pspanel__preview--violet">
-                    <div class="pspanel__mockup-emerge">
-                      <div
-                        class="pspanel__mockup"
-                        aria-label="Preview do InTravel"
-                      >
-                        <div class="pmock pmock--travel">
-                          <div class="pmock__bar">
-                            <span class="pmock__dot-r"></span>
-                            <span class="pmock__dot-y"></span>
-                            <span class="pmock__dot-g"></span>
-                            <span class="pmock__url"
-                              >intravel.app · Oportunidades</span
-                            >
-                          </div>
-                          <div class="pmock__body pmock__body--iframe">
+                <div class="pdemo">
+                  <!-- Palco: janela do produto com câmera guiada -->
+                  <div class="pdemo__stage">
+                    <div class="pdemo__tilt" data-tilt>
+                      <div class="pmock">
+                        <div class="pmock__bar">
+                          <span class="pmock__lights" aria-hidden="true">
+                            <i class="pmock__light pmock__light--r"></i>
+                            <i class="pmock__light pmock__light--y"></i>
+                            <i class="pmock__light pmock__light--g"></i>
+                          </span>
+                          <span class="pmock__url">intravel.app · Dashboard</span>
+                          <span class="pmock__live" aria-hidden="true"><i></i>ao vivo</span>
+                        </div>
+
+                        <div class="pmock__screen">
+                          <div class="pmock__camera" data-camera>
                             <img
+                              class="pmock__img"
                               src="assets/screenshots/Screenshot_3.png"
-                              alt="Dashboard InTravel"
-                              class="pmock__screenshot-img"
+                              alt="Dashboard do InTravel com meta do mês, funil de oportunidades e tarefas do dia"
                               loading="lazy"
+                              decoding="async"
                               draggable="false"
                             />
+                            <span class="pmock__focus" data-focus aria-hidden="true">
+                              <i></i><i></i><i></i><i></i>
+                            </span>
                           </div>
+                          <span class="pmock__sweep" data-sweep aria-hidden="true"></span>
+                          <span class="pmock__inner-shadow" aria-hidden="true"></span>
+                          <p class="pmock__caption" data-caption aria-hidden="true">
+                            <span class="pmock__caption-dot"></span>
+                            <span class="pmock__caption-text" data-caption-text>Visão geral da agência</span>
+                          </p>
                         </div>
                       </div>
-                    </div>
 
-                    <div
-                      class="pspanel__badge pspanel__badge--br pspanel__badge--violet"
-                      aria-hidden="true"
-                    >
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        aria-hidden="true"
-                      >
-                        <circle cx="8" cy="8" r="6" />
-                        <path d="M2 8h12M8 2a10 10 0 0 1 3 6 10 10 0 0 1-3 6" />
-                      </svg>
-                      <span class="pspanel__badge-text"
-                        >R$ 48k em pipeline</span
-                      >
+                      <span class="pdemo__badge" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/></svg>
+                        12 de 20 vendas no mês
+                      </span>
                     </div>
+                    <span class="pdemo__reflection" aria-hidden="true"></span>
                   </div>
+
+                  <!-- Slides: pontos principais do produto -->
+                  <ol class="pdemo__steps" data-steps aria-label="Pontos principais do InTravel">
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep is-active"
+                      type="button"
+                      data-step="0"
+                      data-cam="50 50 1"
+                      aria-current="true"
+                    >
+                      <span class="pstep__num" aria-hidden="true">01</span>
+                      <span class="pstep__txt">
+                        <b>Visão geral da agência</b>
+                        <small>Meta do mês, funil, atendimentos ativos e próximos embarques em um só lugar.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="1"
+                      data-cam="45 16 1.55"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">02</span>
+                      <span class="pstep__txt">
+                        <b>Meta e desempenho</b>
+                        <small>Quanto falta para bater a meta do mês, com o progresso acumulado da equipe.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="2"
+                      data-cam="38 66 1.45"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">03</span>
+                      <span class="pstep__txt">
+                        <b>Foco do dia</b>
+                        <small>A lista do que precisa de ação hoje: follow-ups atrasados, cotações a expirar e propostas a enviar.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  <li class="pdemo__step">
+                    <button
+                      class="pstep"
+                      type="button"
+                      data-step="3"
+                      data-cam="82 55 1.5"
+                      aria-current="false"
+                    >
+                      <span class="pstep__num" aria-hidden="true">04</span>
+                      <span class="pstep__txt">
+                        <b>Agenda e relacionamento</b>
+                        <small>Embarques, aniversários e retornos programados sem depender da memória do consultor.</small>
+                      </span>
+                      <span class="pstep__bar" aria-hidden="true"><i></i></span>
+                    </button>
+                  </li>
+                  </ol>
                 </div>
               </article>
-
             </div>
             <!-- /.pshowcase__panel -->
           </div>

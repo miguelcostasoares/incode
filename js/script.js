@@ -1670,302 +1670,407 @@ var startCounters = (function () {
 
 
 
-/* ── Produtos — showcase interativo com autoplay (v2 fixed) ─ */
-(function () {
-  "use strict";
-
-  var showcase = document.getElementById("pshowcase");
-  if (!showcase) return;
-
-  var panelWrapper = document.getElementById("pshowcase-panel");
-  var navBtns = showcase.querySelectorAll(".psnav__item");
-  var panels = showcase.querySelectorAll(".pspanel");
-  var dots = document.querySelectorAll(".products__dot");
-  var rm = window.matchMedia("(prefers-reduced-motion:reduce)");
-
-  var AUTOPLAY_MS = 6000;
-  var current = 0;
-  var progressRaf = null;
-  var progressStart = null;
-  var userPaused = false;
-
-  /* ── Utilitários ─────────────────────────────────────────── */
-  function stopProgress() {
-    if (progressRaf) {
-      cancelAnimationFrame(progressRaf);
-      progressRaf = null;
-    }
-    progressStart = null;
-  }
-
-  function resetAllFills() {
-    [].forEach.call(navBtns, function (btn) {
-      var fill = btn.querySelector(".psnav__progress-fill");
-      if (fill) fill.style.width = "0%";
-    });
-  }
-
-  /* ── Mostrar painel pelo índice ──────────────────────────── */
-  function showPanel(idx) {
-    [].forEach.call(panels, function (p, i) {
-      var isTarget = i === idx;
-      /* Sempre remove a animação antes para poder re-disparar */
-      p.style.animation = "none";
-      p.style.display = "none";
-      p.setAttribute("aria-hidden", "true");
-
-      if (isTarget) {
-        p.style.display = "block";
-        /* Força reflow — necessário para a animação CSS re-disparar */
-        void p.offsetHeight;
-        if (!rm.matches) {
-          p.style.animation =
-            "pspanel-in 400ms cubic-bezier(0.16,1,0.3,1) both";
-        } else {
-          p.style.animation = "";
-        }
-        p.setAttribute("aria-hidden", "false");
-      }
-    });
-  }
-
-  /* ── Navegar para o índice ───────────────────────────────── */
-  function goTo(idx, fromAutoplay) {
-    if (idx === current && !fromAutoplay) return;
-
-    stopProgress();
-    resetAllFills();
-
-    current = idx;
-
-    /* Atualiza botões de nav */
-    [].forEach.call(navBtns, function (btn, i) {
-      var active = i === idx;
-      btn.classList.toggle("is-active", active);
-      btn.setAttribute("aria-selected", String(active));
-    });
-
-    /* Atualiza dots */
-    [].forEach.call(dots, function (dot, i) {
-      dot.classList.toggle("is-active", i === idx);
-    });
-
-    /* Atualiza borda colorida do wrapper */
-    if (panelWrapper) panelWrapper.setAttribute("data-active", String(idx));
-
-    /* Troca o painel visível */
-    showPanel(idx);
-
-    /* Reinicia autoplay se não estiver pausado */
-    if (!userPaused && !rm.matches) {
-      startProgress(navBtns[current]);
-    }
-  }
-
-  /* ── Autoplay ────────────────────────────────────────────── */
-  function startProgress(btn) {
-    stopProgress();
-    if (rm.matches || userPaused) return;
-    var fill = btn && btn.querySelector(".psnav__progress-fill");
-    if (!fill) return;
-    fill.style.width = "0%";
-    progressStart = performance.now();
-
-    (function tick(now) {
-      var pct = Math.min(((now - progressStart) / AUTOPLAY_MS) * 100, 100);
-      fill.style.width = pct + "%";
-      if (pct < 100) {
-        progressRaf = requestAnimationFrame(tick);
-      } else {
-        goTo((current + 1) % navBtns.length, true);
-      }
-    })(performance.now());
-  }
-
-  /* ── Eventos dos botões de nav ───────────────────────────── */
-  [].forEach.call(navBtns, function (btn, i) {
-    btn.addEventListener("click", function () {
-      userPaused = false;
-      goTo(i, false);
-    });
-    btn.addEventListener("keydown", function (e) {
-      var arr = Array.prototype.slice.call(navBtns);
-      var cur = arr.indexOf(btn);
-      var target = null;
-      if (e.key === "ArrowDown" || e.key === "ArrowRight")
-        target = arr[(cur + 1) % arr.length];
-      if (e.key === "ArrowUp" || e.key === "ArrowLeft")
-        target = arr[(cur - 1 + arr.length) % arr.length];
-      if (target) {
-        target.focus();
-        target.click();
-        e.preventDefault();
-      }
-    });
-  });
-
-  /* ── Eventos dos dots ────────────────────────────────────── */
-  [].forEach.call(dots, function (dot, i) {
-    dot.style.cursor = "pointer";
-    dot.addEventListener("click", function () {
-      userPaused = false;
-      goTo(i, false);
-    });
-  });
-
-  /* ── Pausar/retomar autoplay ─────────────────────────────── */
-  function pause() {
-    userPaused = true;
-    stopProgress();
-  }
-  function resume() {
-    userPaused = false;
-    if (!rm.matches) startProgress(navBtns[current]);
-  }
-
-  if (panelWrapper) {
-    panelWrapper.addEventListener("mouseenter", pause);
-    panelWrapper.addEventListener("mouseleave", resume);
-    panelWrapper.addEventListener("focusin", pause);
-    panelWrapper.addEventListener("focusout", resume);
-  }
-
-  var navEl = showcase.querySelector(".pshowcase__nav");
-  if (navEl) {
-    navEl.addEventListener("mouseenter", pause);
-    navEl.addEventListener("mouseleave", resume);
-  }
-
-  /* ── Swipe mobile ────────────────────────────────────────── */
-  var touchX = 0;
-  if (panelWrapper) {
-    panelWrapper.addEventListener(
-      "touchstart",
-      function (e) {
-        touchX = e.changedTouches[0].clientX;
-      },
-      { passive: true },
-    );
-    panelWrapper.addEventListener(
-      "touchend",
-      function (e) {
-        var dx = e.changedTouches[0].clientX - touchX;
-        if (Math.abs(dx) > 50) {
-          userPaused = false;
-          goTo(
-            dx < 0
-              ? (current + 1) % navBtns.length
-              : (current - 1 + navBtns.length) % navBtns.length,
-            false,
-          );
-        }
-      },
-      { passive: true },
-    );
-  }
-
-  /* ── Visibilidade da aba ─────────────────────────────────── */
-  document.addEventListener("visibilitychange", function () {
-    if (document.hidden) {
-      stopProgress();
-    } else if (!rm.matches && !userPaused) {
-      startProgress(navBtns[current]);
-    }
-  });
-
-  /* ── Inicialização ───────────────────────────────────────── */
-  /* Garante estado limpo independente do CSS/HTML inicial */
-  showPanel(0);
-  [].forEach.call(navBtns, function (btn, i) {
-    btn.classList.toggle("is-active", i === 0);
-    btn.setAttribute("aria-selected", i === 0 ? "true" : "false");
-  });
-  [].forEach.call(dots, function (dot, i) {
-    dot.classList.toggle("is-active", i === 0);
-  });
-  if (panelWrapper) panelWrapper.setAttribute("data-active", "0");
-
-  if (!rm.matches) startProgress(navBtns[0]);
-})();
-
-
-/* ── Produtos — animação de surgimento via IntersectionObserver ── */
+/* ── Produtos — demonstração guiada (nav + câmera + slides) ─ */
 /*
-  Sem paralaxe de mouse. O mockup surge com inclinação 3D + float
-  suave contínuo, totalmente via CSS. O JS apenas garante que a
-  animação re-dispara cada vez que o painel se torna visível e que
-  o surgimento ocorre quando a secção entra na viewport.
+   Cada produto tem uma sequência de pontos principais ("slides").
+   Ao avançar, a câmera faz zoom/pan sobre a região correspondente
+   do preview, os cantos de foco enquadram a área e a legenda muda.
+   No fim dos slides, passa automaticamente para o próximo produto.
 */
 (function () {
   "use strict";
 
-  var rm = window.matchMedia("(prefers-reduced-motion:reduce)");
-
-  /* ── Re-dispara animação ao trocar de painel ──────────────── */
-  /* O showcase JS já faz isso via aria-hidden; aqui garantimos
-     que o .pspanel__mockup também reinicia o float ao aparecer */
   var showcase = document.getElementById("pshowcase");
   if (!showcase) return;
 
-  var panels = showcase.querySelectorAll(".pspanel");
+  var section = document.getElementById("produtos");
+  var navBtns = [].slice.call(showcase.querySelectorAll(".psnav__item"));
+  var panels = [].slice.call(showcase.querySelectorAll(".pspanel"));
+  var dots = [].slice.call(document.querySelectorAll(".products__dot"));
+  var rm = window.matchMedia("(prefers-reduced-motion:reduce)");
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-  function resetMockupAnim(panel) {
-    if (rm.matches) return;
-    var mockup = panel.querySelector(".pspanel__mockup");
-    var emerge = panel.querySelector(".pspanel__mockup-emerge");
-    if (emerge) {
-      emerge.style.animation = "none";
-      emerge.style.opacity = "0";
-      void emerge.offsetHeight; /* força reflow */
-      emerge.style.animation = "";
-      emerge.style.opacity = "";
+  if (!navBtns.length || !panels.length) return;
+
+  var STEP_MS = 5200;
+
+  var model = panels.map(function (panel) {
+    return {
+      panel: panel,
+      stage: panel.querySelector(".pdemo__stage"),
+      tilt: panel.querySelector("[data-tilt]"),
+      camera: panel.querySelector("[data-camera]"),
+      focus: panel.querySelector("[data-focus]"),
+      sweep: panel.querySelector("[data-sweep]"),
+      caption: panel.querySelector("[data-caption]"),
+      captionText: panel.querySelector("[data-caption-text]"),
+      stepsWrap: panel.querySelector("[data-steps]"),
+      steps: [].slice.call(panel.querySelectorAll(".pstep")),
+    };
+  });
+
+  var product = 0;
+  var step = 0;
+  var raf = null;
+  var t0 = 0;
+  var elapsed = 0;
+  var paused = false;
+  var inView = false;
+
+  /* ── Câmera ──────────────────────────────────────────────── */
+  function parseCam(btn) {
+    var parts = (btn.getAttribute("data-cam") || "50 50 1").trim().split(/\s+/);
+    var z = parseFloat(parts[2]);
+    if (!(z >= 1)) z = 1;
+    var half = 50 / z;
+    var cx = parseFloat(parts[0]);
+    var cy = parseFloat(parts[1]);
+    if (isNaN(cx)) cx = 50;
+    if (isNaN(cy)) cy = 50;
+    cx = Math.min(Math.max(cx, half), 100 - half);
+    cy = Math.min(Math.max(cy, half), 100 - half);
+    return { cx: cx, cy: cy, z: z, half: half };
+  }
+
+  function applyCamera(m, btn, instant) {
+    var c = parseCam(btn);
+
+    if (m.camera) {
+      if (instant || rm.matches) {
+        m.camera.style.transition = "none";
+        void m.camera.offsetWidth;
+      }
+      m.camera.style.setProperty("--z", String(c.z));
+      m.camera.style.setProperty("--tx", (50 - c.cx).toFixed(3) + "%");
+      m.camera.style.setProperty("--ty", (50 - c.cy).toFixed(3) + "%");
+      if (instant || rm.matches) {
+        void m.camera.offsetWidth;
+        m.camera.style.transition = "";
+      }
     }
-    if (mockup) {
-      mockup.style.animation = "none";
-      void mockup.offsetHeight; /* força reflow */
-      mockup.style.animation = "";
+
+    if (m.focus) {
+      /* moldura ligeiramente mais fechada que o enquadramento da câmera,
+         para os cantos ficarem visíveis dentro do ecrã */
+      var fh = c.half / 1.16;
+      m.focus.style.setProperty("--z", String(c.z));
+      m.focus.style.setProperty("--fx", (c.cx - fh).toFixed(3) + "%");
+      m.focus.style.setProperty("--fy", (c.cy - fh).toFixed(3) + "%");
+      m.focus.style.setProperty("--fw", (fh * 2).toFixed(3) + "%");
+      m.focus.style.setProperty("--fh", (fh * 2).toFixed(3) + "%");
+      m.focus.classList.remove("is-on");
+      void m.focus.offsetWidth;
+      if (c.z > 1.02) m.focus.classList.add("is-on");
     }
   }
 
-  /* Observa mudanças de aria-hidden nos painéis */
-  var mo = new MutationObserver(function (mutations) {
-    mutations.forEach(function (m) {
-      if (m.type === "attributes" && m.attributeName === "aria-hidden") {
-        var panel = m.target;
-        if (panel.getAttribute("aria-hidden") === "false") {
-          resetMockupAnim(panel);
+  /* ── Progresso ───────────────────────────────────────────── */
+  function paint(frac) {
+    var m = model[product];
+    var total = m.steps.length || 1;
+
+    m.steps.forEach(function (b, i) {
+      var bar = b.querySelector(".pstep__bar i");
+      if (!bar) return;
+      bar.style.width = i === step ? (frac * 100).toFixed(2) + "%" : "0%";
+    });
+
+    navBtns.forEach(function (btn, i) {
+      var fill = btn.querySelector(".psnav__progress-fill");
+      if (!fill) return;
+      fill.style.width =
+        i === product ? (((step + frac) / total) * 100).toFixed(2) + "%" : "0%";
+    });
+  }
+
+  /* ── Autoplay ────────────────────────────────────────────── */
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = null;
+  }
+
+  function play() {
+    if (raf || rm.matches || paused || !inView) return;
+    t0 = performance.now() - elapsed;
+    raf = requestAnimationFrame(loop);
+  }
+
+  function loop(now) {
+    raf = null;
+    var frac = Math.min((now - t0) / STEP_MS, 1);
+    paint(frac);
+    if (frac >= 1) {
+      advance();
+      return;
+    }
+    elapsed = now - t0;
+    raf = requestAnimationFrame(loop);
+  }
+
+  function advance() {
+    var total = model[product].steps.length;
+    if (step + 1 < total) {
+      goStep(step + 1);
+    } else {
+      goProduct((product + 1) % panels.length);
+    }
+  }
+
+  /* ── Navegação ───────────────────────────────────────────── */
+  function scrollStepIntoView(m, btn) {
+    var wrap = m.stepsWrap;
+    if (!wrap || wrap.scrollWidth <= wrap.clientWidth + 4) return;
+    var li = btn.parentNode;
+    var wrapRect = wrap.getBoundingClientRect();
+    var liRect = li.getBoundingClientRect();
+    var left = Math.max(
+      wrap.scrollLeft + (liRect.left - wrapRect.left) - 8,
+      0,
+    );
+    if (typeof wrap.scrollTo === "function") {
+      wrap.scrollTo({ left: left, behavior: rm.matches ? "auto" : "smooth" });
+    } else {
+      wrap.scrollLeft = left;
+    }
+  }
+
+  function goStep(si, instant) {
+    var m = model[product];
+    if (!m.steps.length) return;
+    step = Math.max(0, Math.min(si, m.steps.length - 1));
+
+    var btn = m.steps[step];
+
+    m.steps.forEach(function (b, i) {
+      var on = i === step;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-current", on ? "true" : "false");
+    });
+
+    applyCamera(m, btn, instant);
+
+    var label = btn.querySelector(".pstep__txt b");
+    if (m.captionText && label) {
+      m.captionText.textContent = label.textContent.trim();
+      if (m.caption && !rm.matches) {
+        m.caption.classList.remove("is-swap");
+        void m.caption.offsetWidth;
+        m.caption.classList.add("is-swap");
+      }
+    }
+
+    if (m.sweep && !rm.matches && !instant) {
+      m.sweep.classList.remove("is-on");
+      void m.sweep.offsetWidth;
+      m.sweep.classList.add("is-on");
+    }
+
+    scrollStepIntoView(m, btn);
+
+    elapsed = 0;
+    paint(0);
+    stop();
+    play();
+  }
+
+  function goProduct(pi) {
+    product = Math.max(0, Math.min(pi, panels.length - 1));
+    step = 0;
+
+    panels.forEach(function (p, i) {
+      p.setAttribute("aria-hidden", i === product ? "false" : "true");
+    });
+
+    navBtns.forEach(function (btn, i) {
+      var on = i === product;
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+      btn.setAttribute("tabindex", on ? "0" : "-1");
+      var fill = btn.querySelector(".psnav__progress-fill");
+      if (fill) fill.style.width = "0%";
+    });
+
+    dots.forEach(function (d, i) {
+      d.classList.toggle("is-active", i === product);
+    });
+
+    var m = model[product];
+    if (!rm.matches) {
+      m.panel.style.animation = "none";
+      void m.panel.offsetHeight;
+      m.panel.style.animation =
+        "pspanel-in 520ms cubic-bezier(0.16,1,0.3,1) both";
+    }
+
+    goStep(0, true);
+  }
+
+  /* ── Eventos: produtos ───────────────────────────────────── */
+  navBtns.forEach(function (btn, i) {
+    btn.addEventListener("click", function () {
+      if (i !== product) goProduct(i);
+    });
+    btn.addEventListener("keydown", function (e) {
+      var next = null;
+      if (e.key === "ArrowDown" || e.key === "ArrowRight")
+        next = (i + 1) % navBtns.length;
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft")
+        next = (i - 1 + navBtns.length) % navBtns.length;
+      if (e.key === "Home") next = 0;
+      if (e.key === "End") next = navBtns.length - 1;
+      if (next === null) return;
+      e.preventDefault();
+      goProduct(next);
+      navBtns[next].focus();
+    });
+  });
+
+  dots.forEach(function (dot, i) {
+    dot.setAttribute("role", "button");
+    dot.setAttribute("tabindex", "0");
+    dot.setAttribute("aria-label", "Ver produto " + (i + 1));
+    dot.removeAttribute("aria-hidden");
+    dot.addEventListener("click", function () {
+      if (i !== product) goProduct(i);
+    });
+    dot.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (i !== product) goProduct(i);
+      }
+    });
+  });
+
+  /* ── Eventos: slides ─────────────────────────────────────── */
+  model.forEach(function (m, pi) {
+    m.steps.forEach(function (btn, si) {
+      btn.addEventListener("click", function () {
+        if (pi !== product) goProduct(pi);
+        goStep(si);
+      });
+      btn.addEventListener("keydown", function (e) {
+        var next = null;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown")
+          next = (si + 1) % m.steps.length;
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp")
+          next = (si - 1 + m.steps.length) % m.steps.length;
+        if (next === null) return;
+        e.preventDefault();
+        goStep(next);
+        m.steps[next].focus();
+      });
+    });
+  });
+
+  /* ── Pausa em interação ──────────────────────────────────── */
+  function pause() {
+    paused = true;
+    stop();
+  }
+  function resume() {
+    paused = false;
+    play();
+  }
+
+  ["mouseenter", "focusin"].forEach(function (ev) {
+    showcase.addEventListener(ev, pause);
+  });
+  ["mouseleave", "focusout"].forEach(function (ev) {
+    showcase.addEventListener(ev, function (e) {
+      if (ev === "focusout" && showcase.contains(e.relatedTarget)) return;
+      if (ev === "mouseleave" || !showcase.matches(":hover")) resume();
+    });
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stop();
+    else play();
+  });
+
+  /* ── Swipe no palco ──────────────────────────────────────── */
+  model.forEach(function (m) {
+    if (!m.stage) return;
+    var x0 = 0;
+    m.stage.addEventListener(
+      "touchstart",
+      function (e) {
+        x0 = e.changedTouches[0].clientX;
+      },
+      { passive: true },
+    );
+    m.stage.addEventListener(
+      "touchend",
+      function (e) {
+        var dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) < 48) return;
+        var total = m.steps.length;
+        if (dx < 0) {
+          if (step + 1 < total) goStep(step + 1);
+          else goProduct((product + 1) % panels.length);
+        } else {
+          if (step > 0) goStep(step - 1);
+          else goProduct((product - 1 + panels.length) % panels.length);
         }
-      }
-    });
+      },
+      { passive: true },
+    );
   });
 
-  [].forEach.call(panels, function (p) {
-    mo.observe(p, { attributes: true });
-  });
-
-  /* ── Surge ao entrar na viewport pela primeira vez ────────── */
-  if (!("IntersectionObserver" in window)) return;
-
-  var section = document.getElementById("produtos");
-  if (!section) return;
-
-  var triggered = false;
-
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting && !triggered) {
-        triggered = true;
-        /* Pequeno delay para deixar o scroll assentar */
-        setTimeout(function () {
-          var activePanel = showcase.querySelector(".pspanel[aria-hidden='false']");
-          if (activePanel) resetMockupAnim(activePanel);
-        }, 80);
-        io.disconnect();
-      }
+  /* ── Paralaxe suave do mockup ────────────────────────────── */
+  if (finePointer.matches && !rm.matches) {
+    model.forEach(function (m) {
+      if (!m.stage || !m.tilt) return;
+      var pending = false;
+      var rx = 0,
+        ry = 0;
+      m.stage.addEventListener("pointermove", function (e) {
+        var r = m.stage.getBoundingClientRect();
+        ry = ((e.clientX - r.left) / r.width - 0.5) * 3.4;
+        rx = ((e.clientY - r.top) / r.height - 0.5) * -2.4;
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(function () {
+          pending = false;
+          m.tilt.style.setProperty("--rx", rx.toFixed(2) + "deg");
+          m.tilt.style.setProperty("--ry", ry.toFixed(2) + "deg");
+        });
+      });
+      m.stage.addEventListener("pointerleave", function () {
+        m.tilt.style.setProperty("--rx", "0deg");
+        m.tilt.style.setProperty("--ry", "0deg");
+      });
     });
-  }, { threshold: 0.15 });
+  }
 
-  io.observe(section);
+  /* ── Só corre quando a secção está visível ───────────────── */
+  if ("IntersectionObserver" in window && section) {
+    new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          inView = e.isIntersecting;
+          if (inView) play();
+          else stop();
+        });
+      },
+      { threshold: 0.2 },
+    ).observe(section);
+  } else {
+    inView = true;
+  }
+
+  /* ── Inicialização ───────────────────────────────────────── */
+  panels.forEach(function (p, i) {
+    p.setAttribute("aria-hidden", i === 0 ? "false" : "true");
+  });
+  navBtns.forEach(function (btn, i) {
+    btn.classList.toggle("is-active", i === 0);
+    btn.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    btn.setAttribute("tabindex", i === 0 ? "0" : "-1");
+  });
+  dots.forEach(function (d, i) {
+    d.classList.toggle("is-active", i === 0);
+  });
+  goStep(0, true);
 })();
 
 /* ── 7b. Aurora da secção Serviços ────────────────────────── */
